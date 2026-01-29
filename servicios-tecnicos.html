@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es" id="htmlRoot">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Servicios Técnicos – Escuela Superior Vocacional Pablo Colón Berdecia</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="translations.js"></script>
+</head>
+<body>
+  <!-- Popup de selección de tema -->
+  <div id="themePopup" class="theme-popup">
+    <div class="theme-popup-content">
+      <h2 data-translate="🎨 Selecciona tu tema preferido">🎨 Selecciona tu tema preferido</h2>
+      <p data-translate="Elige cómo quieres ver el sitio web">Elige cómo quieres ver el sitio web</p>
+      <div class="theme-buttons">
+        <button class="theme-btn theme-btn-light" id="btnLightMode" data-translate="☀️ Modo Claro">
+          ☀️ Modo Claro
+        </button>
+        <button class="theme-btn theme-btn-dark" id="btnDarkMode" data-translate="🌙 Modo Oscuro">
+          🌙 Modo Oscuro
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Script inline para modo claro/oscuro
+    (function() {
+      function hidePopup() {
+        document.getElementById('themePopup').classList.add('hidden');
+      }
+
+      function setLightMode() {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+        hidePopup();
+      }
+
+      function setDarkMode() {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        hidePopup();
+      }
+
+      function checkTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+          hidePopup();
+        } else if (savedTheme === 'light') {
+          hidePopup();
+        }
+      }
+
+      // Ejecutar inmediatamente
+      checkTheme();
+
+      // Agregar event listeners cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', function() {
+        const btnLight = document.getElementById('btnLightMode');
+        const btnDark = document.getElementById('btnDarkMode');
+
+        if (btnLight) {
+          btnLight.addEventListener('click', setLightMode);
+        }
+        if (btnDark) {
+          btnDark.addEventListener('click', setDarkMode);
+        }
+      });
+    })();
+  </script>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo-area">
+        <img src="LOGO6.png" alt="Logo Escuela" class="logo-image">
+        <div class="logo-text">
+          <span class="logo-title" data-translate="Escuela Superior Vocacional">Escuela Superior Vocacional</span>
+          <span class="logo-subtitle">Pablo Colón Berdecia</span>
+        </div>
+      </div>
+      
+      <!-- Hamburger Menu Button -->
+      <button class="hamburger-menu" id="hamburgerBtn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html#inicio" data-translate="Inicio">Inicio</a></li>
+          <li><a href="index.html#servicios" data-translate="Servicios">Servicios</a></li>
+          <li><a href="index.html#contacto" data-translate="Contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- Sidebar Menu -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="sidebar-menu" id="sidebarMenu">
+    <div class="sidebar-header">
+      <h3 data-translate="⚙️ Configuración">⚙️ Configuración</h3>
+    </div>
+    <div class="sidebar-content">
+      <!-- Theme Toggle -->
+      <div class="sidebar-option" id="themeToggle">
+        <span data-translate="🎨 Cambiar Tema">🎨 Cambiar Tema</span>
+      </div>
+      <div class="theme-options" id="themeOptions">
+        <div class="theme-option" id="selectLightTheme">
+          <span data-translate="☀️ Modo Claro">☀️ Modo Claro</span>
+        </div>
+        <div class="theme-option" id="selectDarkTheme">
+          <span data-translate="🌙 Modo Oscuro">🌙 Modo Oscuro</span>
+        </div>
+      </div>
+      
+      <!-- Language Toggle -->
+      <div class="sidebar-option" id="languageToggle">
+        <span data-translate="🌐 Cambiar Idioma">🌐 Cambiar Idioma</span>
+      </div>
+      <div class="language-options" id="languageOptions">
+        <div class="language-option" id="selectSpanish">
+          <span>🇵🇷 Español</span>
+        </div>
+        <div class="language-option" id="selectEnglish">
+          <span>🇺🇸 English</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Hamburger menu functionality
+    (function() {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const sidebarMenu = document.getElementById('sidebarMenu');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
+      const themeToggle = document.getElementById('themeToggle');
+      const themeOptions = document.getElementById('themeOptions');
+      const languageToggle = document.getElementById('languageToggle');
+      const languageOptions = document.getElementById('languageOptions');
+      const selectLightTheme = document.getElementById('selectLightTheme');
+      const selectDarkTheme = document.getElementById('selectDarkTheme');
+      const selectSpanish = document.getElementById('selectSpanish');
+      const selectEnglish = document.getElementById('selectEnglish');
+
+      function openSidebarMenu() {
+        sidebarMenu.classList.add('active');
+        sidebarOverlay.classList.add('active');
+      }
+
+      function closeSidebarMenu() {
+        sidebarMenu.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+        themeOptions.classList.remove('active');
+        languageOptions.classList.remove('active');
+      }
+
+      if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', openSidebarMenu);
+      }
+
+      if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeSidebarMenu);
+      }
+
+      // Theme toggle
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+          themeOptions.classList.toggle('active');
+          languageOptions.classList.remove('active');
+        });
+      }
+
+      // Language toggle
+      if (languageToggle) {
+        languageToggle.addEventListener('click', function() {
+          languageOptions.classList.toggle('active');
+          themeOptions.classList.remove('active');
+        });
+      }
+
+      // Select Light Theme
+      if (selectLightTheme) {
+        selectLightTheme.addEventListener('click', function() {
+          document.body.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light');
+          closeSidebarMenu();
+        });
+      }
+
+      // Select Dark Theme
+      if (selectDarkTheme) {
+        selectDarkTheme.addEventListener('click', function() {
+          document.body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+          closeSidebarMenu();
+        });
+      }
+
+      // Seleccionar idioma español
+      if (selectSpanish) {
+        selectSpanish.addEventListener('click', function() {
+          localStorage.setItem('language', 'es');
+          document.getElementById('htmlRoot').setAttribute('lang', 'es');
+          if (typeof translatePage === 'function') {
+            translatePage('es');
+          }
+          closeSidebarMenu();
+        });
+      }
+
+      // Seleccionar idioma inglés
+      if (selectEnglish) {
+        selectEnglish.addEventListener('click', function() {
+          localStorage.setItem('language', 'en');
+          document.getElementById('htmlRoot').setAttribute('lang', 'en');
+          if (typeof translatePage === 'function') {
+            translatePage('en');
+          }
+          closeSidebarMenu();
+        });
+      }
+    })();
+  </script>
+
+  <!-- Hero -->
+  <section class="hero" style="min-height: 350px; padding: 4rem 0;">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 0;">
+        <div style="font-size: 5rem; margin-bottom: 1rem;">🔧</div>
+        <h1 style="color: #ffffff; font-size: 3rem; text-shadow: 0 2px 20px rgba(0,0,0,0.5);" data-translate="Servicios Técnicos">Servicios Técnicos</h1>
+        <p style="color: rgba(255,255,255,0.95); font-size: 1.2rem; max-width: 800px; margin: 1rem auto;" data-translate="Soporte técnico y mantenimiento de equipos escolares">
+          Soporte técnico y mantenimiento de equipos escolares
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenido principal -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-2">
+        <!-- Información general -->
+        <article class="card">
+          <div class="card-icon">💻</div>
+          <h3 data-translate="Acerca del Servicio">Acerca del Servicio</h3>
+          <p data-translate="El Departamento de Servicios Técnicos brinda soporte y mantenimiento a los equipos tecnológicos de la escuela, incluyendo computadoras, proyectores, impresoras y otros dispositivos electrónicos.">
+            El Departamento de Servicios Técnicos brinda soporte y mantenimiento a los equipos tecnológicos de la escuela, incluyendo computadoras, proyectores, impresoras y otros dispositivos electrónicos.
+          </p>
+          <p data-translate="Nuestro objetivo es garantizar que todos los recursos tecnológicos estén disponibles y funcionando correctamente para apoyar el proceso educativo.">
+            Nuestro objetivo es garantizar que todos los recursos tecnológicos estén disponibles y funcionando correctamente para apoyar el proceso educativo.
+          </p>
+        </article>
+
+        <!-- Horario -->
+        <article class="card">
+          <div class="card-icon">🕐</div>
+          <h3 data-translate="Horario de Servicio">Horario de Servicio</h3>
+          <p><strong data-translate="Lunes a Viernes:">Lunes a Viernes:</strong></p>
+          <p style="font-size: 1.3rem; color: var(--primary-light); margin: 1rem 0;">7:30 AM - 3:00 PM</p>
+          <p><strong data-translate="Ubicación:">Ubicación:</strong> <span data-translate="Oficina de Servicios Técnicos">Oficina de Servicios Técnicos</span></p>
+          <p class="note" data-translate="Para emergencias técnicas, contactar a la oficina administrativa">
+            Para emergencias técnicas, contactar a la oficina administrativa
+          </p>
+        </article>
+
+        <!-- Servicios Disponibles -->
+        <article class="card">
+          <div class="card-icon">🛠️</div>
+          <h3 data-translate="Servicios Disponibles">Servicios Disponibles</h3>
+          <ul>
+            <li data-translate="Mantenimiento de computadoras">Mantenimiento de computadoras</li>
+            <li data-translate="Reparación de equipos electrónicos">Reparación de equipos electrónicos</li>
+            <li data-translate="Instalación de software educativo">Instalación de software educativo</li>
+            <li data-translate="Soporte técnico a maestros">Soporte técnico a maestros</li>
+            <li data-translate="Configuración de proyectores y pantallas">Configuración de proyectores y pantallas</li>
+            <li data-translate="Mantenimiento de impresoras">Mantenimiento de impresoras</li>
+            <li data-translate="Soporte de red e internet">Soporte de red e internet</li>
+            <li data-translate="Actualización de sistemas">Actualización de sistemas</li>
+          </ul>
+        </article>
+
+        <!-- Cómo Solicitar Servicio -->
+        <article class="card">
+          <div class="card-icon">📋</div>
+          <h3 data-translate="Cómo Solicitar Servicio">Cómo Solicitar Servicio</h3>
+          <ol>
+            <li data-translate="Reportar el problema a la oficina administrativa">Reportar el problema a la oficina administrativa</li>
+            <li data-translate="Describir detalladamente el problema técnico">Describir detalladamente el problema técnico</li>
+            <li data-translate="Indicar la ubicación del equipo">Indicar la ubicación del equipo</li>
+            <li data-translate="Esperar la visita del técnico">Esperar la visita del técnico</li>
+          </ol>
+          <p class="note" data-translate="Se atenderán las solicitudes por orden de prioridad">
+            Se atenderán las solicitudes por orden de prioridad
+          </p>
+        </article>
+      </div>
+
+      <!-- Información adicional -->
+      <div class="card" style="margin-top: 2rem;">
+        <h3 data-translate="Política de Uso de Equipos">Política de Uso de Equipos</h3>
+        <p data-translate="Todos los equipos tecnológicos de la escuela deben ser utilizados exclusivamente con fines educativos. Los estudiantes y el personal deben seguir las normas de uso responsable de la tecnología establecidas por el Departamento de Educación.">
+          Todos los equipos tecnológicos de la escuela deben ser utilizados exclusivamente con fines educativos. Los estudiantes y el personal deben seguir las normas de uso responsable de la tecnología establecidas por el Departamento de Educación.
+        </p>
+      </div>
+
+      <!-- Llamado a la acción -->
+      <div class="programs-cta" style="margin-top: 3rem;">
+        <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary-light);" data-translate="¿Necesitas más información?">¿Necesitas más información?</h3>
+        <p style="margin-bottom: 2rem; color: var(--text-soft);" data-translate="Contacta con la oficina administrativa para más detalles sobre servicios técnicos">
+          Contacta con la oficina administrativa para más detalles sobre servicios técnicos
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="index.html#servicios" class="btn btn-primary" data-translate="Ver otros servicios">Ver otros servicios</a>
+          <a href="index.html#contacto" class="btn btn-secondary" data-translate="Contactar escuela">Contactar escuela</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-translate="© 2026 Escuela Superior Vocacional Pablo Colón Berdecia. Todos los derechos reservados.">&copy; 2026 Escuela Superior Vocacional Pablo Colón Berdecia. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

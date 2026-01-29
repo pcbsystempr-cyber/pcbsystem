@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es" id="htmlRoot">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comedor Escolar – Escuela Superior Vocacional Pablo Colón Berdecia</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="translations.js"></script>
+</head>
+<body>
+  <!-- Popup de selección de tema -->
+  <div id="themePopup" class="theme-popup">
+    <div class="theme-popup-content">
+      <h2 data-translate="🎨 Selecciona tu tema preferido">🎨 Selecciona tu tema preferido</h2>
+      <p data-translate="Elige cómo quieres ver el sitio web">Elige cómo quieres ver el sitio web</p>
+      <div class="theme-buttons">
+        <button class="theme-btn theme-btn-light" id="btnLightMode" data-translate="☀️ Modo Claro">
+          ☀️ Modo Claro
+        </button>
+        <button class="theme-btn theme-btn-dark" id="btnDarkMode" data-translate="🌙 Modo Oscuro">
+          🌙 Modo Oscuro
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Script inline para modo claro/oscuro
+    (function() {
+      function hidePopup() {
+        document.getElementById('themePopup').classList.add('hidden');
+      }
+
+      function setLightMode() {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+        hidePopup();
+      }
+
+      function setDarkMode() {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        hidePopup();
+      }
+
+      function checkTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+          hidePopup();
+        } else if (savedTheme === 'light') {
+          hidePopup();
+        }
+      }
+
+      // Ejecutar inmediatamente
+      checkTheme();
+
+      // Agregar event listeners cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', function() {
+        const btnLight = document.getElementById('btnLightMode');
+        const btnDark = document.getElementById('btnDarkMode');
+
+        if (btnLight) {
+          btnLight.addEventListener('click', setLightMode);
+        }
+        if (btnDark) {
+          btnDark.addEventListener('click', setDarkMode);
+        }
+      });
+    })();
+  </script>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo-area">
+        <img src="LOGO6.png" alt="Logo Escuela" class="logo-image">
+        <div class="logo-text">
+          <span class="logo-title" data-translate="Escuela Superior Vocacional">Escuela Superior Vocacional</span>
+          <span class="logo-subtitle">Pablo Colón Berdecia</span>
+        </div>
+      </div>
+
+      <!-- Hamburger Menu Button -->
+      <button class="hamburger-menu" id="hamburgerBtn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html#inicio" data-translate="Inicio">Inicio</a></li>
+          <li><a href="index.html#servicios" data-translate="Servicios">Servicios</a></li>
+          <li><a href="index2.html" data-translate="Todos los servicios">Todos los servicios</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="sidebar-menu" id="sidebarMenu">
+    <div class="sidebar-header">
+      <h3 data-translate="⚙️ Configuración">⚙️ Configuración</h3>
+    </div>
+    <div class="sidebar-content">
+      <!-- Theme Toggle -->
+      <div class="sidebar-option" id="themeToggle">
+        <span data-translate="🎨 Cambiar Tema">🎨 Cambiar Tema</span>
+      </div>
+      <div class="theme-options" id="themeOptions">
+        <div class="theme-option" id="selectLightTheme">
+          <span data-translate="☀️ Modo Claro">☀️ Modo Claro</span>
+        </div>
+        <div class="theme-option" id="selectDarkTheme">
+          <span data-translate="🌙 Modo Oscuro">🌙 Modo Oscuro</span>
+        </div>
+      </div>
+
+      <!-- Language Toggle -->
+      <div class="sidebar-option" id="languageToggle">
+        <span data-translate="🌐 Cambiar Idioma">🌐 Cambiar Idioma</span>
+      </div>
+      <div class="language-options" id="languageOptions">
+        <div class="language-option" id="selectSpanish">
+          <span>🇵🇷 Español</span>
+        </div>
+        <div class="language-option" id="selectEnglish">
+          <span>🇺🇸 English</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Hamburger menu functionality
+    (function() {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const sidebarMenu = document.getElementById('sidebarMenu');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
+      const themeToggle = document.getElementById('themeToggle');
+      const themeOptions = document.getElementById('themeOptions');
+      const languageToggle = document.getElementById('languageToggle');
+      const languageOptions = document.getElementById('languageOptions');
+      const selectLightTheme = document.getElementById('selectLightTheme');
+      const selectDarkTheme = document.getElementById('selectDarkTheme');
+      const selectSpanish = document.getElementById('selectSpanish');
+      const selectEnglish = document.getElementById('selectEnglish');
+
+      function openSidebarMenu() {
+        sidebarMenu.classList.add('active');
+        sidebarOverlay.classList.add('active');
+      }
+
+      function closeSidebarMenu() {
+        sidebarMenu.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+        themeOptions.classList.remove('active');
+        languageOptions.classList.remove('active');
+      }
+
+      if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', openSidebarMenu);
+      }
+
+      if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeSidebarMenu);
+      }
+
+      // Theme toggle
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+          themeOptions.classList.toggle('active');
+          languageOptions.classList.remove('active');
+        });
+      }
+
+      // Language toggle
+      if (languageToggle) {
+        languageToggle.addEventListener('click', function() {
+          languageOptions.classList.toggle('active');
+          themeOptions.classList.remove('active');
+        });
+      }
+
+      // Select Light Theme
+      if (selectLightTheme) {
+        selectLightTheme.addEventListener('click', function() {
+          document.body.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light');
+          closeSidebarMenu();
+        });
+      }
+
+      // Select Dark Theme
+      if (selectDarkTheme) {
+        selectDarkTheme.addEventListener('click', function() {
+          document.body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+          closeSidebarMenu();
+        });
+      }
+
+      // Seleccionar idioma español
+      if (selectSpanish) {
+        selectSpanish.addEventListener('click', function() {
+          localStorage.setItem('language', 'es');
+          document.getElementById('htmlRoot').setAttribute('lang', 'es');
+          if (typeof translatePage === 'function') {
+            translatePage('es');
+          }
+          closeSidebarMenu();
+        });
+      }
+
+      // Seleccionar idioma inglés
+      if (selectEnglish) {
+        selectEnglish.addEventListener('click', function() {
+          localStorage.setItem('language', 'en');
+          document.getElementById('htmlRoot').setAttribute('lang', 'en');
+          if (typeof translatePage === 'function') {
+            translatePage('en');
+          }
+          closeSidebarMenu();
+        });
+      }
+    })();
+  </script>
+
+  <!-- Hero -->
+  <section class="hero" style="min-height: 350px; padding: 4rem 0;">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 0;">
+        <div style="font-size: 5rem; margin-bottom: 1rem;">🍽️</div>
+        <h1 style="color: #ffffff; font-size: 3rem; text-shadow: 0 2px 20px rgba(0,0,0,0.5);" data-translate="Comedor Escolar">Comedor Escolar</h1>
+        <p style="color: rgba(255,255,255,0.95); font-size: 1.2rem; max-width: 800px; margin: 1rem auto;" data-translate="Servicio de alimentación escolar para nuestros estudiantes">
+          Servicio de alimentación escolar para nuestros estudiantes
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contenido principal -->
+  <section class="section">
+    <div class="container">
+      <div class="grid-2">
+        <!-- Información general -->
+        <article class="card">
+          <div class="card-icon">🥘</div>
+          <h3 data-translate="Acerca del Comedor">Acerca del Comedor</h3>
+          <p data-translate="El comedor escolar ofrece servicios de alimentación de acuerdo al programa de comedores escolares del Departamento de Educación de Puerto Rico.">
+            El comedor escolar ofrece servicios de alimentación de acuerdo al programa de
+            comedores escolares del Departamento de Educación de Puerto Rico.
+          </p>
+          <p data-translate="Proporcionamos comidas nutritivas y balanceadas que contribuyen al bienestar y desarrollo de nuestros estudiantes durante la jornada escolar.">
+            Proporcionamos comidas nutritivas y balanceadas que contribuyen al bienestar
+            y desarrollo de nuestros estudiantes durante la jornada escolar.
+          </p>
+        </article>
+
+        <!-- Horario -->
+        <article class="card">
+          <div class="card-icon">🕐</div>
+          <h3 data-translate="Horario de Servicio">Horario de Servicio</h3>
+          <p><strong data-translate="Horario de almuerzo:">Horario de almuerzo:</strong></p>
+          <p style="font-size: 1.3rem; color: var(--primary-light); margin: 1rem 0;" data-translate="9no y 10mo 11:00AM a 11:50AM y 11mo 12mo de 11:50AM a 12:50PM">9no y 10mo 11:00AM a 11:50AM y 11mo 12mo de 11:50AM a 12:50PM</p>
+          <p><strong data-translate="Ubicación:">Ubicación:</strong> <span data-translate="Área de comedor escolar">Área de comedor escolar</span></p>
+          <p class="note" data-translate="El horario puede variar según el nivel y grupo">
+            El horario puede variar según el nivel y grupo
+          </p>
+        </article>
+
+        <!-- Menú y nutrición -->
+        <article class="card">
+          <div class="card-icon">🍎</div>
+          <h3 data-translate="Menú del día">Menú del día</h3>
+
+          <div style="margin-bottom: 1.5rem;">
+            <h4 style="color: var(--primary); margin-bottom: 0.8rem; font-size: 1.1rem;" data-translate="🌅 Desayuno">🌅 Desayuno</h4>
+            <ul>
+              <li data-translate="Farina">Farina</li>
+              <li data-translate="Queso">Queso</li>
+              <li data-translate="Jugo de manzana">Jugo de manzana</li>
+              <li data-translate="Melocotón">Melocotón</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 style="color: var(--primary); margin-bottom: 0.8rem; font-size: 1.1rem;" data-translate="🍽️ Almuerzo">🍽️ Almuerzo</h4>
+            <ul>
+              <li data-translate="Arroz">Arroz</li>
+              <li data-translate="Habichuelas guisadas">Habichuelas guisadas</li>
+              <li data-translate="Maíz">Maíz</li>
+              <li data-translate="Tomate">Tomate</li>
+              <li data-translate="Coctel de fruta">Coctel de fruta</li>
+            </ul>
+          </div>
+
+          <p class="note" style="margin-top: 1rem;" data-translate="El menú puede variar según disponibilidad y programación del Departamento de Educación">
+            El menú puede variar según disponibilidad y programación del Departamento de Educación
+          </p>
+        </article>
+
+        <!-- Normas del comedor -->
+        <article class="card">
+          <div class="card-icon">📋</div>
+          <h3 data-translate="Normas del Comedor">Normas del Comedor</h3>
+          <ul>
+            <li data-translate="Mantener orden y respeto en todo momento">Mantener orden y respeto en todo momento</li>
+            <li data-translate="Hacer fila de manera organizada">Hacer fila de manera organizada</li>
+            <li data-translate="Consumir alimentos en el área designada">Consumir alimentos en el área designada</li>
+            <li data-translate="Depositar desperdicios en los recipientes apropiados">Depositar desperdicios en los recipientes apropiados</li>
+            <li data-translate="Mantener limpieza en mesas y área de comedor">Mantener limpieza en mesas y área de comedor</li>
+            <li data-translate="Respetar al personal del comedor">Respetar al personal del comedor</li>
+            <li data-translate="No desperdiciar alimentos">No desperdiciar alimentos</li>
+            <li data-translate="Seguir las instrucciones del personal a cargo">Seguir las instrucciones del personal a cargo</li>
+          </ul>
+          <p class="note" data-translate="El estudiantado debe seguir las normas establecidas por el personal del comedor">
+            El estudiantado debe seguir las normas establecidas por el personal del comedor
+          </p>
+        </article>
+      </div>
+
+      <!-- Información adicional -->
+      <div class="card" style="margin-top: 2rem;">
+        <h3 data-translate="Programa de Comedores Escolares">Programa de Comedores Escolares</h3>
+        <p data-translate="El Programa de Comedores Escolares del Departamento de Educación tiene como objetivo garantizar que todos los estudiantes tengan acceso a alimentos nutritivos durante la jornada escolar, contribuyendo así a su rendimiento académico y desarrollo integral.">
+          El Programa de Comedores Escolares del Departamento de Educación tiene como objetivo
+          garantizar que todos los estudiantes tengan acceso a alimentos nutritivos durante
+          la jornada escolar, contribuyendo así a su rendimiento académico y desarrollo integral.
+        </p>
+      </div>
+
+     
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-translate="© 2026 Escuela Superior Vocacional Pablo Colón Berdecia. Todos los derechos reservados.">&copy; 2026 Escuela Superior Vocacional Pablo Colón Berdecia. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

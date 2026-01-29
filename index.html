@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="es" id="htmlRoot">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escuela Superior Vocacional Pablo Colón Berdecia</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="translations.js"></script>
+</head>
+<body>
+  <!-- Popup de selección de tema -->
+  <div id="themePopup" class="theme-popup">
+    <div class="theme-popup-content">
+      <h2 data-translate="🎨 Selecciona tu tema preferido">🎨 Selecciona tu tema preferido</h2>
+      <p data-translate="Elige cómo quieres ver el sitio web">Elige cómo quieres ver el sitio web</p>
+      <div class="theme-buttons">
+        <button class="theme-btn theme-btn-light" id="btnLightMode" data-translate="☀️ Modo Claro">
+          ☀️ Modo Claro
+        </button>
+        <button class="theme-btn theme-btn-dark" id="btnDarkMode" data-translate="🌙 Modo Oscuro">
+          🌙 Modo Oscuro
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Script inline para modo claro/oscuro y hamburger menu
+    (function() {
+      function hidePopup() {
+        document.getElementById('themePopup').classList.add('hidden');
+      }
+
+      function setLightMode() {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+        hidePopup();
+      }
+
+      function setDarkMode() {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        hidePopup();
+      }
+
+      function checkTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+          hidePopup();
+        } else if (savedTheme === 'light') {
+          hidePopup();
+        }
+      }
+
+      // Ejecutar inmediatamente
+      checkTheme();
+
+      // Agregar event listeners cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', function() {
+        const btnLight = document.getElementById('btnLightMode');
+        const btnDark = document.getElementById('btnDarkMode');
+
+        if (btnLight) {
+          btnLight.addEventListener('click', setLightMode);
+        }
+        if (btnDark) {
+          btnDark.addEventListener('click', setDarkMode);
+        }
+
+        // Hamburger menu functionality
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeOptions = document.getElementById('themeOptions');
+        const selectLightMode = document.getElementById('selectLightMode');
+        const selectDarkMode = document.getElementById('selectDarkMode');
+        const languageToggle = document.getElementById('languageToggle');
+        const languageOptions = document.getElementById('languageOptions');
+        const selectSpanish = document.getElementById('selectSpanish');
+        const selectEnglish = document.getElementById('selectEnglish');
+
+        // Abrir sidebar
+        if (hamburgerBtn) {
+          hamburgerBtn.addEventListener('click', function() {
+            sidebarMenu.classList.add('active');
+            sidebarOverlay.classList.add('active');
+          });
+        }
+
+        // Cerrar sidebar
+        function closeSidebarMenu() {
+          sidebarMenu.classList.remove('active');
+          sidebarOverlay.classList.remove('active');
+          themeOptions.style.display = 'none';
+          languageOptions.style.display = 'none';
+        }
+
+        if (closeSidebar) {
+          closeSidebar.addEventListener('click', closeSidebarMenu);
+        }
+
+        if (sidebarOverlay) {
+          sidebarOverlay.addEventListener('click', closeSidebarMenu);
+        }
+
+        // Toggle theme options
+        if (themeToggle) {
+          themeToggle.addEventListener('click', function() {
+            if (themeOptions.style.display === 'none') {
+              themeOptions.style.display = 'block';
+            } else {
+              themeOptions.style.display = 'none';
+            }
+          });
+        }
+
+        // Seleccionar modo claro desde sidebar
+        if (selectLightMode) {
+          selectLightMode.addEventListener('click', function() {
+            setLightMode();
+            closeSidebarMenu();
+          });
+        }
+
+        // Seleccionar modo oscuro desde sidebar
+        if (selectDarkMode) {
+          selectDarkMode.addEventListener('click', function() {
+            setDarkMode();
+            closeSidebarMenu();
+          });
+        }
+
+        // Toggle language options
+        if (languageToggle) {
+          languageToggle.addEventListener('click', function() {
+            if (languageOptions.style.display === 'none') {
+              languageOptions.style.display = 'block';
+            } else {
+              languageOptions.style.display = 'none';
+            }
+          });
+        }
+
+        // Seleccionar idioma español
+        if (selectSpanish) {
+          selectSpanish.addEventListener('click', function() {
+            localStorage.setItem('language', 'es');
+            document.getElementById('htmlRoot').setAttribute('lang', 'es');
+            if (typeof translatePage === 'function') {
+              translatePage('es');
+            }
+            closeSidebarMenu();
+          });
+        }
+
+        // Seleccionar idioma inglés
+        if (selectEnglish) {
+          selectEnglish.addEventListener('click', function() {
+            localStorage.setItem('language', 'en');
+            document.getElementById('htmlRoot').setAttribute('lang', 'en');
+            if (typeof translatePage === 'function') {
+              translatePage('en');
+            }
+            closeSidebarMenu();
+          });
+        }
+      });
+    })();
+  </script>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo-area">
+        <img src="LOGO6.png" alt="Logo Escuela" class="logo-image">
+        <div class="logo-text">
+          <span class="logo-title" data-translate="Escuela Superior Vocacional">Escuela Superior Vocacional</span>
+          <span class="logo-subtitle" data-translate="Pablo Colón Berdecia">Pablo Colón Berdecia</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <nav class="main-nav">
+          <ul>
+            <li><a href="#inicio" data-translate="Inicio">Inicio</a></li>
+            <li><a href="#escuela" data-translate="La escuela">La escuela</a></li>
+            <li><a href="#programas" data-translate="Programas">Programas</a></li>
+            <li><a href="#servicios" data-translate="Servicios">Servicios</a></li>
+            <li><a href="#vida" data-translate="Vida estudiantil">Vida estudiantil</a></li>
+            <li><a href="#contacto" data-translate="Contacto">Contacto</a></li>
+          </ul>
+        </nav>
+        <button class="hamburger-menu" id="hamburgerBtn" aria-label="Abrir menú">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menú lateral hamburguesa -->
+  <div class="sidebar-menu" id="sidebarMenu">
+    <div class="sidebar-header">
+      <h3 data-translate="⚙️ Configuración">⚙️ Configuración</h3>
+      <button class="sidebar-close" id="closeSidebar">&times;</button>
+    </div>
+    <div class="sidebar-content">
+      <!-- Cambiar Tema -->
+      <div class="sidebar-item" id="themeToggle">
+        <span class="sidebar-icon">🎨</span>
+        <span class="sidebar-text" data-translate="Cambiar Tema">Cambiar Tema</span>
+        <span class="sidebar-arrow">›</span>
+      </div>
+      <div class="theme-options" id="themeOptions" style="display: none;">
+        <button class="theme-option" id="selectLightMode" data-translate="Modo Claro">
+          <span>☀️</span> Modo Claro
+        </button>
+        <button class="theme-option" id="selectDarkMode" data-translate="Modo Oscuro">
+          <span>🌙</span> Modo Oscuro
+        </button>
+      </div>
+
+      <!-- Cambiar Idioma -->
+      <div class="sidebar-item" id="languageToggle">
+        <span class="sidebar-icon">🌐</span>
+        <span class="sidebar-text" data-translate="Cambiar Idioma">Cambiar Idioma</span>
+        <span class="sidebar-arrow">›</span>
+      </div>
+      <div class="theme-options" id="languageOptions" style="display: none;">
+        <button class="theme-option" id="selectSpanish" data-translate="Español">
+          <span>🇵🇷</span> Español
+        </button>
+        <button class="theme-option" id="selectEnglish" data-translate="English">
+          <span>🇺🇸</span> English
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay para cerrar el menú -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- HERO / INICIO -->
+  <section id="inicio" class="hero">
+    <div class="container">
+      <div class="hero-content-centered">
+        <h1 data-translate="Formación vocacional con visión de futuro">Formación vocacional con visión de futuro</h1>
+        <p data-translate="Escuela Superior Vocacional que prepara estudiantes con bases académicas y técnicas para continuar estudios o entrar al mundo laboral.">
+          Escuela Superior Vocacional que prepara estudiantes con bases académicas y técnicas
+          para continuar estudios o entrar al mundo laboral.
+        </p>
+        <div class="hero-actions">
+          <a href="#programas" class="btn btn-primary" data-translate="🎓 Ver programas vocacionales">🎓 Ver programas vocacionales</a>
+          <a href="#escuela" class="btn btn-secondary" data-translate="🏫 Conocer la escuela">🏫 Conocer la escuela</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LA ESCUELA (Acerca, Admisiones, Normas, Apoyo) -->
+  <section id="escuela" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-translate="La escuela">La escuela</h2>
+        <p data-translate="Información básica sobre la institución, matrícula, normas y apoyo a estudiantes.">
+          Información básica sobre la institución, matrícula, normas y apoyo a estudiantes.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <!-- Quiénes somos -->
+        <article class="card">
+          <div class="card-icon">🏫</div>
+          <h3 data-translate="Quiénes somos">Quiénes somos</h3>
+          <p data-translate="Superior Vocacional Pablo Colón Berdecia es una institución educativa comprometida con la formación académica técnica y vocacional de sus estudiantes. Nuestro enfoque combina el desarrollo de conocimiento, destrezas prácticas y valores, preparando a los jóvenes para continuar estudios postsecundarios, integrarse al mundo laboral y contribuir positivamente en la sociedad.S">
+            Superior Vocacional Pablo Colón Berdecia es una institución educativa comprometida con la formación académica técnica y vocacional de sus estudiantes. Nuestro enfoque combina el desarrollo de conocimiento, destrezas prácticas y valores, preparando a los jóvenes para continuar estudios postsecundarios, integrarse al mundo laboral y contribuir positivamente en la sociedad.
+          </p>
+        </article>
+
+        <!-- Admisiones -->
+        <article class="card">
+          <div class="card-icon">📝</div>
+          <h3 data-translate="Admisiones / Matrícula">Admisiones / Matrícula</h3>
+          <p data-translate="Requisitos generales de matrícula:">Requisitos generales de matrícula:</p>
+          <ul>
+            <li data-translate="Formulario de solicitud completado">Formulario de solicitud completado</li>
+            <li data-translate="Récord de notas y documentos oficiales">Récord de notas y documentos oficiales</li>
+            <li data-translate="Identificación del padre, madre o encargado">Identificación del padre, madre o encargado</li>
+          </ul>
+          <p class="note" data-translate="Fechas y detalles se informan por la oficina escolar y comunicados oficiales.">
+            Fechas y detalles se informan por la oficina escolar y comunicados oficiales.
+          </p>
+          <a
+            href="https://de.pr.gov/MATRICULA//"
+            class="btn btn-secondary btn-small"
+            target="_blank"
+            rel="noopener"
+            data-translate="Ver página de Matrícula"
+          >
+            Ver página de Matrícula
+          </a>
+        </article>
+      </div>
+
+      <div class="grid-2 section-gap">
+        <!-- Normas -->
+        <article class="card">
+          <div class="card-icon">📋</div>
+          <h3 data-translate="Normas y reglamentos">Normas y reglamentos</h3>
+          <p data-translate="Normas básicas de convivencia y seguridad:">Normas básicas de convivencia y seguridad:</p>
+          <ul>
+            <li data-translate="Respeto entre toda la comunidad escolar.">Respeto entre toda la comunidad escolar.</li>
+            <li data-translate="Uso correcto del uniforme y equipos de seguridad.">Uso correcto del uniforme y equipos de seguridad.</li>
+            <li data-translate="Puntualidad, asistencia y cuidado de las instalaciones.">Puntualidad, asistencia y cuidado de las instalaciones.</li>
+          </ul>
+          <p class="note">
+            <span data-translate="Detalles en el">Detalles en el</span> <strong data-translate="Manual del Estudiante">Manual del Estudiante</strong> <span data-translate="y el">y el</span> <strong data-translate="Reglamento Escolar">Reglamento Escolar</strong>.
+          </p>
+        </article>
+
+        <!-- Apoyo socioemocional -->
+        <article class="card">
+          <div class="card-icon">💚</div>
+          <h3 data-translate="Apoyo socioemocional">Apoyo socioemocional</h3>
+          <p data-translate="Servicio de consejería, trabajo social y apoyo psicológico para el bienestar del estudiantado.">
+            Servicio de consejería, trabajo social y apoyo psicológico para el bienestar del estudiantado.
+          </p>
+          <a
+            href="https://hackerpcb1.github.io/Apoyo-Socioemocional-PCB/"
+            class="btn btn-secondary btn-small"
+            target="_blank"
+            rel="noopener"
+            data-translate="Ver página de apoyo socioemocional"
+          >
+            Ver página de apoyo socioemocional
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMAS VOCACIONALES (SOLO BOTÓN) -->
+  <section id="programas" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-translate="Programas y talleres vocacionales">Programas y talleres vocacionales</h2>
+        <p data-translate="Oferta vocacional disponible para los estudiantes de la escuela.">
+          Oferta vocacional disponible para los estudiantes de la escuela.
+        </p>
+      </div>
+
+      <div class="programs-cta">
+        <a
+          href="https://hackerpcb1.github.io/Casa-Abierta/"
+          class="btn btn-primary"
+          target="_blank"
+          rel="noopener"
+          data-translate="Ver programas y Casa Abierta"
+        >
+          Ver programas y Casa Abierta
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS AL ESTUDIANTE -->
+  <section id="servicios" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-translate="Servicios al estudiante">Servicios al estudiante</h2>
+        <p data-translate="Servicios de apoyo que la escuela ofrece a su población estudiantil.">
+          Servicios de apoyo que la escuela ofrece a su población estudiantil.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <!-- Biblioteca -->
+        <article class="card service-card">
+          <div class="service-icon">📚</div>
+          <h3 data-translate="Biblioteca">Biblioteca</h3>
+          <p data-translate="Espacio de lectura, consulta y estudio.">Espacio de lectura, consulta y estudio.</p>
+          <a href="biblioteca.html" class="btn btn-secondary btn-small" data-translate="Ver detalles">
+            Ver detalles
+          </a>
+        </article>
+
+        <!-- Comedor escolar -->
+        <article class="card service-card">
+          <div class="service-icon">🍽️</div>
+          <h3 data-translate="Comedor escolar">Comedor escolar</h3>
+          <p data-translate="Servicio de alimentación escolar.">Servicio de alimentación escolar.</p>
+          <a href="comedor.html" class="btn btn-secondary btn-small" data-translate="Ver detalles">
+            Ver detalles
+          </a>
+        </article>
+
+        <!-- Calcular IGS -->
+        <article class="card service-card">
+          <div class="service-icon">🎓</div>
+          <h3 data-translate="Calcular IGS">Calcular IGS</h3>
+          <p data-translate="Calculadora de Índice General de Solicitud.">Calculadora de Índice General de Solicitud.</p>
+          <a href="https://admisiones.upr.edu/calculadora-igs/" class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Calcular ahora">
+            Calcular ahora
+          </a>
+        </article>
+
+        <!-- Correos Electrónicos de Maestros -->
+        <article class="card service-card">
+          <div class="service-icon">📧</div>
+          <h3 data-translate="Correos Electrónicos">Correos Electrónicos</h3>
+          <p data-translate="Listado completo de correos de maestros.">Listado completo de correos de maestros.</p>
+          <a href="correos-maestros-tabla.html" class="btn btn-secondary btn-small" data-translate="Ver listado">
+            Ver listado
+          </a>
+        </article>
+
+        <!-- Microsoft Teams -->
+        <article class="card service-card">
+          <div class="service-icon">📱</div>
+          <h3 data-translate="Microsoft Teams">Microsoft Teams</h3>
+          <p data-translate="Acceso a clases virtuales y colaboración en línea.">Acceso a clases virtuales y colaboración en línea.</p>
+          <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=5e3ce6c0-2b1f-4285-8d4b-75ee78787346&scope=openId%20profile%20openid%20offline_access&redirect_uri=https%3A%2F%2Fteams.microsoft.com%2Fv2&client-request-id=019be6e8-5a6c-7d37-b129-894db9c8d8ef&response_mode=fragment&response_type=code&x-client-SKU=msal.js.browser&x-client-VER=3.30.0&client_info=1&code_challenge=6ZqFlWHLh3RpNojFPjlqU4h9HyciQoVF24L_a1_WF4A&code_challenge_method=S256&nonce=019be6e8-5a6d-7bdb-9075-c5ce0aa099ac&state=eyJpZCI6IjAxOWJlNmU4LTVhNmMtNzY0OS1hNGRlLWQ4YTQ0MTU4OGMxYyIsIm1ldGEiOnsiaW50ZXJhY3Rpb25UeXBlIjoicmVkaXJlY3QifX0%3D%7Chttps%3A%2F%2Fteams.microsoft.com%2Fv2%2F%3Fculture%3Den-us%26country%3Dus%26enablemcasfort21%3Dtrue" class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Acceder a Teams">
+            Acceder a Teams
+          </a>
+        </article>
+
+        <!-- Power DE -->
+        <article class="card service-card">
+          <div class="service-icon">📊</div>
+          <h3 data-translate="Power DE">Power DE</h3>
+          <p data-translate="Portal de información estudiantil del Departamento de Educación.">Portal de información estudiantil del Departamento de Educación.</p>
+          <a href="https://informacionestudiantil.dde.pr/public/create_multi_student_account.html" class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Acceder a Power DE">
+            Acceder a Power DE
+          </a>
+        </article>
+
+
+
+        <!-- Servicios Técnicos -->
+        <article class="card service-card">
+          <div class="service-icon">🔧</div>
+          <h3 data-translate="Servicios Técnicos">Servicios Técnicos</h3>
+          <p data-translate="Soporte técnico y mantenimiento de equipos escolares.">Soporte técnico y mantenimiento de equipos escolares.</p>
+          <a href="https://hackerpcb1.github.io/Servicio-Tecnico/" class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Acceder al servicio">
+            Acceder al servicio
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDARIO ESCOLAR -->
+  <section id="calendario-escolar" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-translate="Calendario escolar 2025–2026">Calendario escolar 2025–2026</h2>
+        <p data-translate="Calendario oficial del Departamento de Educación de Puerto Rico para el año escolar 2025–2026.">
+          Calendario oficial del Departamento de Educación de Puerto Rico para el año escolar 2025–2026.
+        </p>
+      </div>
+
+      <div class="calendar-wrapper">
+        <iframe
+          src="https://de.pr.gov/wp-content/uploads/2025/06/Calendario-Escolar-2025-2026-1.pdf"
+          title="Calendario Escolar 2025-2026"
+        ></iframe>
+
+        <div class="calendar-actions">
+          <a
+            class="btn btn-primary"
+            href="https://de.pr.gov/wp-content/uploads/2025/06/Calendario-Escolar-2025-2026-1.pdf"
+            target="_blank"
+            rel="noopener"
+            data-translate="Descargar calendario en PDF"
+          >
+            Descargar calendario en PDF
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDA ESTUDIANTIL (Noticias, Eventos, Gaming Day, Redes) -->
+  <section id="vida" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-translate="Vida estudiantil">Vida estudiantil</h2>
+        <p data-translate="Noticias, actividades y enlaces a iniciativas especiales.">
+          Noticias, actividades y enlaces a iniciativas especiales.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3 data-translate="Noticias recientes">Noticias recientes</h3>
+          <article class="card">
+            <h4 data-translate="Inscripción abierta">Inscripción abierta</h4>
+            <a href="promociones.html" class="btn btn-primary" data-translate="🎓 Ver promociones">🎓 Ver promociones</a>
+            <a href="https://www.instagram.com/clase.eunoiia/" class="btn btn-primary" target="_blank" data-translate="🎓 Clase Eunoiia">🎓 Clase Eunoiia</a>
+          </article>
+        </div>
+
+        <div>
+          <h3 data-translate="Próximos eventos">Próximos eventos</h3>
+          <ul class="event-list">
+            <li><strong data-translate="2 al 6 de septiembre 2026">2 al 6 de febrero de 2026:</strong> <span data-translate="Semana Nacional de Consejería Profesional en el Escenario Escolar">Semana Nacional de Consejería Profesional en el Escenario Escolar</span></li>
+            <li><strong data-translate="4 de febrero de 2026:">4 de febrero de 2026:</strong> <span data-translate="Dia Mundial contra el cáncer">Dia Mundial contra el cáncer</span></li>
+            <li><strong data-translate="9 al 13 de febrero de 2026:">9 al 13 de febrero de 2026:</strong> <span data-translate="Semana del Programa de Salud Escolar. Semana de los Albergues, Rescatistas de Animales y de la Concienciación y la Adopción de Mascotas en Puerto Rico (Ley 5-2024)">Semana del Programa de Salud Escolar. Semana de los Albergues, Rescatistas de Animales y de la Concienciación y la Adopción de Mascotas en Puerto Rico (Ley 5-2024)</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="gaming-block">
+        <div class="gaming-header">
+          <h3 data-translate="🎮 Gaming Day – Departamento de Tecnología">🎮 Gaming Day – Departamento de Tecnología</h3>
+          <span class="tag-gaming" data-translate="✨ Actividad especial">✨ Actividad especial</span>
+        </div>
+        <div class="grid-2">
+          <article class="card">
+            <p data-translate="Actividad que integra videojuegos, programación y trabajo en equipo como herramienta educativa.">
+              Actividad que integra videojuegos, programación y trabajo en equipo como herramienta educativa.
+            </p>
+          </article>
+          <article class="card">
+            <p class="note" data-translate="La información de fechas, categorías y registro se publica previamente en la escuela y redes.">
+              La información de fechas, categorías y registro se publica previamente en la escuela y redes.
+            </p>
+            <a
+              href="https://hackerpcb3-byte.github.io/Gaming_Day_4/"
+              class="btn btn-secondary btn-small"
+              target="_blank"
+              rel="noopener"
+              data-translate="Ver página del Gaming Day"
+            >
+              Ver página del Gaming Day
+            </a>
+          </article>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-translate="Contacto">Contacto</h2>
+        <p data-translate="Medios principales para comunicarse con la escuela.">
+          Medios principales para comunicarse con la escuela.
+        </p>
+      </div>
+
+      <div class="contact-centered">
+        <div class="contact-info">
+          <p>
+            <strong data-translate="Dirección:">Dirección:</strong>
+            <span data-translate="Carretera 156 salida hacia Comerío, Barranquitas, P. R.">Carretera 156 salida hacia Comerío, Barranquitas, P. R.</span>
+          </p>
+          <p><strong data-translate="Teléfono:">Teléfono:</strong> +1 787-857-2897</p>
+
+          <p><strong data-translate="Horario de oficina:">Horario de oficina:</strong> <span data-translate="Lunes a Viernes · 7:30 AM – 2:30 PM">Lunes a Viernes · 7:30 AM – 2:30 PM</span></p>
+
+          <div style="margin-top: 1.5rem; text-align: center;">
+            <a
+              href="https://www.facebook.com/p/Escuela-Superior-Vocacional-Pablo-Col%C3%B3n-Berdecia-100057389681928/?locale=es_LA"
+              class="btn btn-secondary btn-small"
+              target="_blank"
+              rel="noopener"
+              style="display: inline-flex; align-items: center; gap: 0.5rem;"
+              data-translate="📘 Síguenos en Facebook"
+            >
+              📘 Síguenos en Facebook
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <h2 data-translate="Información rápida">Información rápida</h2>
+          <ul>
+            <li><strong data-translate="Nivel:">Nivel:</strong> <span data-translate="Escuela Superior Vocacional">Escuela Superior Vocacional</span></li>
+            <li><strong data-translate="Horario:">Horario:</strong> <span data-translate="Lunes a Viernes · 7:30 AM – 2:30 PM">Lunes a Viernes · 7:30 AM – 2:30 PM</span></li>
+            <li><strong data-translate="Enfoque:">Enfoque:</strong> <span data-translate="Programas técnicos y académicos">Programas técnicos y académicos</span></li>
+            <li>
+              <strong data-translate="Ubicación:">Ubicación:</strong> <span data-translate="Carretera 156 salida hacia Comerío, Barranquitas, P. R.">Carretera 156 salida hacia Comerío, Barranquitas, P. R.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-translate="© 2026 Escuela Superior Vocacional Pablo Colón Berdecia. Todos los derechos reservados.">&copy; 2026 Escuela Superior Vocacional Pablo Colón Berdecia. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Menu hamburguesa
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    const navLinks = document.querySelectorAll('.main-nav a');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      mainNav.classList.toggle('active');
+    });
+
+    // Cerrar menú al hacer click en un enlace
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+      });
+    });
+
+    // Cerrar menú al hacer click fuera
+    document.addEventListener('click', (e) => {
+      if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+      }
+    });
+
+    // Header scroll effect
+    const header = document.querySelector('.site-header');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+
+      lastScroll = currentScroll;
+    });
+
+    // Animación de elementos al hacer scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observar tarjetas y secciones
+    document.querySelectorAll('.card, .service-card, .resource-card, .social-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Efecto parallax suave en el hero
+    let lastScrollY = 0;
+    let ticking = false;
+
+    function updateParallax() {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+
+      if (hero && scrolled < hero.offsetHeight * 1.5) {
+        // Parallax en el background - movimiento más suave
+        hero.style.backgroundPositionY = `${scrolled * 0.3}px`;
+      }
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      lastScrollY = window.pageYOffset;
+
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    });
+
+    // Smooth scroll para navegación
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
