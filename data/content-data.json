@@ -41,7 +41,17 @@
       "dateAdded": "2026-01-31T00:00:00.000Z"
     }
   ],
-  "comedor": [],
+  "comedor": [
+    {
+      "id": "comedor_1769894807844",
+      "filename": "239pdF1.jpeg",
+      "url": "https://i.imgur.com/239pdF1.jpeg",
+      "title": "Menu del Viernes 30 de enero de 2026",
+      "description": "¡Delicioso y Nutritivo!",
+      "dateAdded": "2026-01-31T21:26:47.844Z",
+      "isExternal": true
+    }
+  ],
   "promociones": [
     {
       "id": "promociones_1",
@@ -79,4 +89,3 @@
     ]
   }
 }
-
