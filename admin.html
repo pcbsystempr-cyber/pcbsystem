@@ -90,12 +90,39 @@
         <div class="upload-section" id="uploadSection" style="display: none;">
           <div class="upload-card">
             <h3>Subir Nueva Imagen</h3>
+
+            <!-- Tabs para elegir método -->
+            <div class="upload-tabs">
+              <button type="button" class="tab-btn active" data-tab="file">📁 Subir Archivo</button>
+              <button type="button" class="tab-btn" data-tab="url">🔗 URL Externa</button>
+            </div>
+
             <form id="uploadForm">
-              <div class="form-group">
-                <label for="imageFile">Seleccionar Imagen:</label>
-                <input type="file" id="imageFile" accept="image/*" required>
-                <div class="file-preview" id="filePreview"></div>
+              <!-- Tab: Subir Archivo -->
+              <div class="tab-content active" id="tabFile">
+                <div class="form-group">
+                  <label for="imageFile">Seleccionar Imagen:</label>
+                  <input type="file" id="imageFile" accept="image/*">
+                  <div class="file-preview" id="filePreview"></div>
+                  <p class="help-text">⚠️ Nota: Para usar en GitHub, debes copiar manualmente la imagen a la carpeta correspondiente o usar URL externa.</p>
+                </div>
               </div>
+
+              <!-- Tab: URL Externa -->
+              <div class="tab-content" id="tabUrl" style="display: none;">
+                <div class="form-group">
+                  <label for="imageUrl">URL de la Imagen:</label>
+                  <input type="url" id="imageUrl" placeholder="https://ejemplo.com/imagen.jpg">
+                  <p class="help-text">
+                    💡 Puedes usar servicios como:
+                    <br>• <a href="https://imgur.com" target="_blank">Imgur</a> (recomendado)
+                    <br>• <a href="https://postimages.org" target="_blank">PostImages</a>
+                    <br>• Google Drive (asegúrate de que sea público)
+                  </p>
+                  <div class="url-preview" id="urlPreview"></div>
+                </div>
+              </div>
+
               <div class="form-group">
                 <label for="imageTitle">Título (opcional):</label>
                 <input type="text" id="imageTitle" placeholder="Ej: Inscripción Abierta 2026">

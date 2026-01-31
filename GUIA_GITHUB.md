@@ -109,13 +109,54 @@ git push -u origin main
 
 ## 5. Actualizar el Contenido
 
-### Método 1: Desde el Panel Administrativo (Recomendado)
+### 🌟 Método Recomendado: Usar URLs Externas para Imágenes
+
+**¡NUEVO!** Ahora puedes usar URLs externas para las imágenes, lo que hace mucho más fácil la gestión del contenido:
+
+#### Ventajas de usar URLs externas:
+- ✅ No necesitas copiar archivos manualmente
+- ✅ Funciona perfectamente en GitHub Pages
+- ✅ Más rápido y fácil de actualizar
+- ✅ Las imágenes se cargan desde servicios especializados
+
+#### Servicios recomendados para hospedar imágenes:
+
+1. **[Imgur](https://imgur.com)** (Recomendado)
+   - Gratis y sin registro (aunque es mejor con cuenta)
+   - Sube la imagen → Clic derecho → "Copiar dirección de imagen"
+   - Pega la URL en el dashboard
+
+2. **[PostImages](https://postimages.org)**
+   - Gratis y sin registro
+   - Sube la imagen → Copia el "Direct link"
+
+3. **Google Drive**
+   - Sube la imagen → Clic derecho → "Obtener enlace"
+   - Cambia "Restringido" a "Cualquier persona con el enlace"
+   - Usa el enlace de vista previa
+
+#### Cómo usar URLs externas en el dashboard:
+
+1. **Abre el dashboard**: `https://TU-USUARIO.github.io/PCB-Website/admin.html`
+2. **Inicia sesión** con las credenciales
+3. **Selecciona la sección** (Comedor, Promociones, Avisos, etc.)
+4. **Haz clic en** "➕ Añadir Imagen"
+5. **Selecciona la pestaña** "🔗 URL Externa"
+6. **Pega la URL** de tu imagen (desde Imgur, PostImages, etc.)
+7. **Verás una vista previa** de la imagen
+8. **Añade título y descripción**
+9. **Haz clic en** "Guardar"
+10. **Exporta los datos** y súbelos a GitHub (ver abajo)
+
+### Método 1: Desde el Panel Administrativo
 
 1. **Abre tu sitio web**: `https://TU-USUARIO.github.io/PCB-Website/admin.html`
 2. **Inicia sesión** con:
    - Usuario: `admin`
    - Contraseña: `PCB2026`
 3. **Añade o edita** promociones, avisos, imágenes, etc.
+   - **Opción A**: Usa "🔗 URL Externa" para imágenes (recomendado)
+   - **Opción B**: Sube archivos (requiere copiar manualmente)
 4. **Haz clic en** `📥 Exportar Datos` (botón en la parte superior)
 5. **Se descargará** el archivo `content-data.json`
 6. **Sube el archivo** a GitHub:

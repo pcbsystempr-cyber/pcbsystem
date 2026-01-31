@@ -177,8 +177,9 @@
     }
 
     content.innerHTML = notifications.map((item, index) => {
-      const imageSrc = item.base64 || item.path || '';
-      console.log(`Renderizando item ${index}:`, item.title, 'Imagen:', imageSrc ? 'Sí' : 'No');
+      // Use URL if available (external), otherwise use base64 or path
+      const imageSrc = item.url || item.base64 || item.path || '';
+      console.log(`Renderizando item ${index}:`, item.title, 'Imagen:', imageSrc ? 'Sí' : 'No', item.isExternal ? '(URL Externa)' : '');
 
       return `
         <div class="notification-item" onclick="window.imagePopup && window.imagePopup.open ? window.imagePopup.open({

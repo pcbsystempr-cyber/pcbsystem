@@ -308,8 +308,8 @@
 
           if (allItems.length > 0) {
             galleryContainer.innerHTML = allItems.map((item, index) => {
-              // Determinar la fuente de la imagen
-              const imageSrc = item.base64 || item.path || item.image || '';
+              // Determinar la fuente de la imagen: URL > base64 > path > image
+              const imageSrc = item.url || item.base64 || item.path || item.image || '';
               const itemType = index < promociones.length ? '📢 Promoción' : '📋 Aviso';
 
               return `

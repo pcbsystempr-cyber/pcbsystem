@@ -49,7 +49,9 @@
   const btnCancelUpload = document.getElementById('btnCancelUpload');
   const btnCancelMenu = document.getElementById('btnCancelMenu');
   const imageFile = document.getElementById('imageFile');
+  const imageUrl = document.getElementById('imageUrl');
   const filePreview = document.getElementById('filePreview');
+  const urlPreview = document.getElementById('urlPreview');
   const desayunoItems = document.getElementById('desayunoItems');
   const almuerzoItems = document.getElementById('almuerzoItems');
   const galleryGrid = document.getElementById('galleryGrid');
@@ -60,6 +62,9 @@
   const botConfigSection = document.getElementById('botConfigSection');
   const botItemsList = document.getElementById('botItemsList');
   const btnSaveBotConfig = document.getElementById('btnSaveBotConfig');
+
+  // Upload method state
+  let uploadMethod = 'file'; // 'file' or 'url'
 
   // Initialize
   function init() {
@@ -171,8 +176,25 @@
     // Export data button
     btnExportData.addEventListener('click', exportDataToJSON);
 
+    // Tab buttons
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        switchUploadTab(tab);
+      });
+    });
+
     // File input preview
-    imageFile.addEventListener('change', handleFileSelect);
+    if (imageFile) {
+      imageFile.addEventListener('change', handleFileSelect);
+    }
+
+    // URL input preview
+    if (imageUrl) {
+      imageUrl.addEventListener('input', handleUrlInput);
+      imageUrl.addEventListener('blur', handleUrlBlur);
+    }
 
     // Upload form
     uploadForm.addEventListener('submit', handleUploadSubmit);
@@ -186,6 +208,69 @@
     deleteModal.addEventListener('click', (e) => {
       if (e.target === deleteModal) closeDeleteModal();
     });
+  }
+
+  // Switch upload tab
+  function switchUploadTab(tab) {
+    uploadMethod = tab;
+
+    // Update tab buttons
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.tab === tab);
+    });
+
+    // Update tab content
+    const tabFile = document.getElementById('tabFile');
+    const tabUrl = document.getElementById('tabUrl');
+
+    if (tab === 'file') {
+      tabFile.style.display = 'block';
+      tabUrl.style.display = 'none';
+      if (imageFile) imageFile.required = true;
+      if (imageUrl) imageUrl.required = false;
+    } else {
+      tabFile.style.display = 'none';
+      tabUrl.style.display = 'block';
+      if (imageFile) imageFile.required = false;
+      if (imageUrl) imageUrl.required = true;
+    }
+  }
+
+  // Handle URL input
+  function handleUrlInput() {
+    const url = imageUrl.value.trim();
+    if (url && isValidImageUrl(url)) {
+      showUrlPreview(url);
+    } else {
+      urlPreview.innerHTML = '';
+    }
+  }
+
+  // Handle URL blur (when user leaves the input)
+  function handleUrlBlur() {
+    const url = imageUrl.value.trim();
+    if (url && !isValidImageUrl(url)) {
+      alert('⚠️ La URL no parece ser válida. Asegúrate de que termine en .jpg, .jpeg, .png, .gif o .webp');
+    }
+  }
+
+  // Check if URL is a valid image URL
+  function isValidImageUrl(url) {
+    try {
+      new URL(url);
+      return /\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i.test(url);
+    } catch {
+      return false;
+    }
+  }
+
+  // Show URL preview
+  function showUrlPreview(url) {
+    urlPreview.innerHTML = `
+      <p style="margin-bottom: 0.5rem; color: #666;">Vista previa:</p>
+      <img src="${url}" alt="Preview" onerror="this.parentElement.innerHTML='<p style=color:red>❌ No se pudo cargar la imagen. Verifica la URL.</p>'">
+    `;
   }
 
   // Switch section
@@ -298,26 +383,32 @@
   function handleUploadSubmit(e) {
     e.preventDefault();
 
-    const file = imageFile.files[0];
-    if (!file) {
-      alert('Por favor selecciona una imagen');
-      return;
-    }
-
     const title = document.getElementById('imageTitle').value || 'Sin título';
     const description = document.getElementById('imageDescription').value || '';
 
-    // Create image object
-    const reader = new FileReader();
-    reader.onload = function(e) {
+    if (uploadMethod === 'url') {
+      // Handle URL upload
+      const url = imageUrl.value.trim();
+
+      if (!url) {
+        alert('⚠️ Por favor ingresa una URL de imagen');
+        return;
+      }
+
+      if (!isValidImageUrl(url)) {
+        alert('⚠️ La URL no parece ser válida. Asegúrate de que termine en .jpg, .jpeg, .png, .gif o .webp');
+        return;
+      }
+
+      // Create image object with URL
       const imageData = {
         id: `${currentSection}_${Date.now()}`,
-        filename: file.name,
-        path: `${SECTIONS[currentSection].folder}/${file.name}`,
+        filename: url.split('/').pop().split('?')[0], // Extract filename from URL
+        url: url, // Store the external URL
         title: title,
         description: description,
         dateAdded: new Date().toISOString(),
-        base64: e.target.result // Store base64 for preview
+        isExternal: true // Flag to indicate this is an external image
       };
 
       // Add to content data
@@ -328,13 +419,50 @@
       saveContentData();
 
       // Show success message
-      alert('✅ Imagen añadida correctamente!\n\nNota: Para que la imagen aparezca en el sitio web, debes copiar el archivo manualmente a la carpeta: ' + SECTIONS[currentSection].folder);
+      alert('✅ Imagen añadida correctamente!\n\n🌐 La imagen se cargará desde la URL externa y funcionará perfectamente en GitHub Pages.');
 
       // Hide form and refresh gallery
       hideUploadForm();
       renderGallery();
-    };
-    reader.readAsDataURL(file);
+
+    } else {
+      // Handle file upload
+      const file = imageFile.files[0];
+      if (!file) {
+        alert('⚠️ Por favor selecciona una imagen');
+        return;
+      }
+
+      // Create image object
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const imageData = {
+          id: `${currentSection}_${Date.now()}`,
+          filename: file.name,
+          path: `${SECTIONS[currentSection].folder}/${file.name}`,
+          title: title,
+          description: description,
+          dateAdded: new Date().toISOString(),
+          base64: e.target.result, // Store base64 for preview
+          isExternal: false
+        };
+
+        // Add to content data
+        if (!contentData[currentSection]) {
+          contentData[currentSection] = [];
+        }
+        contentData[currentSection].push(imageData);
+        saveContentData();
+
+        // Show success message
+        alert('✅ Imagen añadida correctamente!\n\n⚠️ Nota: Para que la imagen aparezca en GitHub Pages, debes copiar el archivo manualmente a la carpeta: ' + SECTIONS[currentSection].folder + '\n\n💡 Tip: Usa la opción "🔗 URL Externa" para evitar copiar archivos manualmente.');
+
+        // Hide form and refresh gallery
+        hideUploadForm();
+        renderGallery();
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   // Handle menu submit
@@ -385,23 +513,31 @@
     galleryGrid.style.display = 'grid';
     emptyState.style.display = 'none';
 
-    galleryGrid.innerHTML = items.map(item => `
-      <div class="gallery-item" data-id="${item.id}">
-        <img src="${item.base64 || item.path}" alt="${item.title}" class="gallery-item-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22250%22%3E%3Crect fill=%22%23f5f7fa%22 width=%22300%22 height=%22250%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2218%22 fill=%22%23999%22%3E📷 Imagen%3C/text%3E%3C/svg%3E'">
-        <div class="gallery-item-content">
-          <div class="gallery-item-title">${item.title}</div>
-          ${item.description ? `<div class="gallery-item-description">${item.description}</div>` : ''}
-          <div class="gallery-item-meta">
-            <div class="gallery-item-filename">${item.filename}</div>
-            <div class="gallery-item-actions">
-              <button class="btn-icon delete" onclick="adminApp.deleteImage('${item.id}')" title="Eliminar">
-                🗑️
-              </button>
+    galleryGrid.innerHTML = items.map(item => {
+      // Determine image source: URL > base64 > path
+      const imgSrc = item.url || item.base64 || item.path;
+      const sourceLabel = item.isExternal ? '🌐 URL Externa' : '📁 Archivo Local';
+
+      return `
+        <div class="gallery-item" data-id="${item.id}">
+          <img src="${imgSrc}" alt="${item.title}" class="gallery-item-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22250%22%3E%3Crect fill=%22%23f5f7fa%22 width=%22300%22 height=%22250%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2218%22 fill=%22%23999%22%3E📷 Imagen%3C/text%3E%3C/svg%3E'">
+          <div class="gallery-item-content">
+            <div class="gallery-item-title">${item.title}</div>
+            ${item.description ? `<div class="gallery-item-description">${item.description}</div>` : ''}
+            <div class="gallery-item-meta">
+              <div class="gallery-item-filename" title="${item.url || item.filename}">
+                ${sourceLabel}: ${item.filename}
+              </div>
+              <div class="gallery-item-actions">
+                <button class="btn-icon delete" onclick="adminApp.deleteImage('${item.id}')" title="Eliminar">
+                  🗑️
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   // Delete image

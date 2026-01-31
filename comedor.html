@@ -384,15 +384,19 @@
 
           function renderGallery(comedorImages) {
             if (comedorImages.length > 0) {
-              galleryContainer.innerHTML = comedorImages.map(item => `
-                <div class="promotion-item">
-                  <img src="${item.base64 || item.path}" alt="${item.title}" class="promotion-image" onerror="this.parentElement.style.display='none'">
-                  <div class="promotion-caption">
-                    <h3>${item.title || 'Foto del Comedor'}</h3>
-                    ${item.description ? `<p>${item.description}</p>` : ''}
+              galleryContainer.innerHTML = comedorImages.map(item => {
+                // Use URL if available (external), otherwise use base64 or path
+                const imgSrc = item.url || item.base64 || item.path;
+                return `
+                  <div class="promotion-item">
+                    <img src="${imgSrc}" alt="${item.title}" class="promotion-image" onerror="this.parentElement.style.display='none'">
+                    <div class="promotion-caption">
+                      <h3>${item.title || 'Foto del Comedor'}</h3>
+                      ${item.description ? `<p>${item.description}</p>` : ''}
+                    </div>
                   </div>
-                </div>
-              `).join('') + `
+                `;
+              }).join('') + `
                 <div class="promotion-placeholder">
                   <div class="placeholder-icon">📸</div>
                   <p>Gestiona las fotos desde el <a href="admin.html" style="color: #667eea;">panel administrativo</a></p>
