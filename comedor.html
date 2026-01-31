@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comedor Escolar – Escuela Superior Vocacional Pablo Colón Berdecia</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="image-popup.css">
+  <link rel="stylesheet" href="notification-bot.css">
   <script src="translations.js"></script>
 </head>
 <body>
@@ -276,37 +278,65 @@
           </p>
         </article>
 
-       
         <!-- Menú y nutrición -->
         <article class="card">
           <div class="card-icon">🍎</div>
           <h3 data-translate="Menú del día">Menú del día</h3>
 
-          <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: var(--primary); margin-bottom: 0.8rem; font-size: 1.1rem;" data-translate="🌅 Desayuno">🌅 Desayuno</h4>
-            <ul>
-              <li data-translate="Revoltillo">Revoltillo</li>
-              <li data-translate="Peras Frescas">Peras Frescas</li>
-              <li data-translate="Melocotones">Melocotones</li>
-              <li data-translate="Leche">Leche</li>
-            </ul>
+          <div id="menuDelDia">
+            <!-- El menú se cargará dinámicamente -->
           </div>
 
-          <div>
-            <h4 style="color: var(--primary); margin-bottom: 0.8rem; font-size: 1.1rem;" data-translate="🍽️ Almuerzo">🍽️ Almuerzo</h4>
-            <ul>
-              <li data-translate="Arroz">Arroz</li>
-              <li data-translate="Habichuelas guisadas con calabaza">Habichuelas guisadas con calabaza</li>
-              <li data-translate="Carne de Cerdo">Carne de Cerdo</li>
-              <li data-translate="Zanahoria">Zanahoria</li>
-              <li data-translate="Manzana">Manzana</li>
-              <li data-translate="Coctel de fruta">Coctel de fruta</li>
-            </ul>
-          </div>
           <p class="note" style="margin-top: 1rem;" data-translate="El menú puede variar según disponibilidad y programación del Departamento de Educación">
             El menú puede variar según disponibilidad y programación del Departamento de Educación
           </p>
+          <p style="margin-top: 0.5rem; text-align: center;">
+            <a href="admin.html" style="color: #667eea; text-decoration: none;">✏️ Editar menú desde el panel administrativo</a>
+          </p>
         </article>
+
+        <script>
+          // Cargar menú del día desde JSON o localStorage
+          (function() {
+            const menuContainer = document.getElementById('menuDelDia');
+
+            function renderMenu(menuData) {
+              menuContainer.innerHTML = `
+                <div style="margin-bottom: 1.5rem;">
+                  <h4 style="color: var(--primary); margin-bottom: 0.8rem; font-size: 1.1rem;" data-translate="🌅 Desayuno">🌅 Desayuno</h4>
+                  <ul>
+                    ${menuData.desayuno.map(item => `<li>${item}</li>`).join('')}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 style="color: var(--primary); margin-bottom: 0.8rem; font-size: 1.1rem;" data-translate="🍽️ Almuerzo">🍽️ Almuerzo</h4>
+                  <ul>
+                    ${menuData.almuerzo.map(item => `<li>${item}</li>`).join('')}
+                  </ul>
+                </div>
+              `;
+            }
+
+            // Try to load from JSON file first
+            fetch('data/content-data.json')
+              .then(response => response.json())
+              .then(data => {
+                renderMenu(data.menu_comedor || {
+                  desayuno: ['Revoltillo', 'Peras Frescas', 'Melocotones', 'Leche'],
+                  almuerzo: ['Arroz', 'Habichuelas guisadas con calabaza', 'Carne de Cerdo', 'Zanahoria', 'Manzana', 'Coctel de fruta']
+                });
+              })
+              .catch(error => {
+                // Fallback to localStorage
+                const contentData = JSON.parse(localStorage.getItem('pcb_content_data') || '{}');
+                renderMenu(contentData.menu_comedor || {
+                  desayuno: ['Revoltillo', 'Peras Frescas', 'Melocotones', 'Leche'],
+                  almuerzo: ['Arroz', 'Habichuelas guisadas con calabaza', 'Carne de Cerdo', 'Zanahoria', 'Manzana', 'Coctel de fruta']
+                });
+              });
+          })();
+        </script>
 
         <!-- Normas del comedor -->
         <article class="card">
@@ -338,7 +368,61 @@
         </p>
       </div>
 
-     
+      <!-- Galería de Fotos -->
+      <div class="section-header" style="margin-top: 4rem;">
+        <h2 data-translate="📸 Galería del Comedor">📸 Galería del Comedor</h2>
+      </div>
+
+      <div class="promotions-gallery" id="comedorGallery" style="margin-top: 2rem;">
+        <!-- Las imágenes se cargarán dinámicamente desde el dashboard -->
+      </div>
+
+      <script>
+        // Cargar galería del comedor desde JSON o localStorage
+        (function() {
+          const galleryContainer = document.getElementById('comedorGallery');
+
+          function renderGallery(comedorImages) {
+            if (comedorImages.length > 0) {
+              galleryContainer.innerHTML = comedorImages.map(item => `
+                <div class="promotion-item">
+                  <img src="${item.base64 || item.path}" alt="${item.title}" class="promotion-image" onerror="this.parentElement.style.display='none'">
+                  <div class="promotion-caption">
+                    <h3>${item.title || 'Foto del Comedor'}</h3>
+                    ${item.description ? `<p>${item.description}</p>` : ''}
+                  </div>
+                </div>
+              `).join('') + `
+                <div class="promotion-placeholder">
+                  <div class="placeholder-icon">📸</div>
+                  <p>Gestiona las fotos desde el <a href="admin.html" style="color: #667eea;">panel administrativo</a></p>
+                </div>
+              `;
+            } else {
+              galleryContainer.innerHTML = `
+                <div class="promotion-placeholder">
+                  <div class="placeholder-icon">📸</div>
+                  <p>No hay fotos disponibles. <a href="admin.html" style="color: #667eea;">Añade fotos desde el panel administrativo</a></p>
+                </div>
+              `;
+            }
+          }
+
+          // Try to load from JSON file first
+          fetch('data/content-data.json')
+            .then(response => response.json())
+            .then(data => {
+              renderGallery(data.comedor || []);
+            })
+            .catch(error => {
+              // Fallback to localStorage
+              console.log('Loading from localStorage');
+              const contentData = JSON.parse(localStorage.getItem('pcb_content_data') || '{}');
+              renderGallery(contentData.comedor || []);
+            });
+        })();
+      </script>
+
   </section>
 
   <!-- Footer -->
@@ -349,6 +433,8 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="image-popup.js"></script>
+  <script src="notification-bot.js"></script>
 </body>
 </html>
 

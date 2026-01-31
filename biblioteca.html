@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Biblioteca – Escuela Superior Vocacional Pablo Colón Berdecia</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="image-popup.css">
+  <link rel="stylesheet" href="notification-bot.css">
   <script src="translations.js"></script>
 </head>
 <body>
@@ -326,30 +328,49 @@
       <!-- Galería de Fotos -->
       <div class="section-header" style="margin-top: 4rem;">
         <h2 data-translate="📸 Galería de la Biblioteca">📸 Galería de la Biblioteca</h2>
-
       </div>
 
-      <div class="grid-3" style="margin-top: 2rem;">
-        <div class="card" style="padding: 0; overflow: hidden;">
-          <img src="galeriabiblioteca/image1.png" alt="Foto de la biblioteca" style="width: 100%; height: 250px; object-fit: cover; display: block;">
-        </div>
-
-        <div class="card" style="padding: 0; overflow: hidden;">
-          <img src="galeriabiblioteca/image2.png" alt="Foto de la biblioteca" style="width: 100%; height: 250px; object-fit: cover; display: block;">
-        </div>
-
-        <div class="card" style="padding: 0; overflow: hidden;">
-          <img src="galeriabiblioteca/image3.png" alt="Foto de la biblioteca" style="width: 100%; height: 250px; object-fit: cover; display: block;">
-        </div>
-
-        <div class="card" style="padding: 0; overflow: hidden;">
-          <img src="galeriabiblioteca/image4.png" alt="Foto de la biblioteca" style="width: 100%; height: 250px; object-fit: cover; display: block;">
-        </div>
-
-        <div class="card" style="padding: 0; overflow: hidden;">
-          <img src="galeriabiblioteca/image5.png" alt="Foto de la biblioteca" style="width: 100%; height: 250px; object-fit: cover; display: block;">
-        </div>
+      <div class="grid-3" id="bibliotecaGallery" style="margin-top: 2rem;">
+        <!-- Las imágenes se cargarán dinámicamente desde el dashboard -->
       </div>
+
+      <script>
+        // Cargar galería de biblioteca desde JSON o localStorage
+        (function() {
+          const galleryContainer = document.getElementById('bibliotecaGallery');
+
+          // Function to render gallery
+          function renderGallery(bibliotecaImages) {
+            if (bibliotecaImages.length > 0) {
+              galleryContainer.innerHTML = bibliotecaImages.map(item => `
+                <div class="card" style="padding: 0; overflow: hidden;">
+                  <img src="${item.base64 || item.path}" alt="${item.title}" style="width: 100%; height: 250px; object-fit: cover; display: block;" onerror="this.style.display='none'">
+                  ${item.title && item.title !== 'Sin título' ? `<div style="padding: 1rem;"><strong>${item.title}</strong></div>` : ''}
+                </div>
+              `).join('');
+            } else {
+              galleryContainer.innerHTML = `
+                <div class="card" style="padding: 2rem; text-align: center; grid-column: 1 / -1;">
+                  <p style="color: #95a5a6;">📷 Las fotos de la biblioteca se gestionan desde el <a href="admin.html" style="color: #667eea;">panel administrativo</a></p>
+                </div>
+              `;
+            }
+          }
+
+          // Try to load from JSON file first
+          fetch('data/content-data.json')
+            .then(response => response.json())
+            .then(data => {
+              renderGallery(data.biblioteca || []);
+            })
+            .catch(error => {
+              // Fallback to localStorage
+              console.log('Loading from localStorage');
+              const contentData = JSON.parse(localStorage.getItem('pcb_content_data') || '{}');
+              renderGallery(contentData.biblioteca || []);
+            });
+        })();
+      </script>
 
       <!-- Llamado a la acción -->
       <div class="programs-cta" style="margin-top: 3rem;">
@@ -373,6 +394,8 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="image-popup.js"></script>
+  <script src="notification-bot.js"></script>
 </body>
 </html>
 

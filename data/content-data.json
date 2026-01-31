@@ -1,0 +1,82 @@
+{
+  "biblioteca": [
+    {
+      "id": "biblioteca_1",
+      "filename": "image1.png",
+      "path": "galeriabiblioteca/image1.png",
+      "title": "Foto de la biblioteca 1",
+      "description": "",
+      "dateAdded": "2026-01-31T00:00:00.000Z"
+    },
+    {
+      "id": "biblioteca_2",
+      "filename": "image2.png",
+      "path": "galeriabiblioteca/image2.png",
+      "title": "Foto de la biblioteca 2",
+      "description": "",
+      "dateAdded": "2026-01-31T00:00:00.000Z"
+    },
+    {
+      "id": "biblioteca_3",
+      "filename": "image3.png",
+      "path": "galeriabiblioteca/image3.png",
+      "title": "Foto de la biblioteca 3",
+      "description": "",
+      "dateAdded": "2026-01-31T00:00:00.000Z"
+    },
+    {
+      "id": "biblioteca_4",
+      "filename": "image4.png",
+      "path": "galeriabiblioteca/image4.png",
+      "title": "Foto de la biblioteca 4",
+      "description": "",
+      "dateAdded": "2026-01-31T00:00:00.000Z"
+    },
+    {
+      "id": "biblioteca_5",
+      "filename": "image5.png",
+      "path": "galeriabiblioteca/image5.png",
+      "title": "Foto de la biblioteca 5",
+      "description": "",
+      "dateAdded": "2026-01-31T00:00:00.000Z"
+    }
+  ],
+  "comedor": [],
+  "promociones": [
+    {
+      "id": "promociones_1",
+      "filename": "image1.jpeg",
+      "path": "galeriadepromociones/image1.jpeg",
+      "title": "Inscripción Abierta 2026",
+      "description": "¡Únete a nuestra familia educativa!",
+      "dateAdded": "2026-01-31T00:00:00.000Z"
+    }
+  ],
+  "avisos": [
+    {
+      "id": "avisos_1",
+      "filename": "Aviso30-enero-2026.jpeg",
+      "path": "Avisos/Aviso30-enero-2026.jpeg",
+      "title": "Aviso Importante",
+      "description": "Información actualizada - 30 de enero 2026",
+      "dateAdded": "2026-01-31T00:00:00.000Z"
+    }
+  ],
+  "menu_comedor": {
+    "desayuno": [
+      "Revoltillo",
+      "Peras Frescas",
+      "Melocotones",
+      "Leche"
+    ],
+    "almuerzo": [
+      "Arroz",
+      "Habichuelas guisadas con calabaza",
+      "Carne de Cerdo",
+      "Zanahoria",
+      "Manzana",
+      "Coctel de fruta"
+    ]
+  }
+}
+
