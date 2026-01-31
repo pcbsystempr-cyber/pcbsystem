@@ -92,18 +92,19 @@
   "avisos": [],
   "menu_comedor": {
     "desayuno": [
-      "Revoltillo",
+      "Farina",
+      "Queso",
       "Peras Frescas",
-      "Melocotones",
-      "Leche"
+      "Melocotón",
+      "Leche fresca"
     ],
     "almuerzo": [
-      "Arroz",
-      "Habichuelas guisadas con calabaza",
-      "Carne de Cerdo",
-      "Zanahoria",
-      "Manzana",
-      "Coctel de fruta"
+      "Arroz amarillo",
+      "Habichuelas guisadas",
+      "Pollo guisado",
+      "Brócoli",
+      "Maíz",
+      "Leche fresca"
     ]
   }
 }
