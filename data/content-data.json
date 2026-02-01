@@ -69,6 +69,24 @@
       "title": "Inscripción Abierta 2026",
       "description": "¡Únete a nuestra familia educativa!",
       "dateAdded": "2026-01-31T00:00:00.000Z"
+    },
+    {
+      "id": "promociones_1769971491191",
+      "filename": "image3.jpeg",
+      "path": "galeriadepromociones/image3.jpeg",
+      "title": "Programa de actividades en el mes Ocupacional.",
+      "description": "¡No te pierdas nada, sigue nuestro programa de acitivades!",
+      "dateAdded": "2026-02-01T18:44:51.191Z",
+      "isExternal": false
+    },
+    {
+      "id": "promociones_1769971612983",
+      "filename": "image4.jpeg",
+      "path": "galeriadepromociones/image4.jpeg",
+      "title": "Taller virtual sobre la Influenza",
+      "description": "Nuestra escuela se preocupa por la salud y la educación de la comunidad escolar, por eso te invitamos a que aistas al taller virtual. ¡Gratis!",
+      "dateAdded": "2026-02-01T18:46:52.983Z",
+      "isExternal": false
     }
   ],
   "avisos": [
