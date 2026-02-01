@@ -89,16 +89,7 @@
       "isExternal": false
     }
   ],
-  "avisos": [
-    {
-      "id": "avisos_1",
-      "filename": "Aviso30-enero-2026.jpeg",
-      "path": "Avisos/Aviso30-enero-2026.jpeg",
-      "title": "Aviso Importante",
-      "description": "Información actualizada - 30 de enero 2026",
-      "dateAdded": "2026-01-31T00:00:00.000Z"
-    }
-  ],
+  "avisos": [],
   "menu_comedor": {
     "desayuno": [
       "Farina",
