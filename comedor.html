@@ -137,6 +137,16 @@
           <span>🇺🇸 English</span>
         </div>
       </div>
+
+      <!-- Separador -->
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;"></div>
+
+      <!-- Dashboard Administrativo -->
+      <a href="admin.html" class="sidebar-link" style="display: flex; align-items: center; padding: 1rem; text-decoration: none; color: inherit; cursor: pointer; border-radius: 10px; transition: all 0.3s ease;">
+        <span style="font-size: 1.5rem; margin-right: 1rem;">⚙️</span>
+        <span style="flex: 1; font-weight: 500;" data-translate="Dashboard Admin">Dashboard Admin</span>
+        <span style="font-size: 1.2rem;">›</span>
+      </a>
     </div>
   </div>
 
@@ -383,16 +393,29 @@
           const galleryContainer = document.getElementById('comedorGallery');
 
           function renderGallery(comedorImages) {
+            console.log('🍽️ Renderizando galería del comedor:', comedorImages);
+
             if (comedorImages.length > 0) {
-              galleryContainer.innerHTML = comedorImages.map(item => {
+              galleryContainer.innerHTML = comedorImages.map((item, index) => {
                 // Use URL if available (external), otherwise use base64 or path
                 const imgSrc = item.url || item.base64 || item.path;
+                console.log(`Imagen ${index}:`, {
+                  title: item.title,
+                  url: item.url,
+                  hasBase64: !!item.base64,
+                  path: item.path,
+                  finalSrc: imgSrc,
+                  isExternal: item.isExternal
+                });
+
                 return `
                   <div class="promotion-item">
-                    <img src="${imgSrc}" alt="${item.title}" class="promotion-image" onerror="this.parentElement.style.display='none'">
+                    <img src="${imgSrc}" alt="${item.title}" class="promotion-image"
+                         onerror="console.error('❌ Error cargando imagen:', '${imgSrc}'); this.parentElement.innerHTML='<div style=padding:2rem;text-align:center;color:red>❌ Error cargando imagen<br><small>${imgSrc}</small></div>'">
                     <div class="promotion-caption">
                       <h3>${item.title || 'Foto del Comedor'}</h3>
                       ${item.description ? `<p>${item.description}</p>` : ''}
+                      ${item.isExternal ? '<p style="font-size:0.8rem;color:#667eea;">🌐 Imagen externa</p>' : ''}
                     </div>
                   </div>
                 `;
@@ -403,6 +426,7 @@
                 </div>
               `;
             } else {
+              console.log('⚠️ No hay imágenes del comedor');
               galleryContainer.innerHTML = `
                 <div class="promotion-placeholder">
                   <div class="placeholder-icon">📸</div>
@@ -413,15 +437,22 @@
           }
 
           // Try to load from JSON file first
+          console.log('🔍 Intentando cargar desde data/content-data.json...');
           fetch('data/content-data.json')
-            .then(response => response.json())
+            .then(response => {
+              console.log('✅ Respuesta recibida:', response.status);
+              return response.json();
+            })
             .then(data => {
+              console.log('📦 Datos cargados desde JSON:', data);
+              console.log('🍽️ Datos del comedor:', data.comedor);
               renderGallery(data.comedor || []);
             })
             .catch(error => {
               // Fallback to localStorage
-              console.log('Loading from localStorage');
+              console.log('⚠️ Error cargando JSON, usando localStorage:', error);
               const contentData = JSON.parse(localStorage.getItem('pcb_content_data') || '{}');
+              console.log('📦 Datos desde localStorage:', contentData);
               renderGallery(contentData.comedor || []);
             });
         })();

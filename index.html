@@ -239,6 +239,16 @@
           <span>🇺🇸</span> English
         </button>
       </div>
+
+      <!-- Separador -->
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;"></div>
+
+      <!-- Dashboard Administrativo -->
+      <a href="admin.html" class="sidebar-item sidebar-link" style="text-decoration: none; color: inherit; display: flex; align-items: center; padding: 1rem; cursor: pointer; transition: background 0.3s;">
+        <span class="sidebar-icon">⚙️</span>
+        <span class="sidebar-text" data-translate="Dashboard Admin">Dashboard Admin</span>
+        <span class="sidebar-arrow">›</span>
+      </a>
     </div>
   </div>
 
@@ -358,7 +368,7 @@
     </div>
   </section>
 
-  <!-- PROGRAMAS VOCACIONALES (SOLO BOTÓN) -->
+  <!-- PROGRAMAS VOCACIONALES (SLIDESHOW) -->
   <section id="programas" class="section section-alt">
     <div class="container">
       <div class="section-header">
@@ -368,16 +378,121 @@
         </p>
       </div>
 
-      <div class="programs-cta">
-        <a
-          href="https://hackerpcb1.github.io/Casa-Abierta/"
-          class="btn btn-primary"
-          target="_blank"
-          rel="noopener"
-          data-translate="Ver programas y Casa Abierta"
-        >
-          Ver programas y Casa Abierta
-        </a>
+      <!-- Slideshow Container -->
+      <div class="slideshow-container">
+        <div class="slideshow-wrapper">
+          <!-- Slides -->
+          <div class="slide fade active">
+            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
+              <img src="galeriaslideshow/epaFFA.jpeg" alt="Elaboración de Productos Agricolas">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Procesamiento y Desarrollo de Productos Agrícolas">Sin agricultores no hay comida, sin comida no hay vida</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="slide fade">
+            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
+              <img src="galeriaslideshow/acfccla.jpeg" alt="Artes Culinarias">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Cocina Profesional y Gestión Gastronómica">El arte de la buena cocina</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="slide fade">
+            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
+              <img src="galeriaslideshow/computecskillsusa.jpeg" alt="Computec">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Formación práctica y tecnológica">Formación práctica y tecnológica</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="slide fade">
+            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
+              <img src="galeriaslideshow/cosmetologiaskillsusa.jpeg" alt="Cosmetología">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Belleza y Cuidado Personal Profesional">Belleza y Cuidado Personal Profesional</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="slide fade">
+            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
+              <img src="galeriaslideshow/enfermeriahosa.jpg" alt="Enfermería">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Cuidado Integral de la Salud">Cuidado Integral de la Salud</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="slide fade">
+            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
+              <img src="galeriaslideshow/decaempresarismo.jpg" alt="Representante de Ventas y Servicios Empresariales">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Representante de Ventas y Servicios Empresariales">Representante de Ventas y Servicios Empresariales</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="slide fade">
+            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
+              <img src="galeriaslideshow/seguridadpublica.jpg" alt="Seguridad Publica">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Seguridad Publica">Servicio de Seguridad Publica</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Navigation Arrows -->
+          <button class="slide-prev" onclick="changeSlide(-1)" aria-label="Anterior">❮</button>
+          <button class="slide-next" onclick="changeSlide(1)" aria-label="Siguiente">❯</button>
+        </div>
+
+        <!-- Dots/Indicators -->
+        <div class="slide-dots">
+          <span class="dot active" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+          <span class="dot" onclick="currentSlide(4)"></span>
+          <span class="dot" onclick="currentSlide(5)"></span>
+          <span class="dot" onclick="currentSlide(6)"></span>
+          <span class="dot" onclick="currentSlide(7)"></span>
+          <span class="dot" onclick="currentSlide(8)"></span>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="programs-cta" style="margin-top: 2rem;">
+          <a
+            href="https://hackerpcb1.github.io/Casa-Abierta/"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener"
+            data-translate="Ver todos los programas y Casa Abierta"
+          >
+            Ver todos los programas y Casa Abierta
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -595,19 +710,7 @@
           </div>
         </div>
 
-        <div class="hero-card">
-          <h2 data-translate="Información rápida">Información rápida</h2>
-          <ul>
-            <li><strong data-translate="Nivel:">Nivel:</strong> <span data-translate="Escuela Superior Vocacional">Escuela Superior Vocacional</span></li>
-            <li><strong data-translate="Horario:">Horario:</strong> <span data-translate="Lunes a Viernes · 7:30 AM – 2:30 PM">Lunes a Viernes · 7:30 AM – 2:30 PM</span></li>
-            <li><strong data-translate="Enfoque:">Enfoque:</strong> <span data-translate="Programas técnicos y académicos">Programas técnicos y académicos</span></li>
-            <li>
-              <strong data-translate="Ubicación:">Ubicación:</strong> <span data-translate="Carretera 156 salida hacia Comerío, Barranquitas, P. R.">Carretera 156 salida hacia Comerío, Barranquitas, P. R.</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+        
   </section>
 
   <!-- FOOTER -->
@@ -722,6 +825,106 @@
       });
     });
   </script>
+
+  <!-- Slideshow Script -->
+  <script>
+    // Slideshow functionality
+    let slideIndex = 1;
+    let slideTimer;
+
+    // Initialize slideshow
+    document.addEventListener('DOMContentLoaded', function() {
+      showSlides(slideIndex);
+      startAutoSlide();
+    });
+
+    // Auto slide every 5 seconds
+    function startAutoSlide() {
+      slideTimer = setInterval(() => {
+        changeSlide(1);
+      }, 5000);
+    }
+
+    // Reset timer when user interacts
+    function resetTimer() {
+      clearInterval(slideTimer);
+      startAutoSlide();
+    }
+
+    // Next/previous controls
+    function changeSlide(n) {
+      resetTimer();
+      showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+      resetTimer();
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      let i;
+      const slides = document.getElementsByClassName("slide");
+      const dots = document.getElementsByClassName("dot");
+
+      if (!slides.length) return;
+
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+
+      // Hide all slides
+      for (i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+      }
+
+      // Remove active class from all dots
+      for (i = 0; i < dots.length; i++) {
+        dots[i].classList.remove("active");
+      }
+
+      // Show current slide
+      slides[slideIndex-1].classList.add("active");
+      dots[slideIndex-1].classList.add("active");
+    }
+
+    // Pause on hover
+    const slideshowContainer = document.querySelector('.slideshow-container');
+    if (slideshowContainer) {
+      slideshowContainer.addEventListener('mouseenter', () => {
+        clearInterval(slideTimer);
+      });
+
+      slideshowContainer.addEventListener('mouseleave', () => {
+        startAutoSlide();
+      });
+    }
+
+    // Touch support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (slideshowContainer) {
+      slideshowContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+
+      slideshowContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      });
+    }
+
+    function handleSwipe() {
+      if (touchEndX < touchStartX - 50) {
+        changeSlide(1); // Swipe left
+      }
+      if (touchEndX > touchStartX + 50) {
+        changeSlide(-1); // Swipe right
+      }
+    }
+  </script>
+
   <script src="script.js"></script>
   <script src="image-popup.js"></script>
   <script src="notification-bot.js"></script>

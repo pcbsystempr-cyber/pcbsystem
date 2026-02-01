@@ -218,51 +218,73 @@
     </div>
   </header>
 
-  <!-- SIDEBAR MENU -->
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <!-- Menú lateral hamburguesa -->
   <div class="sidebar-menu" id="sidebarMenu">
-    <button class="sidebar-close" id="closeSidebar">×</button>
-    <nav class="sidebar-nav">
-      <ul>
-        <li><a href="index.html" data-translate="Inicio">Inicio</a></li>
-        <li><a href="index.html#escuela" data-translate="La escuela">La escuela</a></li>
-        <li><a href="index.html#programas" data-translate="Programas">Programas</a></li>
-        <li><a href="index.html#servicios" data-translate="Servicios">Servicios</a></li>
-        <li><a href="index.html#vida" data-translate="Vida estudiantil">Vida estudiantil</a></li>
-        <li><a href="index.html#contacto" data-translate="Contacto">Contacto</a></li>
-      </ul>
-      <div class="sidebar-options">
-        <div class="sidebar-option">
-          <button class="sidebar-option-btn" id="themeToggle">
-            <span data-translate="🎨 Tema">🎨 Tema</span>
-            <span class="arrow">▼</span>
-          </button>
-          <div class="sidebar-submenu" id="themeOptions" style="display: none;">
-            <button id="selectLightMode" data-translate="☀️ Modo Claro">☀️ Modo Claro</button>
-            <button id="selectDarkMode" data-translate="🌙 Modo Oscuro">🌙 Modo Oscuro</button>
-          </div>
-        </div>
-        <div class="sidebar-option">
-          <button class="sidebar-option-btn" id="languageToggle">
-            <span data-translate="🌐 Idioma">🌐 Idioma</span>
-            <span class="arrow">▼</span>
-          </button>
-          <div class="sidebar-submenu" id="languageOptions" style="display: none;">
-            <button id="selectSpanish" data-translate="🇪🇸 Español">🇪🇸 Español</button>
-            <button id="selectEnglish" data-translate="🇺🇸 English">🇺🇸 English</button>
-          </div>
-        </div>
+    <div class="sidebar-header">
+      <h3 data-translate="⚙️ Configuración">⚙️ Configuración</h3>
+      <button class="sidebar-close" id="closeSidebar">&times;</button>
+    </div>
+    <div class="sidebar-content">
+      <!-- Cambiar Tema -->
+      <div class="sidebar-item" id="themeToggle">
+        <span class="sidebar-icon">🎨</span>
+        <span class="sidebar-text" data-translate="Cambiar Tema">Cambiar Tema</span>
+        <span class="sidebar-arrow">›</span>
       </div>
-    </nav>
+      <div class="theme-options" id="themeOptions" style="display: none;">
+        <button class="theme-option" id="selectLightMode" data-translate="Modo Claro">
+          <span>☀️</span> Modo Claro
+        </button>
+        <button class="theme-option" id="selectDarkMode" data-translate="Modo Oscuro">
+          <span>🌙</span> Modo Oscuro
+        </button>
+      </div>
+
+      <!-- Cambiar Idioma -->
+      <div class="sidebar-item" id="languageToggle">
+        <span class="sidebar-icon">🌐</span>
+        <span class="sidebar-text" data-translate="Cambiar Idioma">Cambiar Idioma</span>
+        <span class="sidebar-arrow">›</span>
+      </div>
+      <div class="theme-options" id="languageOptions" style="display: none;">
+        <button class="theme-option" id="selectSpanish" data-translate="Español">
+          <span>🇵🇷</span> Español
+        </button>
+        <button class="theme-option" id="selectEnglish" data-translate="English">
+          <span>🇺🇸</span> English
+        </button>
+      </div>
+
+      <!-- Separador -->
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;"></div>
+
+      <!-- Dashboard Administrativo -->
+      <a href="admin.html" class="sidebar-item sidebar-link" style="text-decoration: none; color: inherit; display: flex; align-items: center; padding: 1rem; cursor: pointer; transition: background 0.3s;">
+        <span class="sidebar-icon">⚙️</span>
+        <span class="sidebar-text" data-translate="Dashboard Admin">Dashboard Admin</span>
+        <span class="sidebar-arrow">›</span>
+      </a>
+    </div>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <section class="section" style="padding-top: 8rem;">
+  <!-- Overlay para cerrar el menú -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
     <div class="container">
-      <div class="section-header">
-        <h2 data-translate="Quiénes Somos">Quiénes Somos</h2>
-        <p data-translate="Conoce nuestra historia, misión y visión">Conoce nuestra historia, misión y visión</p>
+      <div class="hero-content-centered">
+        <h1 data-translate="Quiénes Somos">Quiénes Somos</h1>
+        <p data-translate="Conoce nuestra historia, misión y visión">
+          Conoce nuestra historia, misión y visión
+        </p>
       </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <section class="section">
+    <div class="container">
 
       <!-- Historia -->
       <div class="card" style="margin-bottom: 2rem;">

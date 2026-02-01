@@ -39,25 +39,16 @@
       "title": "Foto de la biblioteca 5",
       "description": "",
       "dateAdded": "2026-01-31T00:00:00.000Z"
-    },
-    {
-      "id": "biblioteca_1769896186900",
-      "filename": "D8VVra6.jpeg",
-      "url": "https://i.imgur.com/D8VVra6.jpeg",
-      "title": "PCB",
-      "description": "",
-      "dateAdded": "2026-01-31T21:49:46.900Z",
-      "isExternal": true
     }
   ],
   "comedor": [
     {
-      "id": "comedor_1769894807844",
-      "filename": "239pdF1.jpeg",
-      "url": "https://i.imgur.com/239pdF1.jpeg",
-      "title": "Menu del Viernes 30 de enero de 2026",
-      "description": "¡Delicioso y Nutritivo!",
-      "dateAdded": "2026-01-31T21:26:47.844Z",
+      "id": "comedor_ejemplo",
+      "filename": "ejemplo-comedor.jpg",
+      "url": "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800",
+      "title": "Ejemplo: Comedor Escolar",
+      "description": "Esta es una imagen de ejemplo usando URL externa. Reemplázala desde el dashboard.",
+      "dateAdded": "2026-01-31T12:00:00.000Z",
       "isExternal": true
     }
   ],
@@ -69,42 +60,33 @@
       "title": "Inscripción Abierta 2026",
       "description": "¡Únete a nuestra familia educativa!",
       "dateAdded": "2026-01-31T00:00:00.000Z"
-    },
-    {
-      "id": "promociones_1769895552043",
-      "filename": "nyZ76tr.jpeg",
-      "url": "https://i.imgur.com/nyZ76tr.jpeg",
-      "title": "Programa de actividades en el mes Ocupacional.",
-      "description": "¡Construyendo carreras con proposito!",
-      "dateAdded": "2026-01-31T21:39:12.043Z",
-      "isExternal": true
-    },
-    {
-      "id": "promociones_1769895647107",
-      "filename": "vWlBPVu.jpeg",
-      "url": "https://i.imgur.com/vWlBPVu.jpeg",
-      "title": "Taller virtual sobre la Influenza",
-      "description": "¡Gratis!",
-      "dateAdded": "2026-01-31T21:40:47.107Z",
-      "isExternal": true
     }
   ],
-  "avisos": [],
+  "avisos": [
+    {
+      "id": "avisos_1",
+      "filename": "Aviso30-enero-2026.jpeg",
+      "path": "Avisos/Aviso30-enero-2026.jpeg",
+      "title": "Aviso Importante",
+      "description": "Información actualizada - 30 de enero 2026",
+      "dateAdded": "2026-01-31T00:00:00.000Z"
+    }
+  ],
   "menu_comedor": {
     "desayuno": [
-      "Farina",
-      "Queso",
+      "Revoltillo",
       "Peras Frescas",
-      "Melocotón",
-      "Leche fresca"
+      "Melocotones",
+      "Leche"
     ],
     "almuerzo": [
-      "Arroz amarillo",
-      "Habichuelas guisadas",
-      "Pollo guisado",
-      "Brócoli",
-      "Maíz",
-      "Leche fresca"
+      "Arroz",
+      "Habichuelas guisadas con calabaza",
+      "Carne de Cerdo",
+      "Zanahoria",
+      "Manzana",
+      "Coctel de fruta"
     ]
   }
 }
+
