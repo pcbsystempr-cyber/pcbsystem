@@ -43,13 +43,13 @@
   ],
   "comedor": [
     {
-      "id": "comedor_ejemplo",
-      "filename": "ejemplo-comedor.jpg",
-      "url": "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800",
-      "title": "Ejemplo: Comedor Escolar",
-      "description": "Esta es una imagen de ejemplo usando URL externa. Reemplázala desde el dashboard.",
-      "dateAdded": "2026-01-31T12:00:00.000Z",
-      "isExternal": true
+      "id": "comedor_1769970209800",
+      "filename": "menu1.jpeg",
+      "path": "galeriacomedor/menu1.jpeg",
+      "title": "Menu del Viernes 30 de enero de 2026",
+      "description": "Desde el primer aroma te atrapa 🤤. Un revoltillo calientito y cremoso abre el apetito, acompañado de frutas frescas y jugosas que explotan en dulzura. Al almuerzo, arroz esponjoso, habichuelas guisadas con calabaza llenas de sabor, y una carne de cerdo tierna y jugosa que se deshace en cada bocado… frutas frescas para cerrar como se merece. Huele rico, se ve brutal y sabe mejor. ¡Pasa y aprovecha! 🍎🔥",
+      "dateAdded": "2026-02-01T18:23:29.800Z",
+      "isExternal": false
     }
   ],
   "promociones": [
@@ -89,4 +89,3 @@
     ]
   }
 }
-
