@@ -50,6 +50,15 @@
       "description": "Desde el primer aroma te atrapa 🤤. Un revoltillo calientito y cremoso abre el apetito, acompañado de frutas frescas y jugosas que explotan en dulzura. Al almuerzo, arroz esponjoso, habichuelas guisadas con calabaza llenas de sabor, y una carne de cerdo tierna y jugosa que se deshace en cada bocado… frutas frescas para cerrar como se merece. Huele rico, se ve brutal y sabe mejor. ¡Pasa y aprovecha! 🍎🔥",
       "dateAdded": "2026-02-01T18:23:29.800Z",
       "isExternal": false
+    },
+    {
+      "id": "comedor_1769971268594",
+      "filename": "menu2.jpeg",
+      "path": "galeriacomedor/menu2.jpeg",
+      "title": "Menu del Viernes 2 de febrero de 2026",
+      "description": "Hoy el comedor se luce 👨‍🍳✨: una farina calientita y cremosa, con queso que se derrite suavemente, acompañada de peras frescas y melocotón dulce que despiertan el apetito desde temprano 🤤.\nY cuando llega el almuerzo… pollo guisado bien jugoso, arroz amarillo esponjoso, habichuelas llenas de sabor, brócoli con queso, maíz tierno y leche fresca para completar una comida que alimenta el cuerpo y alegra el día 🥘🍗🥦🥛\n\n👉 Huele rico, se ve brutal y sabe mejor. No te lo pierdas. Pasa y aprovecha. 🍽️🔥",
+      "dateAdded": "2026-02-01T18:41:08.594Z",
+      "isExternal": false
     }
   ],
   "promociones": [
@@ -74,18 +83,18 @@
   ],
   "menu_comedor": {
     "desayuno": [
-      "Revoltillo",
+      "Farina",
+      "Queso",
       "Peras Frescas",
       "Melocotones",
       "Leche"
     ],
     "almuerzo": [
-      "Arroz",
-      "Habichuelas guisadas con calabaza",
-      "Carne de Cerdo",
-      "Zanahoria",
-      "Manzana",
-      "Coctel de fruta"
+      "Arroz Amarrillo",
+      "Habichuelas guisadas",
+      "Pollo Guisado",
+      "Brocoli con queso",
+      "Leche Fresca"
     ]
   }
 }
