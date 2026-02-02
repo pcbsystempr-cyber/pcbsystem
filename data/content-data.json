@@ -101,18 +101,13 @@
   "avisos": [],
   "menu_comedor": {
     "desayuno": [
-      "Farina",
+      "Tostadas Francesas",
       "Queso",
-      "Peras Frescas",
-      "Melocotones",
       "Leche"
     ],
     "almuerzo": [
-      "Arroz Amarrillo",
-      "Habichuelas guisadas",
-      "Pollo Guisado",
-      "Brocoli con queso",
-      "Leche Fresca"
+      "Se informara más tarde.",
+      "Perdonen los incovenientes."
     ]
   }
 }
