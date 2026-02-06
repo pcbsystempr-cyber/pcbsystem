@@ -101,13 +101,16 @@
   "avisos": [],
   "menu_comedor": {
     "desayuno": [
-      "Tostadas Francesas",
-      "Queso",
-      "Leche"
+      "Avena",
+      "Pan sobao",
+      "Salsa de manzana",
+      "Peras fresca"
     ],
     "almuerzo": [
-      "Se informara más tarde.",
-      "Perdonen los incovenientes."
+      "Hamburguer",
+      "Tomate",
+      "Lechuga",
+      "Jugo"
     ]
   }
 }
