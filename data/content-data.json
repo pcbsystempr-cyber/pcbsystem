@@ -72,14 +72,6 @@
   ],
   "promociones": [
     {
-      "id": "promociones_1",
-      "filename": "image1.jpeg",
-      "path": "galeriadepromociones/image1.jpeg",
-      "title": "Inscripción Abierta 2026",
-      "description": "¡Únete a nuestra familia educativa!",
-      "dateAdded": "2026-01-31T00:00:00.000Z"
-    },
-    {
       "id": "promociones_1769971491191",
       "filename": "image3.jpeg",
       "path": "galeriadepromociones/image3.jpeg",
