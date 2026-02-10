@@ -102,14 +102,15 @@
   "avisos": [],
   "menu_comedor": {
     "desayuno": [
-      "Tostadas francesas con queso",
-      "Jugo manzana"
+      "Huevo frito",
+      "Pan",
+      "Queso",
+      "Manzanas frescas",
+      "Leche fresca",
+      "Coctel de fruta"
     ],
     "almuerzo": [
-      "Arroz",
-      "Pollo guisado",
-      "Habichuelas guisadas",
-      "Leche fresca"
+      "Estamos a la espera de que el personal del comedor nos proporcione el menú correspondiente."
     ]
   }
 }
