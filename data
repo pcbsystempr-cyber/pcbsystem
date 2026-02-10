@@ -102,17 +102,14 @@
   "avisos": [],
   "menu_comedor": {
     "desayuno": [
-      "Avena",
-      "Queso",
-      "Coctel de frutas"
+      "Tostadas francesas con queso",
+      "Jugo manzana"
     ],
     "almuerzo": [
       "Arroz",
-      "Habichuelas",
-      "Carne de cerdo",
-      "Lechuga",
-      "Tomate",
-      "Peras frescas"
+      "Pollo guisado",
+      "Habichuelas guisadas",
+      "Leche fresca"
     ]
   }
 }
