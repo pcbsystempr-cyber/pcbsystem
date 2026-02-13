@@ -102,15 +102,15 @@
   "avisos": [],
   "menu_comedor": {
     "desayuno": [
-      "Farina",
-      "Queso",
-      "Jugo de manzana"
+      "No disponible"
     ],
     "almuerzo": [
-      "Arroz",
-      "Pollo guisado",
-      "Brócoli",
-      "Coctel de frutas"
+      "Burrito",
+      "Brocolis",
+      "Lechuga y tomate",
+      "Manzanas frescas",
+      "Melocotón",
+      "Leche fresca"
     ]
   }
 }
