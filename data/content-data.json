@@ -102,15 +102,11 @@
   "avisos": [],
   "menu_comedor": {
     "desayuno": [
-      "No disponible"
-    ],
-    "almuerzo": [
-      "Burrito",
-      "Brocolis",
-      "Lechuga y tomate",
-      "Manzanas frescas",
+      "Farina",
+      "Queso",
       "Melocotón",
-      "Leche fresca"
-    ]
+      "Leche"
+    ],
+    "almuerzo": []
   }
 }
