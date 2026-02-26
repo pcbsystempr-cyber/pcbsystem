@@ -1,948 +1,1240 @@
-<!DOCTYPE html>
-<html lang="es" id="htmlRoot">
+<!doctype html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Escuela Superior Vocacional Pablo Colón Berdecia</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="image-popup.css">
-  <link rel="stylesheet" href="notification-bot.css">
-  <script src="translations.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gaming Day - Competencia Escolar</title>
+  <meta name="description" content="Gaming Day: torneo de videojuegos de la escuela. Información, horarios, reglas y registro." />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Pequeños toques adicionales */
+    .glow { text-shadow: 0 2px 12px rgba(99,102,241,0.25); }
+
+    /* Slideshow Styles */
+    .slideshow-container {
+      position: relative;
+      max-width: 100%;
+      margin: auto;
+    }
+
+    .slide {
+      display: none;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 350px;
+      object-fit: contain;
+      border-radius: 8px;
+      background-color: #1f2937;
+    }
+
+    @media (max-width: 768px) {
+      .slide img {
+        height: 250px;
+      }
+    }
+
+    .slide .caption {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .prev, .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      margin-top: -22px;
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      -webkit-user-select: none;
+      user-select: none;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover, .next:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .dots {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .dot {
+      cursor: pointer;
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+
+    .active, .dot:hover {
+      background-color: #717171;
+    }
+
+    /* PCB System Styles */
+  .pcb-popup-overlay{
+  display:none;
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.65);
+  align-items:center; justify-content:center;
+  z-index:10000;
+}
+.pcb-popup-overlay.active{ display:flex; }
+
+
+
+
+    .pcb-popup {
+      background: linear-gradient(135deg, #1e293b, #334155);
+      border: 2px solid #7c3aed;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(124, 58, 237, 0.3);
+      transform: scale(0.7);
+      transition: transform 0.3s ease;
+      animation: popupGlow 2s infinite alternate;
+    }
+
+    .pcb-popup-overlay.active .pcb-popup {
+      transform: scale(1);
+    }
+
+    .pcb-popup-header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #475569;
+      background: linear-gradient(90deg, #4338ca, #7c3aed, #db2777);
+      border-radius: 13px 13px 0 0;
+    }
+
+    .pcb-popup-icon {
+      font-size: 24px;
+      color: #ffffff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .pcb-popup-body {
+      padding: 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #475569, #64748b, #475569);
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      border-radius: 0 0 13px 13px;
+    }
+
+    .pcb-popup-body h3 {
+      color: #f1f5f9;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      font-family: 'Arial Black', sans-serif;
+    }
+
+    .pcb-popup-body h2 {
+      color: #f1f5f9;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      font-family: 'Arial Black', sans-serif;
+    }
+
+    .pcb-popup-subtitle {
+      color: #e2e8f0;
+      margin-bottom: 20px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .pcb-popup-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .pcb-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .pcb-feature i {
+      color: #c084fc;
+      font-size: 20px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .pcb-popup-message {
+      color: #e2e8f0;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .pcb-popup-btn {
+      background: linear-gradient(90deg, #4338ca, #7c3aed);
+      color: #ffffff;
+      border: 2px solid #a78bfa;
+      padding: 12px 24px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+      font-family: 'Arial Black', sans-serif;
+    }
+
+    .pcb-popup-btn:hover {
+      background: linear-gradient(90deg, #3730a3, #6d28d9);
+      box-shadow: 0 6px 16px rgba(124, 58, 237, 0.6);
+      transform: scale(1.05);
+    }
+
+    .pcb-popup-powered {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .pcb-popup-powered img {
+      height: 40px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+
+    .pcb-chatbot:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 30px #4338ca, 0 0 60px #7c3aed, 0 6px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    .pcb-chatbot-icon {
+      font-size: 24px;
+      color: white;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pcb-chatbot-icon img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .gamepad-icon {
+      width: 45px;
+      height: 45px;
+      color: white;
+    }
+
+    .pcb-chatbot-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: #ff6b6b;
+      color: white;
+      border-radius: 10px;
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: bold;
+      z-index: 1000;
+    }
+
+    .pcb-chatbot-pulse {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: rgba(0, 123, 255, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    .pcb-chatbot-logo {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #007bff;
+    }
+
+    .pcb-chatbot-logo img {
+      width: 15px;
+      height: 15px;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Suave animación de brillo para el popup */
+    @keyframes popupGlow {
+      0% {
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(124, 58, 237, 0.3);
+      }
+      100% {
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(124, 58, 237, 0.5);
+      }
+    }
+
+    /* Blinking animation for LIVE status */
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .blink {
+      animation: blink 1s infinite;
+    }
+
+    /* ===== ESTILOS GENERALES PARA "PRÓXIMO TORNEO" (Escritorio y Móvil) ===== */
+
+    /* Ocultar descripción de "Próximo Torneo" en todas las pantallas */
+    .upcoming-description {
+      display: none;
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 768px) {
+      /* Ajustar botón flotante en móvil */
+      .pcb-chatbot {
+        width: 55px !important;
+        height: 55px !important;
+        bottom: 20px !important;
+        right: 20px !important;
+      }
+
+      .gamepad-icon {
+        width: 35px !important;
+        height: 35px !important;
+      }
+
+      .pcb-chatbot-badge {
+        font-size: 9px !important;
+        padding: 2px 6px !important;
+        top: -8px !important;
+        right: -8px !important;
+      }
+
+      /* Mejorar popup "Próximamente" en móvil - MÁS COMPACTO */
+      .pcb-popup {
+        width: 95% !important;
+        max-width: 360px !important;
+        margin: 0 10px !important;
+        max-height: 85vh !important;
+      }
+
+      .pcb-popup-header {
+        padding: 10px !important;
+      }
+
+      .pcb-popup-body {
+        padding: 12px !important;
+      }
+
+      .pcb-popup-body h3 {
+        font-size: 1rem !important;
+        margin-bottom: 5px !important;
+      }
+
+      .pcb-popup-body h2 {
+        font-size: 1.25rem !important;
+        margin-bottom: 5px !important;
+      }
+
+      .pcb-popup-subtitle {
+        font-size: 0.75rem !important;
+        margin-bottom: 10px !important;
+      }
+
+      .pcb-popup-features {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .pcb-feature {
+        padding: 8px 6px !important;
+        font-size: 0.7rem !important;
+      }
+
+      .pcb-feature i {
+        font-size: 14px !important;
+        margin-bottom: 3px !important;
+      }
+
+      .pcb-popup-message {
+        font-size: 0.8rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 10px !important;
+      }
+
+      .pcb-popup-btn {
+        padding: 8px 16px !important;
+        font-size: 0.8rem !important;
+      }
+
+      .pcb-popup-powered {
+        margin-top: 10px !important;
+        font-size: 0.7rem !important;
+      }
+
+      .pcb-popup-powered img {
+        height: 24px !important;
+      }
+
+      /* Ocultar subtítulo en móvil para ahorrar espacio */
+      .pcb-popup-subtitle {
+        display: none !important;
+      }
+
+      /* Ajustar header en móvil */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      #mobile-menu {
+        z-index: 999;
+      }
+
+      /* Animaciones para el menú móvil - Efecto roll smooth */
+      #mobile-menu {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0;
+        transform: scaleY(0);
+        transform-origin: top;
+      }
+
+      #mobile-menu.show {
+        max-height: 500px;
+        opacity: 1;
+        transform: scaleY(1);
+      }
+
+      #mobile-menu.hide {
+        max-height: 0;
+        opacity: 0;
+        transform: scaleY(0);
+      }
+
+      /* Animación suave para los items del menú */
+      #mobile-menu a {
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+      }
+
+      #mobile-menu.show a {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      #mobile-menu.show a:nth-child(1) { transition-delay: 0.1s; }
+      #mobile-menu.show a:nth-child(2) { transition-delay: 0.15s; }
+      #mobile-menu.show a:nth-child(3) { transition-delay: 0.2s; }
+      #mobile-menu.show a:nth-child(4) { transition-delay: 0.25s; }
+      #mobile-menu.show a:nth-child(5) { transition-delay: 0.3s; }
+
+      /* Mejorar espaciado en móvil */
+      .max-w-6xl {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      /* Botones más grandes para touch */
+      button, a.bg-indigo-600, a.bg-white {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+        touch-action: manipulation;
+      }
+
+      /* Asegurar que los enlaces de registro funcionen en móvil */
+      a[href*="forms.office.com"] {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0.3) !important;
+        touch-action: manipulation !important;
+      }
+
+      /* Mejorar tarjetas de juegos en móvil */
+      .bg-white\/5 {
+        padding: 1rem !important;
+      }
+
+      /* Ajustar imágenes en móvil */
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* Mejorar títulos en móvil */
+      h2 {
+        font-size: 1.5rem !important;
+        line-height: 1.3 !important;
+      }
+
+      h3 {
+        font-size: 1.25rem !important;
+      }
+
+      /* Mejorar espaciado de secciones en móvil - MÁS COMPACTO */
+      section {
+        margin-top: 1.5rem !important;
+      }
+
+      /* Ajustar padding de main en móvil */
+      main {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+      }
+
+      /* Reducir padding de secciones */
+      section.bg-white\/5 {
+        padding: 1rem !important;
+      }
+
+      /* Ocultar sección "Objetivo" en móvil */
+      #about h3:nth-of-type(2),
+      #about p:nth-of-type(2) {
+        display: none !important;
+      }
+
+      /* Reducir texto de descripción de juegos */
+      #games p {
+        display: none !important;
+      }
+
+      /* Hacer sección de "Próximos Torneos" más compacta y clara en móvil */
+      #upcoming-tournaments {
+        padding: 1rem !important;
+        margin-top: 1.5rem !important;
+      }
+
+      #upcoming-tournaments h3 {
+        font-size: 1.25rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      #upcoming-tournaments .bg-gradient-to-r {
+        padding: 1rem !important;
+      }
+
+      #upcoming-tournaments h4 {
+        font-size: 1.125rem !important;
+        margin-bottom: 0.75rem !important;
+      }
+
+      /* Íconos y texto de fecha/hora en móvil */
+      #upcoming-tournaments svg {
+        width: 1rem !important;
+        height: 1rem !important;
+      }
+
+      #upcoming-tournaments .text-yellow-400 span {
+        font-size: 0.875rem !important;
+      }
+
+      #upcoming-tournaments .text-gray-300 span {
+        font-size: 0.75rem !important;
+      }
+
+      /* Countdown más pequeño en móvil */
+      #countdown {
+        font-size: 1.5rem !important;
+        line-height: 1.2 !important;
+      }
+
+      /* Reducir reglas mostradas en móvil - mostrar solo las primeras 5 */
+      #rules ul li:nth-child(n+6) {
+        display: none !important;
+      }
+
+      /* Agregar indicador de "ver más" */
+      #rules ul::after {
+        content: "• Ver más reglas en versión escritorio...";
+        display: block;
+        margin-top: 0.75rem;
+        font-size: 0.75rem;
+        color: #9ca3af;
+        font-style: italic;
+      }
+
+      /* Mejorar lista de reglas en móvil */
+      ul li {
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Ajustar footer en móvil */
+      footer .grid {
+        gap: 2rem !important;
+      }
+
+      footer h4 {
+        font-size: 1rem !important;
+      }
+
+      footer .h-16 {
+        height: 3rem !important;
+        width: 3rem !important;
+      }
+
+      /* Mejorar slideshow en móvil - REDUCIR ALTURA */
+      .slide img {
+        height: 180px !important;
+      }
+
+      /* Reducir altura del contenedor de galería */
+      #gallery {
+        padding: 1rem !important;
+      }
+
+      #gallery p {
+        font-size: 0.75rem !important;
+      }
+
+      /* Ajustar botones de navegación del slider */
+      .prev, .next {
+        padding: 12px !important;
+        font-size: 16px !important;
+      }
+
+      /* Mejorar badge NUEVO en móvil */
+      .absolute.-top-2.-right-2 {
+        font-size: 0.65rem !important;
+        padding: 0.125rem 0.375rem !important;
+      }
+
+      /* Reducir espaciado en horarios */
+      #schedule .grid {
+        gap: 1rem !important;
+      }
+
+      #schedule .bg-white\/5 {
+        padding: 1rem !important;
+      }
+    }
+
+    /* Mejoras adicionales para tablets */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .max-w-6xl {
+        max-width: 90%;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+      }
+    }
+
+
+  </style>
+
 </head>
-<body>
-  <!-- Popup de selección de tema -->
-  <div id="themePopup" class="theme-popup">
-    <div class="theme-popup-content">
-      <h2 data-translate="🎨 Selecciona tu tema preferido">🎨 Selecciona tu tema preferido</h2>
-      <p data-translate="Elige cómo quieres ver el sitio web">Elige cómo quieres ver el sitio web</p>
-      <div class="theme-buttons">
-        <button class="theme-btn theme-btn-light" id="btnLightMode" data-translate="☀️ Modo Claro">
-          ☀️ Modo Claro
-        </button>
-        <button class="theme-btn theme-btn-dark" id="btnDarkMode" data-translate="🌙 Modo Oscuro">
-          🌙 Modo Oscuro
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Script inline para modo claro/oscuro y hamburger menu
-    (function() {
-      function hidePopup() {
-        document.getElementById('themePopup').classList.add('hidden');
-      }
-
-      function setLightMode() {
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light');
-        hidePopup();
-      }
-
-      function setDarkMode() {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark');
-        hidePopup();
-      }
-
-      function checkTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-          document.body.classList.add('dark-mode');
-          hidePopup();
-        } else if (savedTheme === 'light') {
-          hidePopup();
-        }
-      }
-
-      // Ejecutar inmediatamente
-      checkTheme();
-
-      // Agregar event listeners cuando el DOM esté listo
-      document.addEventListener('DOMContentLoaded', function() {
-        const btnLight = document.getElementById('btnLightMode');
-        const btnDark = document.getElementById('btnDarkMode');
-
-        if (btnLight) {
-          btnLight.addEventListener('click', setLightMode);
-        }
-        if (btnDark) {
-          btnDark.addEventListener('click', setDarkMode);
-        }
-
-        // Hamburger menu functionality
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const sidebarMenu = document.getElementById('sidebarMenu');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const closeSidebar = document.getElementById('closeSidebar');
-        const themeToggle = document.getElementById('themeToggle');
-        const themeOptions = document.getElementById('themeOptions');
-        const selectLightMode = document.getElementById('selectLightMode');
-        const selectDarkMode = document.getElementById('selectDarkMode');
-        const languageToggle = document.getElementById('languageToggle');
-        const languageOptions = document.getElementById('languageOptions');
-        const selectSpanish = document.getElementById('selectSpanish');
-        const selectEnglish = document.getElementById('selectEnglish');
-
-        // Abrir sidebar
-        if (hamburgerBtn) {
-          hamburgerBtn.addEventListener('click', function() {
-            sidebarMenu.classList.add('active');
-            sidebarOverlay.classList.add('active');
-          });
-        }
-
-        // Cerrar sidebar
-        function closeSidebarMenu() {
-          sidebarMenu.classList.remove('active');
-          sidebarOverlay.classList.remove('active');
-          themeOptions.style.display = 'none';
-          languageOptions.style.display = 'none';
-        }
-
-        if (closeSidebar) {
-          closeSidebar.addEventListener('click', closeSidebarMenu);
-        }
-
-        if (sidebarOverlay) {
-          sidebarOverlay.addEventListener('click', closeSidebarMenu);
-        }
-
-        // Toggle theme options
-        if (themeToggle) {
-          themeToggle.addEventListener('click', function() {
-            if (themeOptions.style.display === 'none') {
-              themeOptions.style.display = 'block';
-            } else {
-              themeOptions.style.display = 'none';
-            }
-          });
-        }
-
-        // Seleccionar modo claro desde sidebar
-        if (selectLightMode) {
-          selectLightMode.addEventListener('click', function() {
-            setLightMode();
-            closeSidebarMenu();
-          });
-        }
-
-        // Seleccionar modo oscuro desde sidebar
-        if (selectDarkMode) {
-          selectDarkMode.addEventListener('click', function() {
-            setDarkMode();
-            closeSidebarMenu();
-          });
-        }
-
-        // Toggle language options
-        if (languageToggle) {
-          languageToggle.addEventListener('click', function() {
-            if (languageOptions.style.display === 'none') {
-              languageOptions.style.display = 'block';
-            } else {
-              languageOptions.style.display = 'none';
-            }
-          });
-        }
-
-        // Seleccionar idioma español
-        if (selectSpanish) {
-          selectSpanish.addEventListener('click', function() {
-            localStorage.setItem('language', 'es');
-            document.getElementById('htmlRoot').setAttribute('lang', 'es');
-            if (typeof translatePage === 'function') {
-              translatePage('es');
-            }
-            closeSidebarMenu();
-          });
-        }
-
-        // Seleccionar idioma inglés
-        if (selectEnglish) {
-          selectEnglish.addEventListener('click', function() {
-            localStorage.setItem('language', 'en');
-            document.getElementById('htmlRoot').setAttribute('lang', 'en');
-            if (typeof translatePage === 'function') {
-              translatePage('en');
-            }
-            closeSidebarMenu();
-          });
-        }
-      });
-    })();
-  </script>
-
-  <!-- HEADER -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="logo-area">
-        <img src="LOGO6.png" alt="Logo Escuela" class="logo-image">
-        <div class="logo-text">
-          <span class="logo-title" data-translate="Escuela Superior Vocacional">Escuela Superior Vocacional</span>
-          <span class="logo-subtitle" data-translate="Pablo Colón Berdecia">Pablo Colón Berdecia</span>
+<body class="bg-gray-900 text-gray-100 antialiased">
+  <header class="bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 py-6 md:py-8 flex items-center justify-between">
+      <div class="flex items-center gap-2 md:gap-4">
+        <img src="Logo_PCB.png" alt="Logo de la Escuela Superior Vocacional Pablo Colón Berdecia"
+             class="w-12 h-12 md:w-14 md:h-14 object-contain p-1 bg-white/10 rounded-lg" />
+        <div>
+          <h1 class="text-xl md:text-2xl font-extrabold">Gaming Day</h1>
+          <p class="text-xs md:text-sm opacity-90">Torneo de videojuegos</p>
         </div>
       </div>
-      <div style="display: flex; align-items: center; gap: 1rem;">
-        <nav class="main-nav">
-          <ul>
-            <li><a href="#inicio" data-translate="Inicio">Inicio</a></li>
-            <li><a href="#escuela" data-translate="La escuela">La escuela</a></li>
-            <li><a href="#programas" data-translate="Programas">Programas</a></li>
-            <li><a href="#servicios" data-translate="Servicios">Servicios</a></li>
-            <li><a href="#vida" data-translate="Vida estudiantil">Vida estudiantil</a></li>
-            <li><a href="#contacto" data-translate="Contacto">Contacto</a></li>
-          </ul>
-        </nav>
-        <button class="hamburger-menu" id="hamburgerBtn" aria-label="Abrir menú">
-          <span></span>
-          <span></span>
-          <span></span>
+      <nav class="hidden md:flex gap-6 items-center">
+        <a href="#about" class="hover:underline">Acerca</a>
+        <a href="#schedule" class="hover:underline">Horario</a>
+        <a href="#rules" class="hover:underline">Reglas</a>
+        <a href="#gallery" class="hover:underline">Galería</a>
+        <a href="#contact" class="hover:underline">Contacto</a>
+        <a href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio" target="_blank" rel="noopener noreferrer" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-md font-semibold transition-all duration-300">Visita PCB System</a>
+      </nav>
+
+      <!-- Mobile: PCB System Button + Menu Button -->
+      <div class="md:hidden flex items-center gap-2">
+        <!-- Botón PCB System (móvil) -->
+        <a href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html#inicio" target="_blank" rel="noopener noreferrer" class="bg-white/20 hover:bg-white/30 px-3 py-2 rounded-md text-xs font-semibold transition-all duration-300 flex items-center gap-1" aria-label="Visitar PCB System">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor" class="w-4 h-4">
+            <path d="M192 64C86 64 0 150 0 256S86 448 192 448H448c106 0 192-86 192-192s-86-192-192-192H192zM496 248c-22.1 0-40-17.9-40-40s17.9-40 40-40s40 17.9 40 40s-17.9 40-40 40zm-24 56c0 22.1-17.9 40-40 40s-40-17.9-40-40s17.9-40 40-40s40 17.9 40 40zM168 200c0-13.3 10.7-24 24-24s24 10.7 24 24v32h32c13.3 0 24 10.7 24 24s-10.7 24-24 24H216v32c0 13.3-10.7 24-24 24s-24-10.7-24-24V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h32V200z"/>
+          </svg>
+          <span>PCB</span>
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button type="button" id="mobile-menu-button" class="text-white focus:outline-none" aria-label="Abrir menú de navegación">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
         </button>
       </div>
+      <!-- Mobile Menu -->
+      <nav id="mobile-menu" class="md:hidden absolute top-full left-0 right-0 bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600 shadow-lg hidden">
+        <div class="px-6 py-4 space-y-2">
+          <a href="#about" class="block hover:underline">Acerca</a>
+          <a href="#schedule" class="block hover:underline">Horario</a>
+          <a href="#rules" class="block hover:underline">Reglas</a>
+          <a href="#gallery" class="block hover:underline">Galería</a>
+          <a href="#contact" class="block hover:underline">Contacto</a>
+        </div>
+      </nav>
     </div>
   </header>
 
-  <!-- Menú lateral hamburguesa -->
-  <div class="sidebar-menu" id="sidebarMenu">
-    <div class="sidebar-header">
-      <h3 data-translate="⚙️ Configuración">⚙️ Configuración</h3>
-      <button class="sidebar-close" id="closeSidebar">&times;</button>
+  <main class="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12">
+    <!-- Hero -->
+    <section class="text-center">
+      <h2 class="text-2xl md:text-4xl font-extrabold leading-tight glow">¡Prepárate para el Gaming Day!</h2>
+      <p class="mt-4 text-base md:text-lg text-gray-300">Únete a la competencia de videojuegos de la escuela. Abierto a estudiantes de todos los grados y niveles.</p>
+      <div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=LCmpelKgSkOat1vQrUeUdAiDyLMl18FNjjhGYwHC_Y9URVJGR1JZMkcxUzROMThUTEpGNE0yMFc4Qi4u" target="_blank" rel="noopener noreferrer" class="bg-indigo-600 px-6 md:px-8 py-3 md:py-4 rounded-md font-bold text-base md:text-lg shadow-lg hover:opacity-95 hover:scale-105 transition-all duration-300 animate-pulse">¡Registrarme Ahora!</a>
+        <a href="#rules" class="bg-white/10 px-5 py-3 rounded-md">Ver reglas</a>
+      </div>
+    </section>
+      
+
+    <!-- About -->
+    <section id="about" class="mt-8 md:mt-12 bg-white/5 rounded-xl p-4 md:p-8">
+      <h3 class="text-xl md:text-2xl font-bold">¿Qué es Gaming Day?</h3>
+      <p class="mt-3 text-gray-200 text-sm md:text-base">Gaming Day es un evento organizado por el curso de Computec que busca fomentar la competencia sana, el trabajo en equipo y el interés por las disciplinas digitales.</p>
+
+      <h3 class="text-xl md:text-2xl font-bold mt-6">Objetivo</h3>
+      <p class="mt-3 text-gray-200 text-sm md:text-base">Reunir a la comunidad estudiantil alrededor del gaming responsable y el aprendizaje colaborativo.</p>
+    </section>
+
+    <!-- Games -->
+    <section id="games" class="mt-8 md:mt-12 bg-white/5 rounded-xl p-4 md:p-8">
+      <h3 class="text-xl md:text-2xl font-bold">Juegos disponibles</h3>
+      <p class="mt-3 text-gray-200 text-sm md:text-base">Los siguientes juegos mostrados a continuación son los que están disponibles para el Gaming Day. Selecciona tu favorito, revisa la modalidad y el horario, y asegúrate de completar tu inscripción antes de la fecha límite.</p>
+      <div class="mt-6 flex flex-wrap gap-2 md:gap-4">
+          <a href="mario-kart.html" class="bg-indigo-600 px-3 md:px-5 py-2 md:py-3 rounded-md font-semibold shadow hover:opacity-95 text-sm md:text-base">Mario Kart</a>
+          <a href="nba.html" class="bg-white/10 px-3 md:px-5 py-2 md:py-3 rounded-md font-semibold shadow hover:opacity-95 text-sm md:text-base">NBA</a>
+          <a href="mortal-kombat.html" class="bg-indigo-600 px-3 md:px-5 py-2 md:py-3 rounded-md font-semibold shadow hover:opacity-95 text-sm md:text-base">Mortal Kombat</a>
+          <a href="smash-bros.html" class="bg-white/10 px-3 md:px-5 py-2 md:py-3 rounded-md font-semibold shadow hover:opacity-95 text-sm md:text-base">Smash Bros</a>
+          <a href="impostor.html" class="bg-indigo-600 px-3 md:px-5 py-2 md:py-3 rounded-md font-semibold shadow hover:opacity-95 text-sm md:text-base relative">
+            Impostor
+            <span class="absolute -top-2 -right-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white text-xs px-2 py-1 rounded-full font-bold">NUEVO</span>
+          </a>
+        </div>
+    </section>
+
+    <!-- Próximo Torneo -->
+    <section id="upcoming-tournaments" class="mt-8 md:mt-12 bg-white/5 p-4 md:p-8 rounded-xl">
+      <h3 class="text-xl md:text-2xl font-bold">Próximo Torneo</h3>
+      <p class="mt-3 text-gray-200 text-sm md:text-base upcoming-description">Mantente al día con el próximo torneo de Gaming Day. ¡No te lo pierdas!</p>
+      <div class="mt-4 md:mt-6">
+        <div class="bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-900 p-4 md:p-6 rounded-xl md:rounded-2xl shadow-2xl border border-indigo-500/50 relative" data-start="2026-02-27T08:00:00" data-end="2026-02-27T18:00:00">
+
+          <div class="text-center">
+            <!-- ================= MODO: TORneo CONFIRMADO (Activo) ================= -->
+            <!-- Para cancelar: Commentar esta sección y descomentar la de abajo -->
+            <div class="flex items-center justify-center gap-2 text-white mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+              </svg>
+              <span class="font-bold text-xs md:text-base">27 de febrero de 2026</span>
+            </div>
+            <div class="flex items-center justify-center gap-2 text-white mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-xs md:text-sm">8:00 AM</span>
+            </div>
+
+            <!-- Mensaje de confirmación -->
+            <div class="text-lg md:text-3xl font-bold text-green-400 mb-2 mt-2">
+              ¡GAMING DAY 2026!
+            </div>
+            <p class="text-gray-300 text-xs md:text-base px-2">
+              ¡Prepárate para la competencia más épica del año! Inscribe tu equipo ahora.
+            </p>
+            <!-- ================= FIN MODO CONFIRMADO ================= -->
+
+            <!--
+            ================= MODO: TORNE0 CANCELADO (Alternativa) =================
+            Descomenta esta sección y comenta la de arriba para mostrar el mensaje de cancelación
+
+            <div class="bg-red-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-bold text-xs md:text-sm shadow-lg animate-pulse inline-block mb-4">
+              CANCELADO
+            </div>
+
+            <div class="opacity-50">
+              <div class="flex items-center justify-center gap-2 text-gray-400 mb-2 line-through">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                </svg>
+                <span class="font-bold text-xs md:text-base">13 de febrero de 2026</span>
+              </div>
+              <div class="flex items-center justify-center gap-2 text-gray-400 mb-4 line-through">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-xs md:text-sm">8:00 AM</span>
+              </div>
+            </div>
+
+            <div class="text-lg md:text-3xl font-bold text-red-400 mb-2 mt-2">
+              TORNEO CANCELADO
+            </div>
+            <p class="text-gray-300 text-xs md:text-base px-2">
+              Este evento ha sido cancelado. Mantente atento para futuras fechas.
+            </p>
+            ================= FIN MODO CANCELADO =================
+            -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schedule -->
+    <section id="schedule" class="mt-8 md:mt-12">
+      <h3 class="text-xl md:text-2xl font-bold">Horarios del gaming</h3>
+      <div class="mt-4 grid md:grid-cols-2 gap-4 md:gap-6">
+        <div class="bg-white/5 p-4 md:p-6 rounded-lg">
+          <h4 class="font-semibold text-base md:text-lg">Por la mañana</h4>
+          <ul class="mt-3 text-gray-200 space-y-2 text-sm md:text-base">
+            <li>08:00 - 11:50 | Gaming</li>
+            <li>11:50 - 12:50 | Almuerzo</li>
+            <li>12:50 - 2:15 | Gaming</li>
+          </ul>
+          <h4 class="font-semibold text-base md:text-lg mt-4">Lugar</h4>
+          <ul class="mt-3 text-gray-200 space-y-2 text-sm md:text-base">
+            <li>Salón de Computec</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rules -->
+    <section id="rules" class="mt-8 md:mt-12 bg-white/5 p-4 md:p-8 rounded-xl">
+      <h3 class="text-xl md:text-2xl font-bold">Reglas y conducta</h3>
+      <p class="mt-3 text-gray-200 text-sm md:text-base">Para asegurar una competencia justa y respetuosa, todas las participantes deben aceptar las siguientes reglas:</p>
+      <ul class="mt-4 space-y-3 text-gray-200 text-sm md:text-base">
+        <li>• <strong>Comportamiento respetuoso:</strong> No se tolerará lenguaje ofensivo ni acoso. Los participantes deben tratar a todos con cortesía y respeto en todo momento.</li>
+        <li>• <strong>Fair play (Juego limpio):</strong> Cualquier intento de hacer trampa (cheats, hacks, exploit de bugs, etc.) resultará en descalificación inmediata.</li>
+        <li>• <strong>Llegar a tiempo:</strong> El jugador o equipo que no se presente en el horario establecido perderá la partida por incomparecencia.</li>
+        <li>• <strong>Uso de dispositivos y software:</strong> Solo se permitirá el uso de hardware y software aprobado previamente por los organizadores. No se permitirá la modificación de los dispositivos durante el evento.</li>
+        <li>• <strong>No fumar:</strong> El consumo de tabaco o productos relacionados está prohibido en las instalaciones del evento.</li>
+        <li>• <strong>Prohibición de armas:</strong> No se permitirá el ingreso con ningún tipo de arma, incluidas armas blancas o de fuego. La seguridad es prioridad.</li>
+        <li>• <strong>Comida y bebidas:</strong> Los participantes deberán cuidar el espacio y los equipos. Evitar derramar alimentos o bebidas sobre los dispositivos de juego.</li>
+        <li>• <strong>Comportamiento adecuado en las áreas comunes:</strong> Mantén siempre un comportamiento apropiado en áreas compartidas, como pasillos, baños y zonas de descanso. Los equipos deben respetar el espacio de los demás jugadores.</li>
+        <li>• <strong>Responsabilidad de los equipos:</strong> Cada equipo es responsable de su propio equipo y pertenencias. En caso de pérdida o daño de equipos, los organizadores no se hacen responsables.</li>
+      </ul>
+    </section>
+
+<!-- ================= GALERÍA SLIDESHOW ================= -->
+<section id="gallery" class="mt-12 bg-white/5 p-8 rounded-xl">
+
+  <h3 class="text-2xl font-bold text-center">Galería de Fotos</h3>
+  <p class="mt-3 text-gray-200 text-center">
+    Echa un vistazo a momentos destacados de ediciones anteriores del Gaming Day.
+  </p>
+
+  <!-- CONTENEDOR SLIDER -->
+  <div class="relative mt-8 max-w-4xl mx-auto overflow-hidden rounded-xl">
+
+    <!-- SLIDES -->
+    <div id="slider" class="flex">
+
+      <!-- Slide 1 -->
+      <div class="min-w-full">
+        <img src="./Galeria%20de%20fotos/imagen1.jpeg"
+             alt="Competencia de FIFA"
+             class="w-full h-64 md:h-[350px] object-contain bg-gray-800">
+        <div class="p-4">
+          <p class="text-sm text-gray-200 text-center">Trabajo en equipo y competencia sana.</p>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="min-w-full">
+        <img src="./Galeria%20de%20fotos/imagen3.jpeg"
+             alt="Mario Kart"
+             class="w-full h-64 md:h-[350px] object-contain bg-gray-800">
+        <div class="p-4">
+          <p class="text-sm text-gray-200 text-center">Carreras emocionantes en Mario Kart.</p>
+        </div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="min-w-full">
+        <img src="./Galeria%20de%20fotos/imagen4.jpeg"
+             alt="Ambiente Gaming Day"
+             class="w-full h-64 md:h-[350px] object-contain bg-gray-800">
+        <div class="p-4">
+          <p class="text-sm text-gray-200 text-center">Ambiente lleno de energía gamer.</p>
+        </div>
+      </div>
+
+      <!-- Slide 5 -->
+      <div class="min-w-full">
+        <img src="./Galeria%20de%20fotos/imagen5.jpeg"
+             alt="Competencia grupal"
+             class="w-full h-64 md:h-[350px] object-contain bg-gray-800">
+        <div class="p-4">
+          <p class="text-sm text-gray-200 text-center">Carreras emocionantes en Mario Kart.</p>
+        </div>
+      </div>
+
+      <!-- Slide 6 -->
+      <div class="min-w-full">
+        <img src="./Galeria%20de%20fotos/imagen6.jpeg"
+             alt="Pantalla principal"
+             class="w-full h-64 md:h-[350px] object-contain bg-gray-800">
+        <div class="p-4">
+          <p class="text-sm text-gray-200 text-center">Todos unidos como familia.</p>
+        </div>
+      </div>
+
+      <!-- Slide CLONADO (copia del Slide 1 para loop infinito real) -->
+      <div class="min-w-full">
+        <img src="./Galeria%20de%20fotos/imagen1.jpeg"
+             alt="Competencia de FIFA"
+             class="w-full h-64 md:h-[350px] object-contain bg-gray-800">
+        <div class="p-4">
+          <p class="text-sm text-gray-200 text-center">Trabajo en equipo y competencia sana.</p>
+        </div>
+      </div>
+
     </div>
-    <div class="sidebar-content">
-      <!-- Cambiar Tema -->
-      <div class="sidebar-item" id="themeToggle">
-        <span class="sidebar-icon">🎨</span>
-        <span class="sidebar-text" data-translate="Cambiar Tema">Cambiar Tema</span>
-        <span class="sidebar-arrow">›</span>
-      </div>
-      <div class="theme-options" id="themeOptions" style="display: none;">
-        <button class="theme-option" id="selectLightMode" data-translate="Modo Claro">
-          <span>☀️</span> Modo Claro
-        </button>
-        <button class="theme-option" id="selectDarkMode" data-translate="Modo Oscuro">
-          <span>🌙</span> Modo Oscuro
-        </button>
-      </div>
 
-      <!-- Cambiar Idioma -->
-      <div class="sidebar-item" id="languageToggle">
-        <span class="sidebar-icon">🌐</span>
-        <span class="sidebar-text" data-translate="Cambiar Idioma">Cambiar Idioma</span>
-        <span class="sidebar-arrow">›</span>
-      </div>
-      <div class="theme-options" id="languageOptions" style="display: none;">
-        <button class="theme-option" id="selectSpanish" data-translate="Español">
-          <span>🇵🇷</span> Español
-        </button>
-        <button class="theme-option" id="selectEnglish" data-translate="English">
-          <span>🇺🇸</span> English
-        </button>
-      </div>
+    <!-- BOTONES -->
+    <button type="button" onclick="prevSlide()"
+      class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 text-white px-3 py-2 rounded-full text-xl">
+      ‹
+    </button>
 
-      <!-- Separador -->
-      <div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;"></div>
+    <button type="button" onclick="nextSlide()"
+      class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 text-white px-3 py-2 rounded-full text-xl">
+      ›
+    </button>
 
-      <!-- Dashboard Administrativo -->
-      <a href="admin.html" class="sidebar-item sidebar-link" style="text-decoration: none; color: inherit; display: flex; align-items: center; padding: 1rem; cursor: pointer; transition: background 0.3s;">
-        <span class="sidebar-icon">⚙️</span>
-        <span class="sidebar-text" data-translate="Dashboard Admin">Dashboard Admin</span>
-        <span class="sidebar-arrow">›</span>
-      </a>
+  </div>
+</section>
+<!-- ===================================================== -->
+
+<!-- ================= SCRIPT SLIDER (1 sola vez) ================= -->
+<script>
+  (function () {
+    const slider = document.getElementById("slider");
+    if (!slider) return;
+
+    const totalSlides = slider.children.length; // incluye el clon
+    const DURATION_MS = 700;
+    const AUTOPLAY_MS = 4000;
+
+    let currentSlide = 0;
+    let isTransitioning = false;
+    let timer = null;
+
+    function setTransition(enabled) {
+      slider.style.transition = enabled ? `transform ${DURATION_MS}ms ease-in-out` : "none";
+    }
+
+    function goTo(index, animate = true) {
+      setTransition(animate);
+      slider.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    window.nextSlide = function () {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      currentSlide++;
+      goTo(currentSlide, true);
+
+      // Cuando llega al slide clonado (último), brinca a 0 sin animación
+      if (currentSlide === totalSlides - 1) {
+        setTimeout(() => {
+          currentSlide = 0;
+          goTo(currentSlide, false);
+          isTransitioning = false;
+        }, DURATION_MS);
+      } else {
+        setTimeout(() => {
+          isTransitioning = false;
+        }, DURATION_MS);
+      }
+    };
+
+    window.prevSlide = function () {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      // Si está en 0 y va atrás: salta al clon sin animación, luego anima al último real
+      if (currentSlide === 0) {
+        currentSlide = totalSlides - 1;   // índice del clon
+        goTo(currentSlide, false);
+
+        setTimeout(() => {
+          currentSlide = totalSlides - 2; // último real
+          goTo(currentSlide, true);
+
+          setTimeout(() => {
+            isTransitioning = false;
+          }, DURATION_MS);
+        }, 20);
+
+        return;
+      }
+
+      currentSlide--;
+      goTo(currentSlide, true);
+
+      setTimeout(() => {
+        isTransitioning = false;
+      }, DURATION_MS);
+    };
+
+    function startAutoplay() {
+      stopAutoplay();
+      timer = setInterval(window.nextSlide, AUTOPLAY_MS);
+    }
+
+    function stopAutoplay() {
+      if (timer) clearInterval(timer);
+      timer = null;
+    }
+
+    // Inicializa
+    goTo(0, false);
+    startAutoplay();
+  })();
+</script>
+<!-- =========================================================== -->
+
+   <!-- Register -->
+<section id="register" class="mt-8 md:mt-12 bg-white/5 p-4 md:p-8 rounded-xl">
+  <h3 class="text-xl md:text-2xl font-bold">Registro</h3>
+  <p class="mt-3 text-gray-200 text-sm md:text-base">¡Regístrate ahora para participar en el Gaming Day! Completa el formulario a continuación.</p>
+
+    <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=LCmpelKgSkOat1vQrUeUdAiDyLMl18FNjjhGYwHC_Y9URVJGR1JZMkcxUzROMThUTEpGNE0yMFc4Qi4u" target="_blank" rel="noopener noreferrer" class="inline-block bg-indigo-600 px-6 py-3 rounded-md font-semibold shadow hover:opacity-95 text-sm md:text-base">
+      Registrarme
+    </a>
+    <p class="text-xs md:text-sm text-gray-300 mt-4">Al registrarte, confirmas que has leído y aceptas el reglamento del Gaming Day. El incumplimiento de las normas podrá conllevar penalidades o descalificación, según determine la organización.</p>
+  </form>
+</section>
+<script>
+  // ✅ TU URL REAL (Web App /exec)
+  const URL_GOOGLE_SHEETS =
+    "https://script.google.com/macros/s/AKfycbycAP95chPQEVNrukg2KmA2pBk9GeIz9xnfH49xeCC9f5KhGIIIGPooOZUmVya5_Ttn/exec";
+
+  document.getElementById("registroGaming").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+
+    // ✅ Estos nombres deben coincidir con tu Apps Script: nombre, apellido, email, grado, juego
+    const datos = {
+      nombre: form.nombre.value.trim(),
+      apellido: form.apellido.value.trim(),
+      email: form.email.value.trim(),
+      grado: form.grado.value,
+      juego: form.juego.value,
+    };
+
+    try {
+      const respuesta = await fetch(URL_GOOGLE_SHEETS, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos),
+      });
+
+      if (respuesta.ok) {
+        alert("✅ Registro enviado correctamente");
+        form.reset();
+      } else {
+        alert("❌ No se pudo guardar el registro. Verifica tu Web App.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("❌ Error de conexión. Abre la página con Live Server (VS Code) o publícala.");
+    }
+  });
+</script>
+
+
+    <!-- Contact -->
+    <section id="contact" class="mt-8 md:mt-12 bg-white/5 p-4 md:p-8 rounded-xl text-center">
+      <h3 class="text-xl md:text-2xl font-bold">Contacto</h3>
+      <p class="mt-3 text-gray-200 text-sm md:text-base">¿Tienes preguntas? Contáctanos a través de los siguientes medios:</p>
+      <ul class="mt-4 space-y-2 text-gray-200 text-sm md:text-base">
+        <li>• <strong>Email:</strong> computec.pcb@gmail.com</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Music Modal -->
+  <div id="music-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div class="bg-gray-900 rounded-lg p-6 max-w-4xl w-full mx-4 relative">
+      <button type="button" id="close-music-modal" class="absolute top-4 right-4 text-white text-2xl hover:text-red-400" aria-label="Cerrar modal de música">&times;</button>
+      <h2 class="text-2xl font-bold text-center mb-6 text-white">Música Gaming</h2>
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- YouTube Iframe -->
+        <div class="flex-1">
+          <iframe id="music-iframe" width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="rounded-lg" title="Reproductor de música gaming"></iframe>
+        </div>
+        <!-- Genre Gallery -->
+        <div class="flex-1 grid grid-cols-2 gap-4">
+          <button type="button" class="genre-btn bg-gray-800 p-4 rounded-lg text-white font-semibold hover:bg-gray-700 transition-all duration-300 border-2 border-transparent hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-400/50" data-video="dQw4w9WgXcQ">
+            <i class="fas fa-headphones text-2xl mb-2"></i><br>Trap Gaming
+          </button>
+          <button type="button" class="genre-btn bg-gray-800 p-4 rounded-lg text-white font-semibold hover:bg-gray-700 transition-all duration-300 border-2 border-transparent hover:border-green-400 hover:shadow-lg hover:shadow-green-400/50" data-video="jfKfPfyJRdk">
+            <i class="fas fa-coffee text-2xl mb-2"></i><br>Lo-Fi Chill
+          </button>
+          <button type="button" class="genre-btn bg-gray-800 p-4 rounded-lg text-white font-semibold hover:bg-gray-700 transition-all duration-300 border-2 border-transparent hover:border-purple-400 hover:shadow-lg hover:shadow-purple-400/50" data-video="8nXqcugV2Yk">
+            <i class="fas fa-dungeon text-2xl mb-2"></i><br>Epic Orchestral
+          </button>
+          <button type="button" class="genre-btn bg-gray-800 p-4 rounded-lg text-white font-semibold hover:bg-gray-700 transition-all duration-300 border-2 border-transparent hover:border-pink-400 hover:shadow-lg hover:shadow-pink-400/50" data-video="y6120QOlsfU">
+            <i class="fas fa-bolt text-2xl mb-2"></i><br>Electronic
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Overlay para cerrar el menú -->
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+<script>
+  // Mobile Menu Toggle (con protección y animaciones smooth)
+  (function () {
+    const btn = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
 
-  <!-- HERO / INICIO -->
-  <section id="inicio" class="hero">
-    <div class="container">
-      <div class="hero-content-centered">
-        <h1 data-translate="Formación vocacional con visión de futuro">Formación vocacional con visión de futuro</h1>
-        <p data-translate="Escuela Superior Vocacional que prepara estudiantes con bases académicas y técnicas para continuar estudios o entrar al mundo laboral.">
-          Escuela Superior Vocacional que prepara estudiantes con bases académicas y técnicas
-          para continuar estudios o entrar al mundo laboral.
-        </p>
-        <div class="hero-actions">
-          <a href="#programas" class="btn btn-primary" data-translate="🎓 Ver programas vocacionales">🎓 Ver programas vocacionales</a>
-          <a href="#escuela" class="btn btn-secondary" data-translate="🏫 Conocer la escuela">🏫 Conocer la escuela</a>
-        </div>
-      </div>
-    </div>
-  </section>
+    let isOpen = false;
 
-  <!-- LA ESCUELA (Acerca, Admisiones, Normas, Apoyo) -->
-  <section id="escuela" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-translate="La escuela">La escuela</h2>
-        <p data-translate="Información básica sobre la institución, matrícula, normas y apoyo a estudiantes.">
-          Información básica sobre la institución, matrícula, normas y apoyo a estudiantes.
-        </p>
-      </div>
-
-      <div class="grid-2">
-        <!-- Quiénes somos -->
-        <article class="card">
-          <div class="card-icon">🏫</div>
-          <h3 data-translate="Quiénes somos">Quiénes somos</h3>
-          <p data-translate="Superior Vocacional Pablo Colón Berdecia es una institución educativa comprometida con la formación académica técnica y vocacional de sus estudiantes. Nuestro enfoque combina el desarrollo de conocimiento, destrezas prácticas y valores, preparando a los jóvenes para continuar estudios postsecundarios, integrarse al mundo laboral y contribuir positivamente en la sociedad.S">
-            Superior Vocacional Pablo Colón Berdecia es una institución educativa comprometida con la formación académica técnica y vocacional de sus estudiantes. Nuestro enfoque combina el desarrollo de conocimiento, destrezas prácticas y valores, preparando a los jóvenes para continuar estudios postsecundarios, integrarse al mundo laboral y contribuir positivamente en la sociedad.
-          </p>
-          <a
-            href="quienes-somos.html"
-            class="btn btn-secondary btn-small"
-            data-translate="Conoce más sobre nosotros"
-          >
-            Conoce más sobre nosotros
-          </a>
-        </article>
-
-        <!-- Admisiones -->
-        <article class="card">
-          <div class="card-icon">📝</div>
-          <h3 data-translate="Admisiones / Matrícula">Admisiones / Matrícula</h3>
-          <p data-translate="Requisitos generales de matrícula:">Requisitos generales de matrícula:</p>
-          <ul>
-            <li data-translate="Formulario de solicitud completado">Formulario de solicitud completado</li>
-            <li data-translate="Récord de notas y documentos oficiales">Récord de notas y documentos oficiales</li>
-            <li data-translate="Identificación del padre, madre o encargado">Identificación del padre, madre o encargado</li>
-          </ul>
-          <p class="note" data-translate="Fechas y detalles se informan por la oficina escolar y comunicados oficiales.">
-            Fechas y detalles se informan por la oficina escolar y comunicados oficiales.
-          </p>
-          <a
-            href="https://de.pr.gov/MATRICULA//"
-            class="btn btn-secondary btn-small"
-            target="_blank"
-            rel="noopener"
-            data-translate="Ver página de Matrícula"
-          >
-            Ver página de Matrícula
-          </a>
-        </article>
-      </div>
-
-      <div class="grid-2 section-gap">
-        <!-- Normas -->
-        <article class="card">
-          <div class="card-icon">📋</div>
-          <h3 data-translate="Normas y reglamentos">Normas y reglamentos</h3>
-          <p data-translate="Normas básicas de convivencia y seguridad:">Normas básicas de convivencia y seguridad:</p>
-          <ul>
-            <li data-translate="Respeto entre toda la comunidad escolar.">Respeto entre toda la comunidad escolar.</li>
-            <li data-translate="Uso correcto del uniforme y equipos de seguridad.">Uso correcto del uniforme y equipos de seguridad.</li>
-            <li data-translate="Puntualidad, asistencia y cuidado de las instalaciones.">Puntualidad, asistencia y cuidado de las instalaciones.</li>
-          </ul>
-          <p class="note">
-            <span data-translate="Detalles en el">Detalles en el</span> <strong data-translate="Manual del Estudiante">Manual del Estudiante</strong> <span data-translate="y el">y el</span> <strong data-translate="Reglamento Escolar">Reglamento Escolar</strong>.
-          </p>
-          <a
-            href="normas-reglamentos.html"
-            class="btn btn-secondary btn-small"
-            data-translate="Ver reglamento completo"
-          >
-            Ver reglamento completo
-          </a>
-        </article>
-
-        <!-- Apoyo socioemocional -->
-        <article class="card">
-          <div class="card-icon">💚</div>
-          <h3 data-translate="Apoyo socioemocional">Apoyo socioemocional</h3>
-          <p data-translate="Servicio de consejería, trabajo social y apoyo psicológico para el bienestar del estudiantado.">
-            Servicio de consejería, trabajo social y apoyo psicológico para el bienestar del estudiantado.
-          </p>
-          <a
-            href="https://hackerpcb1.github.io/Apoyo-Socioemocional-PCB/"
-            class="btn btn-secondary btn-small"
-            target="_blank"
-            rel="noopener"
-            data-translate="Ver página de apoyo socioemocional"
-          >
-            Ver página de apoyo socioemocional
-          </a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROGRAMAS VOCACIONALES (SLIDESHOW) -->
-  <section id="programas" class="section section-alt">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-translate="Programas y talleres vocacionales">Programas y talleres vocacionales</h2>
-        <p data-translate="Oferta vocacional disponible para los estudiantes de la escuela.">
-          Oferta vocacional disponible para los estudiantes de la escuela.
-        </p>
-      </div>
-
-      <!-- Slideshow Container -->
-      <div class="slideshow-container">
-        <div class="slideshow-wrapper">
-          <!-- Slides -->
-          <div class="slide fade active">
-            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
-              <img src="galeriaslideshow/pcbsystemlogo1.jpeg" alt="PCB System (SaaS)">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Creado por estudiantes. Diseñado para el mundo.">Powered by Computec</h3>
-                  <p data-translate="No es un proyecto escolar. Es un legado al futuro de la educación.">No es un proyecto escolar. Es un legado al futuro de la educación.</p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="slide fade">
-            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
-              <img src="galeriaslideshow/epaFFA.jpeg" alt="Elaboración de Productos Agricolas">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Procesamiento y Desarrollo de Productos Agrícolas">Sin agricultores no hay comida, sin comida no hay vida</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="slide fade">
-            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
-              <img src="galeriaslideshow/acfccla.jpeg" alt="Artes Culinarias">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Cocina Profesional y Gestión Gastronómica">El arte de la buena cocina</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="slide fade">
-            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
-              <img src="galeriaslideshow/computecskillsusa.jpeg" alt="Computec">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Formación práctica y tecnológica">Formación práctica y tecnológica</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="slide fade">
-            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
-              <img src="galeriaslideshow/cosmetologiaskillsusa.jpeg" alt="Cosmetología">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Belleza y Cuidado Personal Profesional">Belleza y Cuidado Personal Profesional</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="slide fade">
-            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
-              <img src="galeriaslideshow/enfermeriahosa.jpg" alt="Enfermería">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Cuidado Integral de la Salud">Cuidado Integral de la Salud</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="slide fade">
-            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
-              <img src="galeriaslideshow/decaempresarismo.jpg" alt="Representante de Ventas y Servicios Empresariales">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Representante de Ventas y Servicios Empresariales">Representante de Ventas y Servicios Empresariales</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="slide fade">
-            <a href="https://hackerpcb1.github.io/Casa-Abierta/" target="_blank" rel="noopener">
-              <img src="galeriaslideshow/seguridadpublica.jpg" alt="Seguridad Publica">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Seguridad Publica">Servicio de Seguridad Publica</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <!-- Navigation Arrows -->
-          <button class="slide-prev" onclick="changeSlide(-1)" aria-label="Anterior">❮</button>
-          <button class="slide-next" onclick="changeSlide(1)" aria-label="Siguiente">❯</button>
-        </div>
-
-        <!-- Dots/Indicators -->
-        <div class="slide-dots">
-          <span class="dot active" onclick="currentSlide(1)"></span>
-          <span class="dot" onclick="currentSlide(2)"></span>
-          <span class="dot" onclick="currentSlide(3)"></span>
-          <span class="dot" onclick="currentSlide(4)"></span>
-          <span class="dot" onclick="currentSlide(5)"></span>
-          <span class="dot" onclick="currentSlide(6)"></span>
-          <span class="dot" onclick="currentSlide(7)"></span>
-          <span class="dot" onclick="currentSlide(8)"></span>
-          <span class="dot" onclick="currentSlide(9)"></span>
-        </div>
-
-        <!-- CTA Button -->
-        <div class="programs-cta" style="margin-top: 2rem;">
-          <a
-            href="https://hackerpcb1.github.io/Casa-Abierta/"
-            class="btn btn-primary"
-            target="_blank"
-            rel="noopener"
-            data-translate="Ver todos los programas y Casa Abierta"
-          >
-            Ver todos los programas y Casa Abierta
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICIOS AL ESTUDIANTE -->
-  <section id="servicios" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-translate="Servicios al estudiante">Servicios al estudiante</h2>
-        <p data-translate="Servicios de apoyo que la escuela ofrece a su población estudiantil.">
-          Servicios de apoyo que la escuela ofrece a su población estudiantil.
-        </p>
-      </div>
-
-      <div class="grid-3">
-        <!-- Biblioteca -->
-        <article class="card service-card">
-          <div class="service-icon">📚</div>
-          <h3 data-translate="Biblioteca">Biblioteca</h3>
-          <p data-translate="Espacio de lectura, consulta y estudio.">Espacio de lectura, consulta y estudio.</p>
-          <a href="biblioteca.html" class="btn btn-secondary btn-small" data-translate="Ver detalles">
-            Ver detalles
-          </a>
-        </article>
-
-        <!-- Comedor escolar -->
-        <article class="card service-card">
-          <div class="service-icon">🍽️</div>
-          <h3 data-translate="Comedor escolar">Comedor escolar</h3>
-          <p data-translate="Servicio de alimentación escolar.">Servicio de alimentación escolar.</p>
-          <a href="comedor.html" class="btn btn-secondary btn-small" data-translate="Ver detalles">
-            Ver detalles
-          </a>
-        </article>
-
-        <!-- Calcular IGS -->
-        <article class="card service-card">
-          <div class="service-icon">🎓</div>
-          <h3 data-translate="Calcular IGS">Calcular IGS</h3>
-          <p data-translate="Calculadora de Índice General de Solicitud.">Calculadora de Índice General de Solicitud.</p>
-          <a href="https://admisiones.upr.edu/calculadora-igs/" class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Calcular ahora">
-            Calcular ahora
-          </a>
-        </article>
-
-        <!-- Correos Electrónicos de Maestros -->
-        <article class="card service-card">
-          <div class="service-icon">📧</div>
-          <h3 data-translate="Correos Electrónicos">Correos Electrónicos</h3>
-          <p data-translate="Listado completo de correos de maestros.">Listado completo de correos de maestros.</p>
-          <a href="correos-maestros-tabla.html" class="btn btn-secondary btn-small" data-translate="Ver listado">
-            Ver listado
-          </a>
-        </article>
-
-        <!-- Microsoft Teams -->
-        <article class="card service-card">
-          <div class="service-icon">📱</div>
-          <h3 data-translate="Microsoft Teams">Microsoft Teams</h3>
-          <p data-translate="Acceso a clases virtuales y colaboración en línea.">Acceso a clases virtuales y colaboración en línea.</p>
-          <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=5e3ce6c0-2b1f-4285-8d4b-75ee78787346&scope=openId%20profile%20openid%20offline_access&redirect_uri=https%3A%2F%2Fteams.microsoft.com%2Fv2&client-request-id=019be6e8-5a6c-7d37-b129-894db9c8d8ef&response_mode=fragment&response_type=code&x-client-SKU=msal.js.browser&x-client-VER=3.30.0&client_info=1&code_challenge=6ZqFlWHLh3RpNojFPjlqU4h9HyciQoVF24L_a1_WF4A&code_challenge_method=S256&nonce=019be6e8-5a6d-7bdb-9075-c5ce0aa099ac&state=eyJpZCI6IjAxOWJlNmU4LTVhNmMtNzY0OS1hNGRlLWQ4YTQ0MTU4OGMxYyIsIm1ldGEiOnsiaW50ZXJhY3Rpb25UeXBlIjoicmVkaXJlY3QifX0%3D%7Chttps%3A%2F%2Fteams.microsoft.com%2Fv2%2F%3Fculture%3Den-us%26country%3Dus%26enablemcasfort21%3Dtrue" class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Acceder a Teams">
-            Acceder a Teams
-          </a>
-        </article>
-
-        <!-- Power DE -->
-        <article class="card service-card">
-          <div class="service-icon">📊</div>
-          <h3 data-translate="Power DE">Power DE</h3>
-          <p data-translate="Portal de información estudiantil del Departamento de Educación.">Portal de información estudiantil del Departamento de Educación.</p>
-          <a href="https://informacionestudiantil.dde.pr/public/create_multi_student_account.html" class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Acceder a Power DE">
-            Acceder a Power DE
-          </a>
-        </article>
-
-
-
-        <!-- Servicios Técnicos -->
-        <article class="card service-card">
-          <div class="service-icon">🔧</div>
-          <h3 data-translate="Servicios Técnicos">Servicios Técnicos</h3>
-          <p data-translate="Soporte técnico y mantenimiento de equipos escolares.">Soporte técnico y mantenimiento de equipos escolares.</p>
-          <a href="https://hackerpcb1.github.io/Servicio-Tecnico/" class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Acceder al servicio">
-            Acceder al servicio
-          </a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- CALENDARIO ESCOLAR -->
-  <section id="calendario-escolar" class="section section-alt">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-translate="Calendario escolar 2025–2026">Calendario escolar 2025–2026</h2>
-        <p data-translate="Calendario oficial del Departamento de Educación de Puerto Rico para el año escolar 2025–2026.">
-          Calendario oficial del Departamento de Educación de Puerto Rico para el año escolar 2025–2026.
-        </p>
-      </div>
-
-      <div class="calendar-wrapper">
-        <iframe
-          src="https://de.pr.gov/wp-content/uploads/2025/06/Calendario-Escolar-2025-2026-1.pdf"
-          title="Calendario Escolar 2025-2026"
-        ></iframe>
-
-        <div class="calendar-actions">
-          <a
-            class="btn btn-primary"
-            href="https://de.pr.gov/wp-content/uploads/2025/06/Calendario-Escolar-2025-2026-1.pdf"
-            target="_blank"
-            rel="noopener"
-            data-translate="Descargar calendario en PDF"
-          >
-            Descargar calendario en PDF
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- VIDA ESTUDIANTIL (Noticias, Eventos, Gaming Day, Redes) -->
-  <section id="vida" class="section section-alt">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-translate="Vida estudiantil">Vida estudiantil</h2>
-        <p data-translate="Noticias, actividades y enlaces a iniciativas especiales.">
-          Noticias, actividades y enlaces a iniciativas especiales.
-        </p>
-      </div>
-
-      <div class="grid-2">
-        <div>
-          <h3 data-translate="Noticias recientes">Noticias recientes</h3>
-          <article class="card">
-            <h4 data-translate="Inscripción abierta">Inscripción abierta</h4>
-            <a href="promociones.html" class="btn btn-primary" data-translate="🎓 Ver promociones">🎓 Ver promociones</a>
-            <a href="https://www.instagram.com/clase.eunoiia/" class="btn btn-primary" target="_blank" data-translate="🎓 Clase Eunoiia">🎓 Clase Eunoiia</a>
-          </article>
-        </div>
-
-        <div>
-          <h3 data-translate="Próximos eventos">Próximos eventos</h3>
-          <ul class="event-list">
-            <li><strong data-translate="2 al 6 de septiembre 2026">2 al 6 de febrero de 2026:</strong> <span data-translate="Semana Nacional de Consejería Profesional en el Escenario Escolar">Semana Nacional de Consejería Profesional en el Escenario Escolar</span></li>
-            <li><strong data-translate="4 de febrero de 2026:">4 de febrero de 2026:</strong> <span data-translate="Dia Mundial contra el cáncer">Dia Mundial contra el cáncer</span></li>
-            <li><strong data-translate="9 al 13 de febrero de 2026:">9 al 13 de febrero de 2026:</strong> <span data-translate="Semana del Programa de Salud Escolar. Semana de los Albergues, Rescatistas de Animales y de la Concienciación y la Adopción de Mascotas en Puerto Rico (Ley 5-2024)">Semana del Programa de Salud Escolar. Semana de los Albergues, Rescatistas de Animales y de la Concienciación y la Adopción de Mascotas en Puerto Rico (Ley 5-2024)</span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="gaming-block">
-        <div class="gaming-header">
-          <h3 data-translate="🎮 Gaming Day – Departamento de Tecnología">🎮 Gaming Day – Departamento de Tecnología</h3>
-          <span class="tag-gaming" data-translate="✨ Actividad especial">✨ Actividad especial</span>
-        </div>
-        <div class="grid-2">
-          <article class="card">
-            <p data-translate="Actividad que integra videojuegos, programación y trabajo en equipo como herramienta educativa.">
-              Actividad que integra videojuegos, programación y trabajo en equipo como herramienta educativa.
-            </p>
-          </article>
-          <article class="card">
-            <p class="note" data-translate="La información de fechas, categorías y registro se publica previamente en la escuela y redes.">
-              La información de fechas, categorías y registro se publica previamente en la escuela y redes.
-            </p>
-            <a
-              href="https://hackerpcb3-byte.github.io/Gaming_Day_4/"
-              class="btn btn-secondary btn-small"
-              target="_blank"
-              rel="noopener"
-              data-translate="Ver página del Gaming Day"
-            >
-              Ver página del Gaming Day
-            </a>
-          </article>
-        </div>
-      </div>
-
-
-    </div>
-  </section>
-
-  <!-- CONTACTO -->
-  <section id="contacto" class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-translate="Contacto">Contacto</h2>
-        <p data-translate="Medios principales para comunicarse con la escuela.">
-          Medios principales para comunicarse con la escuela.
-        </p>
-      </div>
-
-      <div class="contact-centered">
-        <div class="contact-info">
-          <p>
-            <strong data-translate="Dirección:">Dirección:</strong>
-            <span data-translate="Carretera 156 salida hacia Comerío, Barranquitas, P. R.">Carretera 156 salida hacia Comerío, Barranquitas, P. R.</span>
-          </p>
-          <p><strong data-translate="Teléfono:">Teléfono:</strong> +1 787-857-2897</p>
-
-          <p><strong data-translate="Horario de oficina:">Horario de oficina:</strong> <span data-translate="Lunes a Viernes · 7:30 AM – 2:30 PM">Lunes a Viernes · 7:30 AM – 2:30 PM</span></p>
-
-          <div style="margin-top: 1.5rem; text-align: center;">
-            <a
-              href="https://www.facebook.com/p/Escuela-Superior-Vocacional-Pablo-Col%C3%B3n-Berdecia-100057389681928/?locale=es_LA"
-              class="btn btn-secondary btn-small"
-              target="_blank"
-              rel="noopener"
-              style="display: inline-flex; align-items: center; gap: 0.5rem;"
-              data-translate="📘 Síguenos en Facebook"
-            >
-              📘 Síguenos en Facebook
-            </a>
-          </div>
-        </div>
-
-        
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container">
-      <p data-translate="© 2026 Escuela Superior Vocacional Pablo Colón Berdecia. Todos los derechos reservados.">&copy; 2026 Escuela Superior Vocacional Pablo Colón Berdecia. Todos los derechos reservados.</p>
-    </div>
-  </footer>
-
-  <script>
-    // Menu hamburguesa
-    const menuToggle = document.querySelector('.menu-toggle');
-    const mainNav = document.querySelector('.main-nav');
-    const navLinks = document.querySelectorAll('.main-nav a');
-
-    menuToggle.addEventListener('click', () => {
-      menuToggle.classList.toggle('active');
-      mainNav.classList.toggle('active');
-    });
-
-    // Cerrar menú al hacer click en un enlace
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        mainNav.classList.remove('active');
-      });
-    });
-
-    // Cerrar menú al hacer click fuera
-    document.addEventListener('click', (e) => {
-      if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
-        menuToggle.classList.remove('active');
-        mainNav.classList.remove('active');
-      }
-    });
-
-    // Header scroll effect
-    const header = document.querySelector('.site-header');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.pageYOffset;
-
-      if (currentScroll > 50) {
-        header.classList.add('scrolled');
+    btn.addEventListener('click', function () {
+      if (isOpen) {
+        // Cerrar menú con efecto roll smooth hacia arriba
+        menu.classList.remove('show');
+        menu.classList.add('hide');
+        setTimeout(() => {
+          menu.classList.add('hidden');
+          menu.classList.remove('hide');
+          isOpen = false;
+        }, 500);
       } else {
-        header.classList.remove('scrolled');
-      }
-
-      lastScroll = currentScroll;
-    });
-
-    // Animación de elementos al hacer scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, observerOptions);
-
-    // Observar tarjetas y secciones
-    document.querySelectorAll('.card, .service-card, .resource-card, .social-card').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(30px)';
-      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      observer.observe(el);
-    });
-
-    // Efecto parallax suave en el hero
-    let lastScrollY = 0;
-    let ticking = false;
-
-    function updateParallax() {
-      const scrolled = window.pageYOffset;
-      const hero = document.querySelector('.hero');
-
-      if (hero && scrolled < hero.offsetHeight * 1.5) {
-        // Parallax en el background - movimiento más suave
-        hero.style.backgroundPositionY = `${scrolled * 0.3}px`;
-      }
-
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-      lastScrollY = window.pageYOffset;
-
-      if (!ticking) {
-        window.requestAnimationFrame(updateParallax);
-        ticking = true;
+        // Abrir menú con efecto roll smooth hacia abajo
+        menu.classList.remove('hidden', 'hide');
+        // Pequeño delay para que la transición se vea
+        setTimeout(() => {
+          menu.classList.add('show');
+          isOpen = true;
+        }, 10);
       }
     });
+  })();
+</script>
 
-    // Smooth scroll para navegación
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      });
-    });
-  </script>
+<!-- Footer -->
+<footer class="bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-900 text-white mt-16">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-  <!-- Slideshow Script -->
-  <script>
-    // Slideshow functionality
-    let slideIndex = 1;
-    let slideTimer;
+      <!-- Columna 1: Información -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Gaming Day</h4>
+        <p class="text-gray-300 text-sm">
+          Torneo de videojuegos organizado por el curso de Computec en la Escuela Superior Vocacional Pablo Colón Berdecia.
+        </p>
+        <div class="mt-4 flex items-center gap-3">
+          <img src="Logo_PCB.png" alt="Logo PCB" class="h-16 w-16 object-contain">
+          <img src="LogoComputec.png" alt="Logo Computec" class="h-16 w-16 object-contain">
+        </div>
+      </div>
 
-    // Initialize slideshow
-    document.addEventListener('DOMContentLoaded', function() {
-      showSlides(slideIndex);
-      startAutoSlide();
-    });
+      <!-- Columna 2: Enlaces Rápidos -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Enlaces Rápidos</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#games" class="text-gray-300 hover:text-white transition-colors">Juegos</a></li>
+          <li><a href="#schedule" class="text-gray-300 hover:text-white transition-colors">Horario</a></li>
+          <li><a href="#rules" class="text-gray-300 hover:text-white transition-colors">Reglas</a></li>
+          <li><a href="#gallery" class="text-gray-300 hover:text-white transition-colors">Galería</a></li>
+          <li><a href="#contact" class="text-gray-300 hover:text-white transition-colors">Contacto</a></li>
+        </ul>
+      </div>
 
-    // Auto slide every 5 seconds
-    function startAutoSlide() {
-      slideTimer = setInterval(() => {
-        changeSlide(1);
-      }, 5000);
-    }
+      <!-- Columna 3: Contacto -->
+      <div>
+        <h4 class="text-lg font-bold mb-4">Contacto</h4>
+        <ul class="space-y-2 text-sm text-gray-300">
+          <li>
+            <strong>Email:</strong><br>
+            <a href="mailto:computec.pcb@gmail.com" class="hover:text-white transition-colors">computec.pcb@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-    // Reset timer when user interacts
-    function resetTimer() {
-      clearInterval(slideTimer);
-      startAutoSlide();
-    }
+    <!-- Línea divisoria -->
+    <div class="border-t border-white/20 mt-8 pt-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-300">
+        <p>&copy; 2026 Gaming Day - Escuela Superior Vocacional Pablo Colón Berdecia</p>
+        <p>Organizado por <strong class="text-white">Computec</strong></p>
+      </div>
+    </div>
+  </div>
+</footer>
 
-    // Next/previous controls
-    function changeSlide(n) {
-      resetTimer();
-      showSlides(slideIndex += n);
-    }
-
-    // Thumbnail image controls
-    function currentSlide(n) {
-      resetTimer();
-      showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-      let i;
-      const slides = document.getElementsByClassName("slide");
-      const dots = document.getElementsByClassName("dot");
-
-      if (!slides.length) return;
-
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-
-      // Hide all slides
-      for (i = 0; i < slides.length; i++) {
-        slides[i].classList.remove("active");
-      }
-
-      // Remove active class from all dots
-      for (i = 0; i < dots.length; i++) {
-        dots[i].classList.remove("active");
-      }
-
-      // Show current slide
-      slides[slideIndex-1].classList.add("active");
-      dots[slideIndex-1].classList.add("active");
-    }
-
-    // Pause on hover
-    const slideshowContainer = document.querySelector('.slideshow-container');
-    if (slideshowContainer) {
-      slideshowContainer.addEventListener('mouseenter', () => {
-        clearInterval(slideTimer);
-      });
-
-      slideshowContainer.addEventListener('mouseleave', () => {
-        startAutoSlide();
-      });
-    }
-
-    // Touch support for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    if (slideshowContainer) {
-      slideshowContainer.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      });
-
-      slideshowContainer.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-      });
-    }
-
-    function handleSwipe() {
-      if (touchEndX < touchStartX - 50) {
-        changeSlide(1); // Swipe left
-      }
-      if (touchEndX > touchStartX + 50) {
-        changeSlide(-1); // Swipe right
-      }
-    }
-  </script>
-
-  <script src="script.js"></script>
-  <script src="image-popup.js"></script>
-  <script src="notification-bot.js"></script>
 </body>
 </html>
-
-
-
-
