@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Dashboard Administrativo</title>
+  <script src="js/crypto-utils.js"></script>
+  <script src="js/jwt-simple.js"></script>
+  <script src="js/auth-jwt.js"></script>
   <style>
     * {
       margin: 0;
@@ -25,7 +29,7 @@
       background: white;
       padding: 3rem;
       border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       max-width: 400px;
       width: 100%;
     }
@@ -137,6 +141,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="login-container">
     <div class="login-header">
@@ -168,7 +173,86 @@
     </div>
   </div>
 
-  <script src="auth.js"></script>
-</body>
-</html>
+  <script>
+    // Login con JWT y encriptación
+    (async function () {
+      'use strict';
 
+      const loginForm = document.getElementById('loginForm');
+      const errorMessage = document.getElementById('errorMessage');
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+
+      // Verificar si ya está autenticado
+      const isAuth = await AuthJWT.isAuthenticated();
+      if (isAuth) {
+        window.location.href = 'admin.html';
+        return;
+      }
+
+      // Manejar envío del formulario
+      loginForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
+
+        // Validar campos
+        if (!username || !password) {
+          showError('Por favor, completa todos los campos');
+          return;
+        }
+
+        // Deshabilitar botón mientras se procesa
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = '🔐 Verificando...';
+
+        try {
+          // Intentar login
+          const result = await AuthJWT.login(username, password);
+
+          if (result.success) {
+            // Mostrar mensaje de éxito
+            submitBtn.textContent = '✅ Acceso concedido';
+            submitBtn.style.background = 'linear-gradient(135deg, #22C55E 0%, #16A34A 100%)';
+
+            // Redirigir al dashboard
+            setTimeout(() => {
+              window.location.href = 'admin.html';
+            }, 500);
+          }
+        } catch (error) {
+          // Mostrar error
+          showError(error.message || 'Error al iniciar sesión');
+          passwordInput.value = '';
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      });
+
+      // Función para mostrar errores
+      function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.classList.add('show');
+
+        setTimeout(() => {
+          errorMessage.classList.remove('show');
+        }, 3000);
+      }
+
+      // Limpiar error al escribir
+      usernameInput.addEventListener('input', () => {
+        errorMessage.classList.remove('show');
+      });
+
+      passwordInput.addEventListener('input', () => {
+        errorMessage.classList.remove('show');
+      });
+
+    })();
+  </script>
+</body>
+
+</html>

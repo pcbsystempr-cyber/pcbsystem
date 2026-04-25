@@ -67,6 +67,9 @@ const translations = {
     'Identificación del padre, madre o encargado': 'Identificación del padre, madre o encargado',
     'Fechas y detalles se informan por la oficina escolar y comunicados oficiales.': 'Fechas y detalles se informan por la oficina escolar y comunicados oficiales.',
     'Normas y reglamentos': 'Normas y reglamentos',
+    'Conoce las normas que rigen nuestra convivencia escolar': 'Conoce las normas que rigen nuestra convivencia escolar',
+    '📘 Reglamento General de Estudiantes y Asistencia Obligatoria': '📘 Reglamento General de Estudiantes y Asistencia Obligatoria',
+    'Esta versión integra el contenido completo del reglamento del Departamento de Educación de Puerto Rico en un formato más claro, navegable y alineado al estilo visual del PCB System.': 'Esta versión integra el contenido completo del reglamento del Departamento de Educación de Puerto Rico en un formato más claro, navegable y alineado al estilo visual del PCB System.',
     'Normas básicas de convivencia y seguridad:': 'Normas básicas de convivencia y seguridad:',
     'Respeto entre toda la comunidad escolar.': 'Respeto entre toda la comunidad escolar.',
     'Uso correcto del uniforme y equipos de seguridad.': 'Uso correcto del uniforme y equipos de seguridad.',
@@ -329,6 +332,334 @@ const translations = {
     'Materia/Departamento': 'Materia/Departamento',
     'Información Importante': 'Información Importante',
     'Para comunicarte con un maestro, puedes enviar un correo electrónico directamente haciendo clic en la dirección de correo. Se recomienda incluir el nombre del estudiante y el asunto claramente en el mensaje.': 'Para comunicarte con un maestro, puedes enviar un correo electrónico directamente haciendo clic en la dirección de correo. Se recomienda incluir el nombre del estudiante y el asunto claramente en el mensaje.',
+
+    // index.html — Popup Novedades
+    '📢 ¡Novedades!': '📢 ¡Novedades!',
+    '¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.': '¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.',
+    'Haz clic para ver más': 'Haz clic para ver más',
+    'Ver Promociones': 'Ver Promociones',
+
+    // index.html — Clase Graduanda
+    'Información importante para los estudiantes de la clase graduanda.': 'Información importante para los estudiantes de la clase graduanda.',
+    'Calendario': 'Calendario',
+    'Fechas importantes y cronograma de actividades.': 'Fechas importantes y cronograma de actividades.',
+    'Ver calendario': 'Ver calendario',
+    'Actividades': 'Actividades',
+    'Eventos y actividades de la clase.': 'Eventos y actividades de la clase.',
+    'Ver actividades': 'Ver actividades',
+    'Fotos': 'Fotos',
+    'Reservación de fotos formales.': 'Reservación de fotos formales.',
+    'Reservar': 'Reservar',
+    '¡Pronto!': '¡Pronto!',
+    'Esta sección estará disponible muy pronto.': 'Esta sección estará disponible muy pronto.',
+    'Clase Graduanda 2026': 'Clase Graduanda 2026',
+    '¡Mantente pendiente! 🎉': '¡Mantente pendiente! 🎉',
+    '¡Entendido!': '¡Entendido!',
+
+    // quienes-somos.html
+    'Conoce nuestra historia, misión y visión': 'Conoce nuestra historia, misión y visión',
+    '👋 Bienvenidos': '👋 Bienvenidos',
+    'Les damos la más cordial bienvenida a nuestra Escuela Pablo Colón Berdecia del Distrito Escolar de Barranquitas. Nuestra misión es ser colaboradores efectivos en el proceso educativo que se desarrolla en nuestra escuela para garantizarles a todos nuestros estudiantes una educación de excelencia que le permita desarrollar al máximo sus capacidades intelectuales y los valores morales y sociales que necesitan para disfrutar de una mejor calidad de vida.': 'Les damos la más cordial bienvenida a nuestra Escuela Pablo Colón Berdecia del Distrito Escolar de Barranquitas. Nuestra misión es ser colaboradores efectivos en el proceso educativo que se desarrolla en nuestra escuela para garantizarles a todos nuestros estudiantes una educación de excelencia que le permita desarrollar al máximo sus capacidades intelectuales y los valores morales y sociales que necesitan para disfrutar de una mejor calidad de vida.',
+    '"Nuestra escuela se compromete a formar ciudadanos responsables y capaces de contribuir positivamente a la sociedad."': '"Nuestra escuela se compromete a formar ciudadanos responsables y capaces de contribuir positivamente a la sociedad."',
+    'Director Escolar': 'Director Escolar',
+    '📚 Nuestra Historia': '📚 Nuestra Historia',
+    'historia-pcb': 'historia-pcb',
+    '🎯 Misión': '🎯 Misión',
+    'mision-pcb': 'mision-pcb',
+    '🌟 Visión': '🌟 Visión',
+    'vision-pcb': 'vision-pcb',
+    '🏛️ Departamento de Educación de Puerto Rico': '🏛️ Departamento de Educación de Puerto Rico',
+    '🌟 Visión del Departamento': '🌟 Visión del Departamento',
+    'vision-depr': 'vision-depr',
+    '🎯 Misión del Departamento': '🎯 Misión del Departamento',
+    'mision-depr': 'mision-depr',
+
+    // index.html — La Escuela
+    'Conoce más sobre nosotros': 'Conoce más sobre nosotros',
+    'Ver página de Matrícula': 'Ver página de Matrícula',
+    'Ver reglamento completo': 'Ver reglamento completo',
+    '🎓 Clase Graduanda 2026': '🎓 Clase Graduanda 2026',
+
+    // index.html — Programas vocacionales
+    'Creado por estudiantes. Diseñado para el mundo.': 'Creado por estudiantes. Diseñado para el mundo.',
+    'No es un proyecto escolar. Es un legado al futuro de la educación.': 'No es un proyecto escolar. Es un legado al futuro de la educación.',
+    'Procesamiento y Desarrollo de Productos Agrícolas': 'Procesamiento y Desarrollo de Productos Agrícolas',
+    'Haz clic para ver más': 'Haz clic para ver más',
+    'Cocina Profesional y Gestión Gastronómica': 'Cocina Profesional y Gestión Gastronómica',
+    'Belleza y Cuidado Personal Profesional': 'Belleza y Cuidado Personal Profesional',
+    'Cuidado Integral de la Salud': 'Cuidado Integral de la Salud',
+    'Representante de Ventas y Servicios Empresariales': 'Representante de Ventas y Servicios Empresariales',
+    'Seguridad Publica': 'Seguridad Publica',
+    'Ver todos los programas y Casa Abierta': 'Ver todos los programas y Casa Abierta',
+
+    // index.html — Servicios al estudiante
+    'DECACoop': 'DECACoop',
+    'Portal de mercadeo y publicidad institucional DECACoop.': 'Portal de mercadeo y publicidad institucional DECACoop.',
+    'Acceder a DECACoop': 'Acceder a DECACoop',
+    'Computec': 'Computec',
+    'Programa de habilidades computacionales y tecnológicas.': 'Programa de habilidades computacionales y tecnológicas.',
+    'Acceder a Computec': 'Acceder a Computec',
+    'Recursos para Estudiantes': 'Recursos para Estudiantes',
+    'Acceso a materiales educativos, guías y recursos de apoyo.': 'Acceso a materiales educativos, guías y recursos de apoyo.',
+    'Ver recursos': 'Ver recursos',
+    'Preparación Académica': 'Preparación Académica',
+    'Repasos para college, exámenes de avanzado, pruebas CRECE, ASVA y más.': 'Repasos para college, exámenes de avanzado, pruebas CRECE, ASVA y más.',
+
+    // index.html — Servicios al maestro
+    'Servicios al maestro': 'Servicios al maestro',
+    'Herramientas y recursos para el personal docente.': 'Herramientas y recursos para el personal docente.',
+    'Impresión para Maestros': 'Impresión para Maestros',
+    'Sistema de impresión y copias para materiales educativos.': 'Sistema de impresión y copias para materiales educativos.',
+    'Acceder a Impresión': 'Acceder a Impresión',
+    'Referir Estudiante': 'Referir Estudiante',
+    'Sistema de referencia para identificar estudiantes que necesitan apoyo.': 'Sistema de referencia para identificar estudiantes que necesitan apoyo.',
+
+    // index.html — Portal de Padres
+    'Recursos y herramientas para que los padres y tutores estén siempre informados y conectados con la escuela.': 'Recursos y herramientas para que los padres y tutores estén siempre informados y conectados con la escuela.',
+    'Calificaciones': 'Calificaciones',
+    'Monitorea el progreso académico y las notas de tu hijo en tiempo real.': 'Monitorea el progreso académico y las notas de tu hijo en tiempo real.',
+    'Ver calificaciones': 'Ver calificaciones',
+    'Comunicados Escolares': 'Comunicados Escolares',
+    'Notificaciones, avisos importantes y mensajes directos de la escuela.': 'Notificaciones, avisos importantes y mensajes directos de la escuela.',
+    'Ver comunicados': 'Ver comunicados',
+    'Formularios y Permisos': 'Formularios y Permisos',
+    'Autorización de actividades, permisos escolares y documentos oficiales.': 'Autorización de actividades, permisos escolares y documentos oficiales.',
+    'Ver formularios': 'Ver formularios',
+    'Plan de Excursión': 'Plan de Excursión',
+    'Completa, guarda y exporta el formulario oficial de autorización de excursiones con todos sus anejos.': 'Completa, guarda y exporta el formulario oficial de autorización de excursiones con todos sus anejos.',
+    'Abrir formulario': 'Abrir formulario',
+    '📋 Formulario de Excursión': '📋 Formulario de Excursión',
+    'Asistencia': 'Asistencia',
+    'Consulta el récord de asistencia, tardanzas y ausencias de tu hijo.': 'Consulta el récord de asistencia, tardanzas y ausencias de tu hijo.',
+    'Ver asistencia': 'Ver asistencia',
+    'Contacto con Maestros': 'Contacto con Maestros',
+    'Comunícate directamente con los maestros a través del directorio de correos.': 'Comunícate directamente con los maestros a través del directorio de correos.',
+    'Ver directorio': 'Ver directorio',
+    'Orientación y Apoyo': 'Orientación y Apoyo',
+    'Accede a los servicios de orientación, consejería y apoyo socioemocional.': 'Accede a los servicios de orientación, consejería y apoyo socioemocional.',
+    'Ver servicios': 'Ver servicios',
+
+    // index.html — Seguridad Escolar
+    'Seguridad Escolar': 'Seguridad Escolar',
+    'Protocolos, recursos y contactos para garantizar un ambiente escolar seguro para toda la comunidad.': 'Protocolos, recursos y contactos para garantizar un ambiente escolar seguro para toda la comunidad.',
+    'Protocolo de Emergencias': 'Protocolo de Emergencias',
+    'Planes de acción y procedimientos oficiales ante situaciones de emergencia escolar.': 'Planes de acción y procedimientos oficiales ante situaciones de emergencia escolar.',
+    'Ver protocolo': 'Ver protocolo',
+    'Contactos de Emergencia': 'Contactos de Emergencia',
+    'Números de seguridad, enfermería y personal clave ante cualquier emergencia.': 'Números de seguridad, enfermería y personal clave ante cualquier emergencia.',
+    'Ver contactos': 'Ver contactos',
+    'Reportar Incidente': 'Reportar Incidente',
+    'Sistema confidencial para reportar situaciones de riesgo, acoso o incidentes en la escuela.': 'Sistema confidencial para reportar situaciones de riesgo, acoso o incidentes en la escuela.',
+    'Reportar ahora': 'Reportar ahora',
+    'Bienestar Estudiantil': 'Bienestar Estudiantil',
+    'Recursos de apoyo emocional, salud mental y seguridad para los estudiantes.': 'Recursos de apoyo emocional, salud mental y seguridad para los estudiantes.',
+
+    // index.html — Contacto y footer
+    'Eventos importantes': 'Eventos importantes',
+    'Dirección': 'Dirección',
+    'Teléfono': 'Teléfono',
+    'Redes Sociales': 'Redes Sociales',
+    'Síguenos en Facebook para estar al día con las novedades.': 'Síguenos en Facebook para estar al día con las novedades.',
+    '¿Tienes preguntas?': '¿Tienes preguntas?',
+    'No dudes en contactarnos. Estamos para ayudarte.': 'No dudes en contactarnos. Estamos para ayudarte.',
+
+    // Sidebar items (sin data-translate en páginas inyectadas)
+    'Menú': 'Menú',
+    'Quiénes Somos': 'Quiénes Somos',
+    'Servicios Digitales': 'Servicios Digitales',
+    'Matrícula Online': 'Matrícula Online',
+    'Solicitud de Documentos': 'Solicitud de Documentos',
+    'Orientación': 'Orientación',
+    'Comedor': 'Comedor',
+
+    // Dropdown header nav — con emoji (claves exactas del HTML)
+    '📝 Matrícula Online': '📝 Matrícula Online',
+    '📄 Solicitud de Documentos': '📄 Solicitud de Documentos',
+    '🔧 Servicios Técnicos': '🔧 Servicios Técnicos',
+    '🧠 Orientación': '🧠 Orientación',
+    '📚 Biblioteca': '📚 Biblioteca',
+    '🍽️ Comedor': '🍽️ Comedor',
+    '👨‍👩‍👧 Portal de Padres': '👨‍👩‍👧 Portal de Padres',
+    '🛡️ Seguridad': '🛡️ Seguridad',
+    'Portal de Padres': 'Portal de Padres',
+    'Seguridad': 'Seguridad',
+    'Vida Estudiantil': 'Vida Estudiantil',
+    'Normas': 'Normas',
+    'Dashboard Admin': 'Dashboard Admin',
+    'Publicar Anuncio': 'Publicar Anuncio',
+
+    // Padres portal
+    '👨‍👩‍👧 Portal de Padres': '👨‍👩‍👧 Portal de Padres',
+    'Gestiones Académicas': 'Gestiones Académicas',
+    'Progreso Académico en Línea': 'Progreso Académico en Línea',
+    'Solicitar Documentos': 'Solicitar Documentos',
+    'Matrícula en Línea': 'Matrícula en Línea',
+    'Comunicación': 'Comunicación',
+    'Formación de Padres': 'Formación de Padres',
+    'Participación': 'Participación',
+
+    // padres.html — contenido completo
+    'Bienvenido al Portal de Familias PCB': 'Bienvenido al Portal de Familias PCB',
+    'Este es tu espacio digital para conectar con la escuela, gestionar trámites, acceder a formación y participar en nuestra comunidad educativa.': 'Este es tu espacio digital para conectar con la escuela, gestionar trámites, acceder a formación y participar en nuestra comunidad educativa.',
+    '💙 Estamos aquí para apoyarte en cada paso del camino educativo de tu hijo/a': '💙 Estamos aquí para apoyarte en cada paso del camino educativo de tu hijo/a',
+    'Documentos, matrícula y seguimiento del progreso': 'Documentos, matrícula y seguimiento del progreso',
+    'Certificaciones, cartas y transcripciones sin visitar la escuela.': 'Certificaciones, cartas y transcripciones sin visitar la escuela.',
+    'Proceso de admisión y actualización de datos.': 'Proceso de admisión y actualización de datos.',
+    'Progreso Académico': 'Progreso Académico',
+    'Seguimiento general del desempeño de tu hijo/a.': 'Seguimiento general del desempeño de tu hijo/a.',
+    'Comunicación Escuela-Familia': 'Comunicación Escuela-Familia',
+    'Mantente conectado con maestros y personal': 'Mantente conectado con maestros y personal',
+    'Citas con Personal': 'Citas con Personal',
+    'Coordine reuniones con maestros, directores u orientadores.': 'Coordine reuniones con maestros, directores u orientadores.',
+    'Notificaciones': 'Notificaciones',
+    'Avisos importantes y recordatorios escolares.': 'Avisos importantes y recordatorios escolares.',
+    'Formación y Apoyo': 'Formación y Apoyo',
+    'Talleres, certificaciones y educación continua': 'Talleres, certificaciones y educación continua',
+    'Talleres para Padres': 'Talleres para Padres',
+    'Tecnología, apoyo académico y bienestar familiar.': 'Tecnología, apoyo académico y bienestar familiar.',
+    'Certificaciones Digitales': 'Certificaciones Digitales',
+    'Micro-certificaciones verificables con código QR.': 'Micro-certificaciones verificables con código QR.',
+    'Educación Continua': 'Educación Continua',
+    'Cursos prácticos: computadoras, resumé, empleo.': 'Cursos prácticos: computadoras, resumé, empleo.',
+    'Participación Comunitaria': 'Participación Comunitaria',
+    'Únete, colabora y fortalece nuestra comunidad': 'Únete, colabora y fortalece nuestra comunidad',
+    'Voluntariado': 'Voluntariado',
+    'Ofrece tu tiempo en biblioteca, eventos o mentoría.': 'Ofrece tu tiempo en biblioteca, eventos o mentoría.',
+    'Ofrecer Charlas': 'Ofrecer Charlas',
+    'Comparte tu profesión, hobby o experiencia.': 'Comparte tu profesión, hobby o experiencia.',
+    'Eventos Escolares': 'Eventos Escolares',
+    'Apoya y participa en actividades de la escuela.': 'Apoya y participa en actividades de la escuela.',
+    '📬 Enviar Mensaje a la Escuela': '📬 Enviar Mensaje a la Escuela',
+    'Enviar Mensaje a la Escuela': 'Enviar Mensaje a la Escuela',
+    'Nombre del Padre/Madre': 'Nombre del Padre/Madre',
+    'Nombre del Estudiante': 'Nombre del Estudiante',
+    'Tipo de Mensaje': 'Tipo de Mensaje',
+    'Justificación de Ausencia': 'Justificación de Ausencia',
+    'Duda Académica': 'Duda Académica',
+    'Queja o Sugerencia': 'Queja o Sugerencia',
+    'Mensaje': 'Mensaje',
+    'Enviar Mensaje': 'Enviar Mensaje',
+
+    // Talleres
+    '🎓 Talleres para Padres': '🎓 Talleres para Padres',
+    'Talleres Tecnológicos': 'Talleres Tecnológicos',
+    'Talleres de Salud y Bienestar': 'Talleres de Salud y Bienestar',
+    'Talleres Educativos': 'Talleres Educativos',
+    'Internet Seguro para Familias': 'Internet Seguro para Familias',
+    'Microsoft 365 para Padres': 'Microsoft 365 para Padres',
+    'Google Workspace Básico': 'Google Workspace Básico',
+    'Navega el mundo digital con confianza': 'Navega el mundo digital con confianza',
+    'Virtual': 'Virtual',
+    'Presencial': 'Presencial',
+    'Híbrido': 'Híbrido',
+    'Ver Taller': 'Ver Taller',
+    'Registrarse': 'Registrarse',
+
+    // Certificaciones
+    '🏆 Certificaciones Digitales para Padres': '🏆 Certificaciones Digitales para Padres',
+    '📋 ¿Cómo Funciona?': '📋 ¿Cómo Funciona?',
+    'Certificaciones Disponibles': 'Certificaciones Disponibles',
+    'Completa Módulos': 'Completa Módulos',
+    'Evaluación Corta': 'Evaluación Corta',
+    'Recibe Certificado': 'Recibe Certificado',
+    '📜 Vista Previa del Certificado': '📜 Vista Previa del Certificado',
+    '✨ Beneficios de las Certificaciones': '✨ Beneficios de las Certificaciones',
+    'Reconocimiento Oficial': 'Reconocimiento Oficial',
+    'Verificación Digital': 'Verificación Digital',
+    'Registro Institucional': 'Registro Institucional',
+    'Comunidad de Padres': 'Comunidad de Padres',
+
+    // Educación comunitaria
+    '📚 Educación Continua Comunitaria': '📚 Educación Continua Comunitaria',
+    'ℹ️ Información Importante': 'ℹ️ Información Importante',
+    '100% Gratuito': '100% Gratuito',
+    'Abierto a Comunidad': 'Abierto a Comunidad',
+    'Laboratorio Escolar': 'Laboratorio Escolar',
+    'Inscribirse': 'Inscribirse',
+    '📋 Requisitos': '📋 Requisitos',
+
+    // Participación comunitaria
+    '🌟 Participación Comunitaria': '🌟 Participación Comunitaria',
+    'Voluntariado': 'Voluntariado',
+    'Charlas Profesionales': 'Charlas Profesionales',
+    'Eventos Escolares': 'Eventos Escolares',
+    'Registrar Participación': 'Registrar Participación',
+
+    // Solicitudes
+    '📄 Solicitud de Documentos': '📄 Solicitud de Documentos',
+    'Tipo de Documento': 'Tipo de Documento',
+    'Enviar Solicitud': 'Enviar Solicitud',
+    'Estado de Solicitud': 'Estado de Solicitud',
+
+    // Asistente
+    '🤖 Asistente PCB': '🤖 Asistente PCB',
+    'Escribe tu pregunta...': 'Escribe tu pregunta...',
+    'Enviar': 'Enviar',
+    'Limpiar': 'Limpiar',
+
+    // Seguridad
+    '🛡️ Panel de Seguridad': '🛡️ Panel de Seguridad',
+    'Control de Acceso': 'Control de Acceso',
+    'Motivo de Visita': 'Motivo de Visita',
+    'Registro de Incidentes': 'Registro de Incidentes',
+
+    // Orientación
+    '🧠 Orientación y Consejería': '🧠 Orientación y Consejería',
+
+    // Enfermería
+    '🏥 Enfermería Escolar': '🏥 Enfermería Escolar',
+
+    // Transportación
+    '🚌 Transportación Escolar': '🚌 Transportación Escolar',
+
+    // Matrícula
+    '📝 Matrícula en Línea': '📝 Matrícula en Línea',
+
+    // Common buttons/labels
+    'Volver': 'Volver',
+    'Cerrar': 'Cerrar',
+    'Guardar': 'Guardar',
+    'Cancelar': 'Cancelar',
+    'Buscar': 'Buscar',
+    'Ver más': 'Ver más',
+    'Descargar': 'Descargar',
+
+    // index.html — Banner "Publica tu anuncio en la comunidad"
+    '¡Publica tu anuncio en la comunidad!': '¡Publica tu anuncio en la comunidad!',
+    'Comparte avisos, actividades, objetos perdidos, recaudaciones y promociones con toda la escuela. Tu anuncio será visible tras la aprobación del administrador.': 'Comparte avisos, actividades, objetos perdidos, recaudaciones y promociones con toda la escuela. Tu anuncio será visible tras la aprobación del administrador.',
+    'Publicar anuncio': 'Publicar anuncio',
+    'Publicar Anuncio': 'Publicar Anuncio',
+    '📢 Avisos': '📢 Avisos',
+    '🎉 Actividades': '🎉 Actividades',
+    '🔍 Objetos perdidos': '🔍 Objetos perdidos',
+    '💰 Recaudaciones': '💰 Recaudaciones',
+    '🏷️ Promociones': '🏷️ Promociones',
+
+    // index.html — Modal Publicar Anuncio (#modalAnuncio)
+    '📌 Publicar en PCB Community': '📌 Publicar en PCB Community',
+    'Tu anuncio será visible tras aprobación del admin.': 'Tu anuncio será visible tras aprobación del admin.',
+    'Categoría *': 'Categoría *',
+    '📢 Aviso': '📢 Aviso',
+    '🔍 Objeto Perdido': '🔍 Objeto Perdido',
+    '🎉 Actividad': '🎉 Actividad',
+    '💰 Recaudación': '💰 Recaudación',
+    '🏷️ Promoción': '🏷️ Promoción',
+    'Caduca el (opcional)': 'Caduca el (opcional)',
+    'Título *': 'Título *',
+    'Ej: Se perdió mochila azul en la cafetería': 'Ej: Se perdió mochila azul en la cafetería',
+    'Mensaje *': 'Mensaje *',
+    'Describe el detalle de tu anuncio...': 'Describe el detalle de tu anuncio...',
+    'Tu nombre (opcional)': 'Tu nombre (opcional)',
+    'Anónimo': 'Anónimo',
+    'Contacto (opcional)': 'Contacto (opcional)',
+    'Email o teléfono': 'Email o teléfono',
+    '📷 Imagen (opcional)': '📷 Imagen (opcional)',
+    'Toca aquí para seleccionar una imagen': 'Toca aquí para seleccionar una imagen',
+    'JPG, PNG o WEBP · máx. 5 MB': 'JPG, PNG o WEBP · máx. 5 MB',
+    '📤 Enviar Anuncio': '📤 Enviar Anuncio',
+    '⏳ Enviando...': '⏳ Enviando...',
+    '✅ ¡Anuncio enviado! Aparecerá en el popup tras la aprobación del administrador.': '✅ ¡Anuncio enviado! Aparecerá en el popup tras la aprobación del administrador.',
+    '❌ Error al enviar: ': '❌ Error al enviar: ',
   },
   en: {
     // Header
@@ -397,6 +728,9 @@ const translations = {
     'Identificación del padre, madre o encargado': 'Parent or guardian identification',
     'Fechas y detalles se informan por la oficina escolar y comunicados oficiales.': 'Dates and details are reported by the school office and official communications.',
     'Normas y reglamentos': 'Rules and Regulations',
+    'Conoce las normas que rigen nuestra convivencia escolar': 'Learn about the rules that govern our school community',
+    '📘 Reglamento General de Estudiantes y Asistencia Obligatoria': '📘 General Student Regulations and Compulsory Attendance',
+    'Esta versión integra el contenido completo del reglamento del Departamento de Educación de Puerto Rico en un formato más claro, navegable y alineado al estilo visual del PCB System.': 'This version integrates the complete content of the Puerto Rico Department of Education regulations in a clearer, navigable format aligned with the PCB System visual style.',
     'Normas básicas de convivencia y seguridad:': 'Basic coexistence and safety rules:',
     'Respeto entre toda la comunidad escolar.': 'Respect among the entire school community.',
     'Uso correcto del uniforme y equipos de seguridad.': 'Proper use of uniform and safety equipment.',
@@ -658,27 +992,504 @@ const translations = {
     'Todos los equipos tecnológicos de la escuela deben ser utilizados exclusivamente con fines educativos. Los estudiantes y el personal deben seguir las normas de uso responsable de la tecnología establecidas por el Departamento de Educación.': 'All school technological equipment must be used exclusively for educational purposes. Students and staff must follow the responsible use of technology standards established by the Department of Education.',
     'Contacta con la oficina administrativa para más detalles sobre servicios técnicos': 'Contact the administrative office for more details about technical services',
     'Acceder al servicio': 'Access the service',
+
+    // index.html — Popup Novedades
+    '📢 ¡Novedades!': '📢 News!',
+    '¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.': 'Enrollment for the new school year has started! Don\'t miss your spot.',
+    'Haz clic para ver más': 'Click to see more',
+    'Ver Promociones': 'View Promotions',
+
+    // index.html — Clase Graduanda
+    'Información importante para los estudiantes de la clase graduanda.': 'Important information for graduating class students.',
+    'Calendario': 'Calendar',
+    'Fechas importantes y cronograma de actividades.': 'Important dates and activity schedule.',
+    'Ver calendario': 'View Calendar',
+    'Actividades': 'Activities',
+    'Eventos y actividades de la clase.': 'Class events and activities.',
+    'Ver actividades': 'View Activities',
+    'Fotos': 'Photos',
+    'Reservación de fotos formales.': 'Formal photo reservation.',
+    'Reservar': 'Reserve',
+    '¡Pronto!': 'Coming Soon!',
+    'Esta sección estará disponible muy pronto.': 'This section will be available very soon.',
+    'Clase Graduanda 2026': 'Graduating Class 2026',
+    '¡Mantente pendiente! 🎉': 'Stay tuned! 🎉',
+    '¡Entendido!': 'Got it!',
+
+    // quienes-somos.html
+    'Conoce nuestra historia, misión y visión': 'Learn about our history, mission and vision',
+    '👋 Bienvenidos': '👋 Welcome',
+    'Les damos la más cordial bienvenida a nuestra Escuela Pablo Colón Berdecia del Distrito Escolar de Barranquitas. Nuestra misión es ser colaboradores efectivos en el proceso educativo que se desarrolla en nuestra escuela para garantizarles a todos nuestros estudiantes una educación de excelencia que le permita desarrollar al máximo sus capacidades intelectuales y los valores morales y sociales que necesitan para disfrutar de una mejor calidad de vida.': 'We warmly welcome you to our Pablo Colón Berdecia School of the Barranquitas School District. Our mission is to be effective collaborators in the educational process at our school, guaranteeing all our students an excellent education that allows them to fully develop their intellectual capacities and the moral and social values they need to enjoy a better quality of life.',
+    '"Nuestra escuela se compromete a formar ciudadanos responsables y capaces de contribuir positivamente a la sociedad."': '"Our school is committed to educating responsible citizens capable of contributing positively to society."',
+    'Director Escolar': 'School Principal',
+    '📚 Nuestra Historia': '📚 Our History',
+    'historia-pcb': 'Pablo Colón Berdecia was a great teacher and prolific poet. He was born in May 1910 in the Helechal neighborhood of Barranquitas. He completed his early education at the local elementary school and later finished his primary education in the 8-4 system at the town school. To complete high school, Don Pablo recounts facing many hardships — there was no high school in town at the time. One evening he gathered with others interested in continuing their education to organize a high school, drawing from graduates of previous years and those just finishing primary school. Among this group were people who later became distinguished figures of the town. The first high school, as Don Pablo describes, began shakily like a child taking its first steps, but over time rose to enviable maturity. It began in 1926 and, after being recognized by the Department of Public Instruction, graduated its first class in June 1930, with Don Pablo among the graduates. He passed away in 1979. This is part of the life and legacy of this distinguished Barranquitas native, who was posthumously honored by naming this great Vocational School after him. Data compiled by Mr. Raúl Marrero Ortiz. To learn more, visit the school library.',
+    '🎯 Misión': '🎯 Mission',
+    'mision-pcb': 'To promote the integral development of students through diverse learning experiences so they can successfully face challenges and contribute to the well-being of society.',
+    '🌟 Visión': '🌟 Vision',
+    'vision-pcb': 'Our school aspires to foster in students the mastery of academic skills integrated with occupational ones, and to contribute to the development of the following essential competencies: the student as a learner, effective communicator, entrepreneur, ethical person, and active community member; so they can face life as responsible citizens capable of making decisions for their own benefit and that of society.',
+    '🏛️ Departamento de Educación de Puerto Rico': '🏛️ Puerto Rico Department of Education',
+    '🌟 Visión del Departamento': '🌟 Department Vision',
+    'vision-depr': 'The Puerto Rican school must be an effective instrument for building a just and democratic society, cultivating ethics, solidarity, and social consciousness. It must be a dynamic unit of social change, capable of explicitly developing the attitudes, skills, and knowledge that prepare students competently and creatively to face the challenges of the modern world. Education must respond to the varied needs and talents of students, diversifying offerings with creative learning and evaluation alternatives, during both regular and extended hours. We recognize the importance of developing knowledge and academic competencies in harmony with the emotional and social development of the student.',
+    '🎯 Misión del Departamento': '🎯 Department Mission',
+    'mision-depr': 'To guarantee a free and non-sectarian education that develops the attitudes, skills, and knowledge of all students, preparing them for successful performance in a globalized labor market and to face modern world challenges competently and creatively; as independent, lifelong learners, respectful of the law and the natural environment, and capable of contributing to the common good.',
+
+    // index.html — La Escuela
+    'Conoce más sobre nosotros': 'Learn more about us',
+    'Ver página de Matrícula': 'View Enrollment Page',
+    'Ver reglamento completo': 'View Full Regulations',
+    '🎓 Clase Graduanda 2026': '🎓 Graduating Class 2026',
+
+    // index.html — Programas vocacionales
+    'Creado por estudiantes. Diseñado para el mundo.': 'Created by students. Designed for the world.',
+    'No es un proyecto escolar. Es un legado al futuro de la educación.': "It's not a school project. It's a legacy for the future of education.",
+    'Procesamiento y Desarrollo de Productos Agrícolas': 'Agricultural Product Processing and Development',
+    'Haz clic para ver más': 'Click to see more',
+    'Cocina Profesional y Gestión Gastronómica': 'Professional Cooking and Gastronomic Management',
+    'Belleza y Cuidado Personal Profesional': 'Professional Beauty and Personal Care',
+    'Cuidado Integral de la Salud': 'Comprehensive Health Care',
+    'Representante de Ventas y Servicios Empresariales': 'Sales Representative and Business Services',
+    'Seguridad Publica': 'Public Security',
+    'Ver todos los programas y Casa Abierta': 'View All Programs and Open House',
+
+    // index.html — Servicios al estudiante
+    'DECACoop': 'DECACoop',
+    'Portal de mercadeo y publicidad institucional DECACoop.': 'DECACoop institutional marketing and advertising portal.',
+    'Acceder a DECACoop': 'Access DECACoop',
+    'Computec': 'Computec',
+    'Programa de habilidades computacionales y tecnológicas.': 'Computer and technology skills program.',
+    'Acceder a Computec': 'Access Computec',
+    'Recursos para Estudiantes': 'Student Resources',
+    'Acceso a materiales educativos, guías y recursos de apoyo.': 'Access to educational materials, guides and support resources.',
+    'Ver recursos': 'View Resources',
+    'Preparación Académica': 'Academic Preparation',
+    'Repasos para college, exámenes de avanzado, pruebas CRECE, ASVA y más.': 'College prep, advanced exams, CRECE, ASVAB tests and more.',
+
+    // index.html — Servicios al maestro
+    'Servicios al maestro': 'Teacher Services',
+    'Herramientas y recursos para el personal docente.': 'Tools and resources for teaching staff.',
+    'Impresión para Maestros': 'Printing for Teachers',
+    'Sistema de impresión y copias para materiales educativos.': 'Printing and copying system for educational materials.',
+    'Acceder a Impresión': 'Access Printing',
+    'Referir Estudiante': 'Refer Student',
+    'Sistema de referencia para identificar estudiantes que necesitan apoyo.': 'Referral system to identify students who need support.',
+
+    // index.html — Portal de Padres
+    'Recursos y herramientas para que los padres y tutores estén siempre informados y conectados con la escuela.': 'Resources and tools for parents and guardians to stay informed and connected with the school.',
+    'Calificaciones': 'Grades',
+    'Monitorea el progreso académico y las notas de tu hijo en tiempo real.': "Monitor your child's academic progress and grades in real time.",
+    'Ver calificaciones': 'View Grades',
+    'Comunicados Escolares': 'School Announcements',
+    'Notificaciones, avisos importantes y mensajes directos de la escuela.': 'Notifications, important alerts and direct messages from the school.',
+    'Ver comunicados': 'View Announcements',
+    'Formularios y Permisos': 'Forms and Permits',
+    'Autorización de actividades, permisos escolares y documentos oficiales.': 'Activity authorization, school permits and official documents.',
+    'Ver formularios': 'View Forms',
+    'Plan de Excursión': 'Field Trip Plan',
+    'Completa, guarda y exporta el formulario oficial de autorización de excursiones con todos sus anejos.': 'Fill out, save and export the official field trip authorization form with all its annexes.',
+    'Abrir formulario': 'Open Form',
+    '📋 Formulario de Excursión': '📋 Field Trip Form',
+    'Asistencia': 'Attendance',
+    'Consulta el récord de asistencia, tardanzas y ausencias de tu hijo.': "Check your child's attendance record, tardiness and absences.",
+    'Ver asistencia': 'View Attendance',
+    'Contacto con Maestros': 'Contact Teachers',
+    'Comunícate directamente con los maestros a través del directorio de correos.': 'Communicate directly with teachers through the email directory.',
+    'Ver directorio': 'View Directory',
+    'Orientación y Apoyo': 'Guidance and Support',
+    'Accede a los servicios de orientación, consejería y apoyo socioemocional.': 'Access guidance, counseling and socioemotional support services.',
+    'Ver servicios': 'View Services',
+
+    // index.html — Seguridad Escolar
+    'Seguridad Escolar': 'School Security',
+    'Protocolos, recursos y contactos para garantizar un ambiente escolar seguro para toda la comunidad.': 'Protocols, resources and contacts to ensure a safe school environment for the entire community.',
+    'Protocolo de Emergencias': 'Emergency Protocol',
+    'Planes de acción y procedimientos oficiales ante situaciones de emergencia escolar.': 'Action plans and official procedures for school emergency situations.',
+    'Ver protocolo': 'View Protocol',
+    'Contactos de Emergencia': 'Emergency Contacts',
+    'Números de seguridad, enfermería y personal clave ante cualquier emergencia.': 'Security numbers, nursing and key personnel for any emergency.',
+    'Ver contactos': 'View Contacts',
+    'Reportar Incidente': 'Report Incident',
+    'Sistema confidencial para reportar situaciones de riesgo, acoso o incidentes en la escuela.': 'Confidential system to report risk situations, harassment or incidents at school.',
+    'Reportar ahora': 'Report Now',
+    'Bienestar Estudiantil': 'Student Wellness',
+    'Recursos de apoyo emocional, salud mental y seguridad para los estudiantes.': 'Emotional support, mental health and safety resources for students.',
+
+    // index.html — Contacto y footer
+    'Eventos importantes': 'Important Events',
+    'Dirección': 'Address',
+    'Teléfono': 'Phone',
+    'Redes Sociales': 'Social Media',
+    'Síguenos en Facebook para estar al día con las novedades.': 'Follow us on Facebook to stay up to date with news.',
+    '¿Tienes preguntas?': 'Do you have questions?',
+    'No dudes en contactarnos. Estamos para ayudarte.': "Don't hesitate to contact us. We're here to help.",
+
+    // Sidebar items
+    'Menú': 'Menu',
+    'Quiénes Somos': 'Who We Are',
+    'Servicios Digitales': 'Digital Services',
+    'Matrícula Online': 'Online Enrollment',
+    'Solicitud de Documentos': 'Document Request',
+    'Orientación': 'Guidance',
+    'Comedor': 'Cafeteria',
+
+    // Dropdown header nav — con emoji (claves exactas del HTML)
+    '📝 Matrícula Online': '📝 Online Enrollment',
+    '📄 Solicitud de Documentos': '📄 Document Request',
+    '🔧 Servicios Técnicos': '🔧 Technical Services',
+    '🧠 Orientación': '🧠 Guidance',
+    '📚 Biblioteca': '📚 Library',
+    '🍽️ Comedor': '🍽️ Cafeteria',
+    '👨‍👩‍👧 Portal de Padres': '👨‍👩‍👧 Parents Portal',
+    '🛡️ Seguridad': '🛡️ Security',
+    'Portal de Padres': 'Parents Portal',
+    'Seguridad': 'Security',
+    'Vida Estudiantil': 'Student Life',
+    'Normas': 'Rules',
+    'Dashboard Admin': 'Admin Dashboard',
+    'Publicar Anuncio': 'Post Announcement',
+
+    // Padres portal
+    '👨‍👩‍👧 Portal de Padres': '👨‍👩‍👧 Parents Portal',
+    'Gestiones Académicas': 'Academic Management',
+    'Progreso Académico en Línea': 'Academic Progress Online',
+    'Solicitar Documentos': 'Request Documents',
+    'Matrícula en Línea': 'Online Enrollment',
+    'Comunicación': 'Communication',
+    'Formación de Padres': 'Parent Training',
+    'Participación': 'Participation',
+
+    // padres.html — contenido completo
+    'Bienvenido al Portal de Familias PCB': 'Welcome to the PCB Family Portal',
+    'Este es tu espacio digital para conectar con la escuela, gestionar trámites, acceder a formación y participar en nuestra comunidad educativa.': 'This is your digital space to connect with the school, manage procedures, access training and participate in our educational community.',
+    '💙 Estamos aquí para apoyarte en cada paso del camino educativo de tu hijo/a': '💙 We are here to support you at every step of your child\'s educational journey',
+    'Documentos, matrícula y seguimiento del progreso': 'Documents, enrollment and progress tracking',
+    'Certificaciones, cartas y transcripciones sin visitar la escuela.': 'Certifications, letters and transcripts without visiting the school.',
+    'Proceso de admisión y actualización de datos.': 'Admission process and data updates.',
+    'Progreso Académico': 'Academic Progress',
+    'Seguimiento general del desempeño de tu hijo/a.': 'General tracking of your child\'s performance.',
+    'Comunicación Escuela-Familia': 'School-Family Communication',
+    'Mantente conectado con maestros y personal': 'Stay connected with teachers and staff',
+    'Citas con Personal': 'Appointments with Staff',
+    'Coordine reuniones con maestros, directores u orientadores.': 'Schedule meetings with teachers, principals or counselors.',
+    'Notificaciones': 'Notifications',
+    'Avisos importantes y recordatorios escolares.': 'Important notices and school reminders.',
+    'Formación y Apoyo': 'Training and Support',
+    'Talleres, certificaciones y educación continua': 'Workshops, certifications and continuing education',
+    'Talleres para Padres': 'Workshops for Parents',
+    'Tecnología, apoyo académico y bienestar familiar.': 'Technology, academic support and family wellness.',
+    'Certificaciones Digitales': 'Digital Certifications',
+    'Micro-certificaciones verificables con código QR.': 'Verifiable micro-certifications with QR code.',
+    'Educación Continua': 'Continuing Education',
+    'Cursos prácticos: computadoras, resumé, empleo.': 'Practical courses: computers, résumé, employment.',
+    'Participación Comunitaria': 'Community Participation',
+    'Únete, colabora y fortalece nuestra comunidad': 'Join, collaborate and strengthen our community',
+    'Voluntariado': 'Volunteering',
+    'Ofrece tu tiempo en biblioteca, eventos o mentoría.': 'Offer your time in the library, events or mentoring.',
+    'Ofrecer Charlas': 'Offer Talks',
+    'Comparte tu profesión, hobby o experiencia.': 'Share your profession, hobby or experience.',
+    'Eventos Escolares': 'School Events',
+    'Apoya y participa en actividades de la escuela.': 'Support and participate in school activities.',
+    '📬 Enviar Mensaje a la Escuela': '📬 Send Message to School',
+    'Enviar Mensaje a la Escuela': 'Send Message to School',
+    'Nombre del Padre/Madre': 'Parent\'s Name',
+    'Nombre del Estudiante': 'Student\'s Name',
+    'Tipo de Mensaje': 'Message Type',
+    'Justificación de Ausencia': 'Absence Justification',
+    'Duda Académica': 'Academic Question',
+    'Queja o Sugerencia': 'Complaint or Suggestion',
+    'Mensaje': 'Message',
+    'Enviar Mensaje': 'Send Message',
+
+    // Talleres
+    '🎓 Talleres para Padres': '🎓 Workshops for Parents',
+    'Talleres Tecnológicos': 'Technology Workshops',
+    'Talleres de Salud y Bienestar': 'Health & Wellness Workshops',
+    'Talleres Educativos': 'Educational Workshops',
+    'Internet Seguro para Familias': 'Safe Internet for Families',
+    'Microsoft 365 para Padres': 'Microsoft 365 for Parents',
+    'Google Workspace Básico': 'Basic Google Workspace',
+    'Navega el mundo digital con confianza': 'Navigate the digital world with confidence',
+    'Virtual': 'Virtual',
+    'Presencial': 'In-Person',
+    'Híbrido': 'Hybrid',
+    'Ver Taller': 'View Workshop',
+    'Registrarse': 'Register',
+
+    // Certificaciones
+    '🏆 Certificaciones Digitales para Padres': '🏆 Digital Certifications for Parents',
+    '📋 ¿Cómo Funciona?': '📋 How Does It Work?',
+    'Certificaciones Disponibles': 'Available Certifications',
+    'Completa Módulos': 'Complete Modules',
+    'Evaluación Corta': 'Short Assessment',
+    'Recibe Certificado': 'Receive Certificate',
+    '📜 Vista Previa del Certificado': '📜 Certificate Preview',
+    '✨ Beneficios de las Certificaciones': '✨ Benefits of Certifications',
+    'Reconocimiento Oficial': 'Official Recognition',
+    'Verificación Digital': 'Digital Verification',
+    'Registro Institucional': 'Institutional Registry',
+    'Comunidad de Padres': 'Parents Community',
+
+    // Educación comunitaria
+    '📚 Educación Continua Comunitaria': '📚 Continuing Community Education',
+    'ℹ️ Información Importante': 'ℹ️ Important Information',
+    '100% Gratuito': '100% Free',
+    'Abierto a Comunidad': 'Open to Community',
+    'Laboratorio Escolar': 'School Lab',
+    'Inscribirse': 'Enroll',
+    '📋 Requisitos': '📋 Requirements',
+
+    // Participación comunitaria
+    '🌟 Participación Comunitaria': '🌟 Community Participation',
+    'Voluntariado': 'Volunteering',
+    'Charlas Profesionales': 'Professional Talks',
+    'Eventos Escolares': 'School Events',
+    'Registrar Participación': 'Register Participation',
+
+    // Solicitudes
+    '📄 Solicitud de Documentos': '📄 Document Request',
+    'Tipo de Documento': 'Document Type',
+    'Enviar Solicitud': 'Submit Request',
+    'Estado de Solicitud': 'Request Status',
+
+    // Asistente
+    '🤖 Asistente PCB': '🤖 PCB Assistant',
+    'Escribe tu pregunta...': 'Type your question...',
+    'Enviar': 'Send',
+    'Limpiar': 'Clear',
+
+    // Seguridad
+    '🛡️ Panel de Seguridad': '🛡️ Security Panel',
+    'Control de Acceso': 'Access Control',
+    'Motivo de Visita': 'Reason for Visit',
+    'Registro de Incidentes': 'Incident Log',
+
+    // Orientación
+    '🧠 Orientación y Consejería': '🧠 Guidance & Counseling',
+
+    // Enfermería
+    '🏥 Enfermería Escolar': '🏥 School Nursing',
+
+    // Transportación
+    '🚌 Transportación Escolar': '🚌 School Transportation',
+
+    // Matrícula
+    '📝 Matrícula en Línea': '📝 Online Enrollment',
+
+    // Common buttons/labels
+    'Volver': 'Back',
+    'Cerrar': 'Close',
+    'Guardar': 'Save',
+    'Cancelar': 'Cancel',
+    'Buscar': 'Search',
+    'Ver más': 'See more',
+    'Descargar': 'Download',
+
+    // biblioteca.html – Hero
+    '📚 Biblioteca Digital': '📚 Digital Library',
+    'bib-hero-sub': 'Your center for knowledge and educational resources. Access our online catalog, reserve study spaces and discover quality academic resources.',
+    'Reservar Espacio': 'Reserve Space',
+    'Ver Recursos': 'View Resources',
+    '📖 Catálogo Digital': '📖 Digital Catalog',
+    '💻 Reservas Online': '💻 Online Reservations',
+    '🎓 Apoyo Académico': '🎓 Academic Support',
+    '🌐 Recursos Globales': '🌐 Global Resources',
+    '🕐 Horario de Atención': '🕐 Service Hours',
+    'Lunes - Viernes:': 'Monday - Friday:',
+    'Servicios:': 'Services:',
+    'Préstamo de libros': 'Book lending',
+    'Computadoras:': 'Computers:',
+    '8 estaciones disponibles': '8 stations available',
+    'Salas de estudio:': 'Study rooms:',
+    'Reserva anticipada': 'Advanced reservation',
+    'Apoyo académico:': 'Academic support:',
+    'Tareas y Proyectos': 'Homework and Projects',
+
+    // biblioteca.html – Sección Reserva de Espacios
+    '📖 Reserva de Espacios': '📖 Space Reservations',
+    'Reserva salas, computadoras y equipos': 'Reserve rooms, computers and equipment',
+    'Dashboard Bibliotecaria': 'Librarian Dashboard',
+    'Sala de Lectura': 'Reading Room',
+    'Espacio tranquilo para estudio individual': 'Quiet space for individual study',
+    'Disponible': 'Available',
+    'Computadoras': 'Computers',
+    'Estaciones de trabajo con internet': 'Workstations with internet',
+    '8 disponibles': '8 available',
+    'Sala de Presentaciones': 'Presentation Room',
+    'Espacio para exposiciones y eventos': 'Space for presentations and events',
+
+    // biblioteca.html – Leyenda del calendario
+    'Actividad de biblioteca': 'Library activity',
+    'Reserva aprobada': 'Approved reservation',
+    'Reserva pendiente': 'Pending reservation',
+    'Múltiples eventos': 'Multiple events',
+
+    // biblioteca.html – Formulario
+    '📋 Formulario de Reservación': '📋 Reservation Form',
+    'Completa el formulario': 'Complete the form — the librarian will review and approve your request',
+    'Paso 1': 'Step 1 — Select the space you want to reserve',
+    'Paso 2': 'Step 2 — Complete your information',
+    '⚠️ Por favor selecciona un espacio': '⚠️ Please select a space before continuing.',
+    'Nombre Completo *': 'Full Name *',
+    'Correo Electrónico *': 'Email Address *',
+    'Teléfono': 'Phone',
+    'Fecha *': 'Date *',
+    'Número de Participantes': 'Number of Participants',
+    'Hora de Inicio *': 'Start Time *',
+    'Hora de Fin *': 'End Time *',
+    'Propósito de la Reserva *': 'Purpose of Reservation *',
+    'bib-pending-note': '⏳ Your request will remain pending until the librarian reviews and approves it.',
+    '📋 Enviar Solicitud de Reserva': '📋 Submit Reservation Request',
+
+    // biblioteca.html – Pantalla de éxito
+    '¡Solicitud Enviada!': 'Request Submitted!',
+    'bib-success-sub': 'Your reservation is pending approval by the librarian.',
+    'Número de Solicitud': 'Request Number',
+    '📋 Copiar código': '📋 Copy code',
+    '✅ ¡Copiado!': '✅ Copied!',
+    'bib-save-ticket': 'Save your request number. You can check the status on the library calendar once approved.',
+    '🔄 Hacer Otra Reserva': '🔄 Make Another Reservation',
+
+    // biblioteca.html – Verificar Estatus
+    '🔍 Verificar Estatus de Solicitud': '🔍 Check Request Status',
+    'bib-verify-sub': 'Check the status of your reservation using your request number, name or date',
+    'Buscar por:': 'Search by:',
+    '🎫 Número de Solicitud': '🎫 Request Number',
+    '👤 Nombre': '👤 Name',
+    '📅 Fecha': '📅 Date',
+    '🔍 Buscar': '🔍 Search',
+    'bib-search-hint': 'Enter the request number you received when completing the form.',
+
+    // biblioteca.html – Recursos Educativos
+    '📘 Recursos Educativos': '📘 Educational Resources',
+    'Acceso a bibliotecas digitales y bases de datos': 'Access to digital libraries and databases',
+    '70,000+ libros gratis': '70,000+ free books',
+    'Millones de libros digitales': 'Millions of digital books',
+    'Cursos gratuitos': 'Free courses',
+    'Artículos académicos': 'Academic articles',
+    'Cursos universitarios': 'University courses',
+    'Charlas inspiradoras': 'Inspiring talks',
+
+    // index.html — Banner "Publica tu anuncio en la comunidad"
+    '¡Publica tu anuncio en la comunidad!': 'Post your announcement to the community!',
+    'Comparte avisos, actividades, objetos perdidos, recaudaciones y promociones con toda la escuela. Tu anuncio será visible tras la aprobación del administrador.': 'Share notices, activities, lost items, fundraisers and promotions with the whole school. Your announcement will be visible after admin approval.',
+    'Publicar anuncio': 'Post announcement',
+    'Publicar Anuncio': 'Post Announcement',
+    '📢 Avisos': '📢 Notices',
+    '🎉 Actividades': '🎉 Activities',
+    '🔍 Objetos perdidos': '🔍 Lost items',
+    '💰 Recaudaciones': '💰 Fundraisers',
+    '🏷️ Promociones': '🏷️ Promotions',
+
+    // index.html — Modal Publicar Anuncio (#modalAnuncio)
+    '📌 Publicar en PCB Community': '📌 Post to PCB Community',
+    'Tu anuncio será visible tras aprobación del admin.': 'Your announcement will be visible after admin approval.',
+    'Categoría *': 'Category *',
+    '📢 Aviso': '📢 Notice',
+    '🔍 Objeto Perdido': '🔍 Lost Item',
+    '🎉 Actividad': '🎉 Activity',
+    '💰 Recaudación': '💰 Fundraiser',
+    '🏷️ Promoción': '🏷️ Promotion',
+    'Caduca el (opcional)': 'Expires on (optional)',
+    'Título *': 'Title *',
+    'Ej: Se perdió mochila azul en la cafetería': 'E.g.: Lost blue backpack in the cafeteria',
+    'Mensaje *': 'Message *',
+    'Describe el detalle de tu anuncio...': 'Describe the details of your announcement...',
+    'Tu nombre (opcional)': 'Your name (optional)',
+    'Anónimo': 'Anonymous',
+    'Contacto (opcional)': 'Contact (optional)',
+    'Email o teléfono': 'Email or phone',
+    '📷 Imagen (opcional)': '📷 Image (optional)',
+    'Toca aquí para seleccionar una imagen': 'Tap here to select an image',
+    'JPG, PNG o WEBP · máx. 5 MB': 'JPG, PNG or WEBP · max. 5 MB',
+    '📤 Enviar Anuncio': '📤 Send Announcement',
+    '⏳ Enviando...': '⏳ Sending...',
+    '✅ ¡Anuncio enviado! Aparecerá en el popup tras la aprobación del administrador.': '✅ Announcement sent! It will appear in the popup after admin approval.',
+    '❌ Error al enviar: ': '❌ Error while sending: ',
   }
 };
 
 // Función para traducir el contenido de la página
 function translatePage(lang) {
-  const elements = document.querySelectorAll('[data-translate]');
-  elements.forEach(element => {
-    const key = element.getAttribute('data-translate');
-    if (translations[lang] && translations[lang][key]) {
-      element.textContent = translations[lang][key];
+  if (!translations[lang]) return;
+  var dict = translations[lang];
+
+  // Método 1: data-translate
+  // Si la clave es el texto español completo → se restaura desde la clave.
+  // Si la clave es un ID corto (ej: 'historia-pcb') → se guarda el original
+  // en data-original antes de traducir y se restaura desde ahí.
+  document.querySelectorAll('[data-translate]').forEach(function(el) {
+    var key = el.getAttribute('data-translate');
+    if (!key) return; // clave vacía: ignorar
+    if (lang === 'es') {
+      // Restaurar: si hay texto original guardado úsalo, si no usa la clave
+      var original = el.getAttribute('data-original');
+      el.textContent = original || key;
+    } else if (dict[key]) {
+      // Guardar original antes de la primera traducción
+      if (!el.hasAttribute('data-original')) {
+        el.setAttribute('data-original', el.textContent.trim());
+      }
+      el.textContent = dict[key];
     }
   });
 
-  // Traducir placeholders
-  const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
-  placeholderElements.forEach(element => {
-    const key = element.getAttribute('data-translate-placeholder');
-    if (translations[lang] && translations[lang][key]) {
-      element.placeholder = translations[lang][key];
+  // Método 2: placeholders
+  document.querySelectorAll('[data-translate-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-translate-placeholder');
+    if (lang === 'es') {
+      el.placeholder = key;
+    } else if (dict[key]) {
+      el.placeholder = dict[key];
     }
   });
+
+  // Método 3: leaf nodes — guarda el texto español ANTES de traducir por primera vez
+  var leafSelectors = 'h1, h2, h3, h4, h5, span, p, a, button, li, th, label';
+  document.querySelectorAll(leafSelectors).forEach(function(el) {
+    if (el.children.length > 0) return;
+    if (el.hasAttribute('data-translate')) return;
+
+    if (lang === 'es') {
+      // Restaurar texto original si fue guardado
+      var original = el.getAttribute('data-original');
+      if (original) el.textContent = original;
+    } else {
+      // Guardar texto español antes de la primera traducción
+      if (!el.hasAttribute('data-original')) {
+        el.setAttribute('data-original', el.textContent.trim());
+      }
+      var text = el.getAttribute('data-original');
+      if (text && dict[text]) {
+        el.textContent = dict[text];
+      }
+    }
+  });
+
+  // Método 4: elementos con icono + texto (theme-option, language-option)
+  // Ej: <button><span>☀️</span> Modo Claro</button>
+  document.querySelectorAll('.theme-option, .language-option').forEach(function(el) {
+    el.childNodes.forEach(function(node) {
+      if (node.nodeType !== 3) return; // Solo text nodes
+      var currentText = node.textContent.trim();
+      if (!currentText) return;
+
+      if (lang === 'es') {
+        // Restaurar texto original si fue guardado
+        if (node._original) {
+          node.textContent = node.textContent.replace(currentText, node._original);
+        }
+      } else {
+        // Guardar texto español antes de la primera traducción
+        if (!node._original) node._original = currentText;
+        var translation = dict[node._original];
+        if (translation) {
+          node.textContent = node.textContent.replace(currentText, translation);
+        }
+      }
+    });
+  });
+
+  localStorage.setItem('language', lang);
 }
 
 // Función para obtener el idioma guardado
@@ -688,7 +1499,9 @@ function getSavedLanguage() {
 
 // Aplicar traducción al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
-  const savedLang = getSavedLanguage();
-  translatePage(savedLang);
+  var savedLang = getSavedLanguage();
+  if (savedLang && savedLang !== 'es') {
+    translatePage(savedLang);
+  }
 });
 

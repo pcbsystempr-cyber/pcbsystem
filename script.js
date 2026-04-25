@@ -1,7 +1,7 @@
 // ===== Sistema de Modo Claro/Oscuro =====
 
 // Función para mostrar el popup de selección de tema
-window.showThemePopup = function() {
+window.showThemePopup = function () {
   const popup = document.getElementById('themePopup');
   if (popup) {
     popup.classList.remove('hidden');
@@ -9,7 +9,7 @@ window.showThemePopup = function() {
 }
 
 // Función para ocultar el popup
-window.hideThemePopup = function() {
+window.hideThemePopup = function () {
   const popup = document.getElementById('themePopup');
   if (popup) {
     popup.classList.add('hidden');
@@ -17,14 +17,14 @@ window.hideThemePopup = function() {
 }
 
 // Función para aplicar modo claro
-window.setLightMode = function() {
+window.setLightMode = function () {
   document.body.classList.remove('dark-mode');
   localStorage.setItem('theme', 'light');
   hideThemePopup();
 }
 
 // Función para aplicar modo oscuro
-window.setDarkMode = function() {
+window.setDarkMode = function () {
   document.body.classList.add('dark-mode');
   localStorage.setItem('theme', 'dark');
   hideThemePopup();
@@ -33,7 +33,7 @@ window.setDarkMode = function() {
 // Verificar si el usuario ya seleccionó un tema anteriormente
 function checkThemePreference() {
   const savedTheme = localStorage.getItem('theme');
-  
+
   if (savedTheme === 'dark') {
     document.body.classList.add('dark-mode');
     hideThemePopup();
@@ -47,8 +47,26 @@ function checkThemePreference() {
 }
 
 // Ejecutar cuando la página cargue
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   checkThemePreference();
+
+  // Toggle para Servicios Digitales en el menú hamburguesa
+  const servicesToggle = document.getElementById('servicesToggle');
+  const servicesOptions = document.getElementById('servicesOptions');
+
+  if (servicesToggle && servicesOptions) {
+    servicesToggle.addEventListener('click', function () {
+      if (servicesOptions.style.display === 'none' || servicesOptions.style.display === '') {
+        servicesOptions.style.display = 'block';
+        const arrow = this.querySelector('.sidebar-arrow');
+        if (arrow) arrow.style.transform = 'rotate(90deg)';
+      } else {
+        servicesOptions.style.display = 'none';
+        const arrow = this.querySelector('.sidebar-arrow');
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
 });
 
 // ===== Menú móvil =====
@@ -116,10 +134,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // ===== Efecto parallax en hero =====
 //window.addEventListener('scroll', () => {
-  //const hero = document.querySelector('.hero');
- // if (hero) {
-  //  const scrolled = window.pageYOffset;
-  //  hero.style.transform = `translateY(${scrolled * 0.5}px)`;
- // }
+//const hero = document.querySelector('.hero');
+// if (hero) {
+//  const scrolled = window.pageYOffset;
+//  hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+// }
 //}); 
 
