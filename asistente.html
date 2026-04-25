@@ -1,0 +1,782 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asistente Virtual - PCB AI</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dark-mode-fix.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* ─────────── Tokens institucionales ─────────── */
+    :root {
+      --chat-primary:       #1E4F86;
+      --chat-primary-dark:  #0F2A4A;
+      --chat-accent:        #38BDF8;
+      --chat-bg:            #f1f5f9;
+      --chat-surface:       #ffffff;
+      --chat-text:          #0f172a;
+      --chat-muted:         #64748b;
+      --chat-border:        rgba(15, 42, 74, 0.08);
+      --chat-bubble-bot-bg: #ffffff;
+      --chat-bubble-user-bg: linear-gradient(135deg, #1E4F86 0%, #38BDF8 100%);
+      --chat-shadow-sm:     0 2px 6px rgba(15, 42, 74, 0.06);
+      --chat-shadow-md:     0 6px 24px -12px rgba(15, 42, 74, 0.25);
+      --chat-radius:        18px;
+      --chat-header-h:      106px;  /* compensación del site-header fijo (desktop) */
+    }
+
+    @media (max-width: 780px) {
+      :root { --chat-header-h: 91px; }
+    }
+
+    html, body { height: 100%; margin: 0; }
+    body { overflow: hidden; background: var(--chat-bg); }
+
+    /* ─────────── Contenedor principal ─────────── */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      /* Ocupa el alto de la ventana descontando el header fijo del sitio.
+         100dvh respeta la barra de URL en móviles (Safari/Chrome iOS). */
+      height: calc(100dvh - var(--chat-header-h));
+      max-height: calc(100dvh - var(--chat-header-h));
+      background: var(--chat-bg);
+      overflow: hidden;
+    }
+
+    /* ─────────── Header del chat ─────────── */
+    .chat-header {
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--chat-primary-dark) 0%, var(--chat-primary) 55%, var(--chat-accent) 130%);
+      padding: 14px clamp(14px, 4vw, 22px);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 4px 20px -8px rgba(15, 42, 74, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .chat-header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 0%, rgba(255,255,255,.18), transparent 55%);
+      pointer-events: none;
+    }
+
+    .chat-header-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .chat-header h2 {
+      margin: 0;
+      font-size: clamp(1rem, 2.4vw, 1.15rem);
+      font-weight: 700;
+      letter-spacing: .2px;
+      line-height: 1.2;
+    }
+    .chat-status {
+      font-size: .78rem;
+      opacity: .92;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chat-status::before {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 0 0 rgba(74, 222, 128, .7);
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%   { box-shadow: 0 0 0 0   rgba(74,222,128,.7); }
+      70%  { box-shadow: 0 0 0 8px rgba(74,222,128,0); }
+      100% { box-shadow: 0 0 0 0   rgba(74,222,128,0); }
+    }
+
+    .chat-avatar {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.18);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255,255,255,.32);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 800; font-size: .9rem;
+      letter-spacing: .5px; flex-shrink: 0;
+    }
+
+    .chat-exit {
+      color: white;
+      text-decoration: none;
+      font-size: .88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      transition: background .2s, transform .2s, border-color .2s;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .chat-exit:hover { background: rgba(255,255,255,.24); transform: translateY(-1px); }
+
+    /* ─────────── Mensajes ─────────── */
+    .chat-messages {
+      flex: 1 1 auto;
+      min-height: 0;            /* clave para que el scroll interno funcione */
+      padding: 22px clamp(12px, 4vw, 32px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(15, 42, 74, .22) transparent;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+    .chat-messages::-webkit-scrollbar { width: 8px; }
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: rgba(15, 42, 74, .18);
+      border-radius: 999px;
+    }
+    .chat-messages::-webkit-scrollbar-thumb:hover { background: rgba(15, 42, 74, .32); }
+
+    .message {
+      max-width: min(78%, 640px);
+      padding: 12px 16px;
+      border-radius: var(--chat-radius);
+      line-height: 1.5;
+      font-size: .96rem;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
+      animation: bubbleIn .28s ease-out both;
+    }
+    .message.bot {
+      align-self: flex-start;
+      background: var(--chat-bubble-bot-bg);
+      color: var(--chat-text);
+      border: 1px solid var(--chat-border);
+      border-bottom-left-radius: 6px;
+      box-shadow: var(--chat-shadow-md);
+    }
+    .message.user {
+      align-self: flex-end;
+      background: var(--chat-bubble-user-bg);
+      color: white;
+      border-bottom-right-radius: 6px;
+      box-shadow: 0 8px 18px -10px rgba(30, 79, 134, .55);
+    }
+    .message a { color: inherit; text-decoration: underline; }
+    .message strong { font-weight: 700; }
+
+    /* Indicador de "escribiendo" */
+    .typing-dots {
+      display: inline-flex; gap: 5px; align-items: center;
+    }
+    .typing-dots span {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--chat-primary);
+      display: inline-block;
+      animation: typingDot 1.2s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: .15s; }
+    .typing-dots span:nth-child(3) { animation-delay: .30s; }
+
+    @keyframes bubbleIn {
+      from { opacity: 0; transform: translateY(6px) scale(.98); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+    @keyframes typingDot {
+      0%, 60%, 100% { transform: translateY(0);   opacity: .4; }
+      30%           { transform: translateY(-6px); opacity: 1;  }
+    }
+
+    /* ─────────── Composer (input + botón) ─────────── */
+    .chat-input-area {
+      flex-shrink: 0;
+      background: var(--chat-surface);
+      padding: 12px clamp(12px, 4vw, 20px);
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--chat-border);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      box-shadow: 0 -4px 18px -12px rgba(15, 42, 74, .25);
+    }
+
+    .chat-input {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 18px;
+      border: 1.5px solid var(--chat-border);
+      border-radius: 999px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+      font-size: 16px;
+      background: #f8fafc;
+      color: var(--chat-text);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .chat-input:focus {
+      border-color: var(--chat-primary);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(30, 79, 134, .12);
+    }
+    .chat-input::placeholder { color: var(--chat-muted); }
+
+    .send-btn {
+      background: linear-gradient(135deg, var(--chat-primary) 0%, var(--chat-accent) 100%);
+      color: white;
+      border: none;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 6px 18px -6px rgba(30, 79, 134, .5);
+      transition: transform .15s ease, box-shadow .2s ease, opacity .2s;
+      flex-shrink: 0;
+    }
+    .send-btn:hover:not(:disabled) {
+      transform: translateY(-1px) scale(1.05);
+      box-shadow: 0 10px 22px -8px rgba(30, 79, 134, .55);
+    }
+    .send-btn:active:not(:disabled) { transform: scale(.95); }
+    .send-btn:disabled { cursor: not-allowed; }
+
+    /* ─────────── Móvil ─────────── */
+    @media (max-width: 768px) {
+      .chat-header { padding: 10px 14px; }
+      .chat-avatar { width: 38px; height: 38px; font-size: .82rem; }
+      .chat-messages { padding: 14px 12px; gap: 10px; }
+      .message { max-width: 85%; padding: 10px 14px; font-size: .94rem; }
+      .chat-input-area { padding: 10px 12px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); gap: 8px; }
+      .chat-input { padding: 10px 16px; min-height: 42px; }
+      .send-btn { width: 42px; height: 42px; }
+      .chat-exit { padding: 6px 12px; font-size: .8rem; }
+    }
+    @media (max-width: 400px) {
+      .chat-messages { padding: 12px 8px; }
+      .message { max-width: 88%; font-size: .92rem; padding: 9px 13px; }
+      .chat-exit .chat-exit-label { display: none; }
+      .chat-header h2 { font-size: .98rem; }
+    }
+
+    /* ─────────── Modo oscuro ─────────── */
+    body.dark-mode {
+      --chat-bg:            #0f172a;
+      --chat-surface:       #1e293b;
+      --chat-text:          #e2e8f0;
+      --chat-muted:         #94a3b8;
+      --chat-border:        rgba(255, 255, 255, 0.08);
+      --chat-bubble-bot-bg: #1e293b;
+      --chat-shadow-md:     0 6px 24px -12px rgba(0, 0, 0, 0.6);
+    }
+    body.dark-mode .chat-container,
+    body.dark-mode .chat-messages { background: var(--chat-bg); }
+    body.dark-mode .message.bot { color: var(--chat-text); border-color: var(--chat-border); }
+    body.dark-mode .chat-input-area { background: var(--chat-surface); border-top-color: var(--chat-border); }
+    body.dark-mode .chat-input {
+      background: #0f172a; color: var(--chat-text);
+      border-color: var(--chat-border);
+    }
+    body.dark-mode .chat-input:focus {
+      background: #131e34; border-color: var(--chat-accent);
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, .15);
+    }
+    body.dark-mode .chat-input::placeholder { color: var(--chat-muted); }
+    body.dark-mode .typing-dots span { background: var(--chat-accent); }
+    body.dark-mode .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); }
+    body.dark-mode .chat-messages::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.22); }
+  </style>
+  <script src="translations.js"></script>
+</head>
+
+<body>
+
+  <!-- Popup de selección de tema -->
+  <div id="themePopup" class="theme-popup">
+    <div class="theme-popup-content">
+      <h2 data-translate="🎨 Selecciona tu tema preferido">🎨 Selecciona tu tema preferido</h2>
+      <p data-translate="Elige cómo quieres ver el sitio web">Elige cómo quieres ver el sitio web</p>
+      <div class="theme-buttons">
+        <button class="theme-btn theme-btn-light" id="btnLightMode" data-translate="☀️ Modo Claro">
+          ☀️ Modo Claro
+        </button>
+        <button class="theme-btn theme-btn-dark" id="btnDarkMode" data-translate="🌙 Modo Oscuro">
+          🌙 Modo Oscuro
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Script inline para modo claro/oscuro
+    (function () {
+      function hidePopup() {
+        document.getElementById('themePopup').classList.add('hidden');
+      }
+
+      function setLightMode() {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+        hidePopup();
+      }
+
+      function setDarkMode() {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        hidePopup();
+      }
+
+      function checkTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+          hidePopup();
+        } else if (savedTheme === 'light') {
+          hidePopup();
+        }
+      }
+
+      // Ejecutar inmediatamente
+      checkTheme();
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const btnLight = document.getElementById('btnLightMode');
+        const btnDark = document.getElementById('btnDarkMode');
+
+        if (btnLight) {
+          btnLight.addEventListener('click', setLightMode);
+        }
+        if (btnDark) {
+          btnDark.addEventListener('click', setDarkMode);
+        }
+      });
+    })();
+  </script>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo-area">
+        <img src="LOGO6.png" alt="Logo Escuela" class="logo-image">
+        <div class="logo-text">
+          <span class="logo-title" data-translate="Escuela Superior Vocacional">Escuela Superior Vocacional</span>
+          <span class="logo-subtitle">Pablo Colón Berdecia</span>
+        </div>
+      </div>
+
+      <!-- Hamburger Menu Button -->
+      <button class="hamburger-menu" id="hamburgerBtn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html#inicio" data-translate="Inicio">Inicio</a></li>
+          <li><a href="index.html#servicios" data-translate="Servicios">Servicios</a></li>
+          <li><a href="index.html#contacto" data-translate="Contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="sidebar-menu" id="sidebarMenu">
+    <div class="sidebar-header">
+      <h3 data-translate="⚙️ Configuración">⚙️ Configuración</h3>
+    </div>
+    <div class="sidebar-content">
+      <!-- Theme Toggle -->
+      <div class="sidebar-option" id="themeToggle">
+        <span data-translate="🎨 Cambiar Tema">🎨 Cambiar Tema</span>
+      </div>
+      <div class="theme-options" id="themeOptions">
+        <div class="theme-option" id="selectLightTheme">
+          <span data-translate="☀️ Modo Claro">☀️ Modo Claro</span>
+        </div>
+        <div class="theme-option" id="selectDarkTheme">
+          <span data-translate="🌙 Modo Oscuro">🌙 Modo Oscuro</span>
+        </div>
+      </div>
+
+      <!-- Language Toggle -->
+      <div class="sidebar-option" id="languageToggle">
+        <span data-translate="🌐 Cambiar Idioma">🌐 Cambiar Idioma</span>
+      </div>
+      <div class="language-options" id="languageOptions">
+        <div class="language-option" id="selectSpanish">
+          <span>🇵🇷 Español</span>
+        </div>
+        <div class="language-option" id="selectEnglish">
+          <span>🇺🇸 English</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Hamburger menu functionality
+    (function () {
+      const hamburgerBtn = document.getElementById('hamburgerBtn');
+      const sidebarMenu = document.getElementById('sidebarMenu');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
+      const themeToggle = document.getElementById('themeToggle');
+      const themeOptions = document.getElementById('themeOptions');
+      const languageToggle = document.getElementById('languageToggle');
+      const languageOptions = document.getElementById('languageOptions');
+      const selectLightTheme = document.getElementById('selectLightTheme');
+      const selectDarkTheme = document.getElementById('selectDarkTheme');
+      const selectSpanish = document.getElementById('selectSpanish');
+      const selectEnglish = document.getElementById('selectEnglish');
+
+      function openSidebarMenu() {
+        sidebarMenu.classList.add('active');
+        sidebarOverlay.classList.add('active');
+      }
+
+      function closeSidebarMenu() {
+        sidebarMenu.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+        themeOptions.classList.remove('active');
+        languageOptions.classList.remove('active');
+      }
+
+      if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', openSidebarMenu);
+      }
+
+      if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeSidebarMenu);
+      }
+
+      // Theme toggle
+      if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+          themeOptions.classList.toggle('active');
+          languageOptions.classList.remove('active');
+        });
+      }
+
+      // Language toggle
+      if (languageToggle) {
+        languageToggle.addEventListener('click', function () {
+          languageOptions.classList.toggle('active');
+          themeOptions.classList.remove('active');
+        });
+      }
+
+      // Select Light Theme
+      if (selectLightTheme) {
+        selectLightTheme.addEventListener('click', function () {
+          document.body.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light');
+          closeSidebarMenu();
+        });
+      }
+
+      // Select Dark Theme
+      if (selectDarkTheme) {
+        selectDarkTheme.addEventListener('click', function () {
+          document.body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+          closeSidebarMenu();
+        });
+      }
+
+      // Seleccionar idioma español
+      if (selectSpanish) {
+        selectSpanish.addEventListener('click', function () {
+          localStorage.setItem('language', 'es');
+          const htmlRoot = document.getElementById('htmlRoot');
+          if (htmlRoot) htmlRoot.setAttribute('lang', 'es');
+          if (typeof translatePage === 'function') {
+            translatePage('es');
+          }
+          closeSidebarMenu();
+        });
+      }
+
+      // Seleccionar idioma inglés
+      if (selectEnglish) {
+        selectEnglish.addEventListener('click', function () {
+          localStorage.setItem('language', 'en');
+          const htmlRoot = document.getElementById('htmlRoot');
+          if (htmlRoot) htmlRoot.setAttribute('lang', 'en');
+          if (typeof translatePage === 'function') {
+            translatePage('en');
+          }
+          closeSidebarMenu();
+        });
+      }
+    })();
+  </script>
+
+
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">AI</div>
+        <div>
+          <h2>Asistente PCB</h2>
+          <span class="chat-status" data-translate="Siempre activo">Siempre activo</span>
+        </div>
+      </div>
+      <a href="index.html" class="chat-exit"><i class="fas fa-times"></i> <span class="chat-exit-label" data-translate="Salir">Salir</span></a>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="message bot">
+        ¡Hola! Soy el asistente virtual de la Escuela Pablo Colón Berdecia. 🎓<br>
+        Puedo ayudarte con horarios, servicios, matrículas y más. ¿En qué te puedo ayudar hoy?
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <input type="text" id="userInput" class="chat-input" placeholder="Escribe tu pregunta aquí..." autocomplete="off">
+      <button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script>
+  // ============================================================
+  //  CONFIGURACIÓN — URL del Cloudflare Worker (proxy seguro)
+  //  La API Key de Gemini vive SOLO en el Worker, nunca aquí.
+  //  Instrucciones: ver gemini-proxy.js
+  // ============================================================
+  var PROXY_URL = 'https://pcb-gemini-proxy.rvazquez-isspr.workers.dev';  // ← reemplaza con tu URL después de desplegar
+
+  // ============================================================
+  //  SYSTEM PROMPT — Contexto completo de la escuela PCB
+  //  Copia aquí las instrucciones de tu proyecto en AI Studio
+  // ============================================================
+  var SYSTEM_PROMPT = `
+Eres el Asistente Virtual oficial de la Escuela Superior Vocacional Pablo Colón Berdecia (PCB),
+ubicada en Barranquitas, Puerto Rico. Tu nombre es "Asistente PCB".
+
+PERSONALIDAD:
+- Amable, profesional y conciso. Respondes en español (o inglés si te preguntan en inglés).
+- Das respuestas cortas y directas. No escribas párrafos largos innecesarios.
+- Usas emojis moderadamente para ser amigable.
+- Si no sabes algo específico, dices que lo consulten con la dirección escolar.
+
+INFORMACIÓN DE LA ESCUELA:
+- Nombre completo: Escuela Superior Vocacional Pablo Colón Berdecia
+- Abreviatura: PCB
+- Ubicación: Barranquitas, Puerto Rico
+- Nivel: Superior (grados 9 al 12)
+- Tipo: Vocacional — combina preparación académica con programas técnicos
+
+HORARIO ESCOLAR:
+- Estudiantes: 7:30 AM – 2:30 PM
+- Maestros llegan antes de las 7:15 AM
+- Almuerzo: aproximadamente 11:00 AM – 12:00 PM (varía por grado)
+
+SERVICIOS DISPONIBLES (con enlace en el sistema):
+- 📚 Biblioteca: reserva de espacios, computadoras y préstamo de libros
+- 🍽️ Comedor: menú semanal, normas, conteo de almuerzo
+- 🧠 Orientación / Apoyo Socioemocional: consejería estudiantil
+- 🏥 Enfermería: atención de salud básica en el plantel
+- 🛡️ Seguridad: control de acceso, protocolo de emergencias
+- 📝 Matrícula Online: proceso de matrícula escolar
+- 📄 Solicitud de Documentos: certificados, transcripciones, etc.
+- 🔧 Servicios Técnicos: mantenimiento de equipos
+- 🖨️ Impresión para Maestros: copias y materiales
+- 💻 Computec: habilidades tecnológicas
+- 📢 DECACoop: mercadeo y cooperativa escolar
+- 🎓 Power DE: portal estudiantil del DEPR (informacionestudiantil.dde.pr)
+- 👨‍👩‍👧 Portal de Padres: calificaciones, asistencia, comunicados
+- 📣 Reportar Incidente: sistema confidencial antibullying
+- 🚨 Protocolo de Emergencias: evacuación, lockdown, terremoto, etc.
+
+PROGRAMAS VOCACIONALES:
+- Cosmetología, Enfermería, Artes Culinarias, Computec, DECACoop
+- Elaboración de Productos Agrícolas (P.A.), Electiva Ocupacional
+
+PERSONAL CLAVE:
+- Dirección Escolar: (787) 857-2020
+- Enfermería: (787) 857-2021
+- Guardia de Seguridad: (787) 857-2022
+- Emergencias: 9-1-1
+- Policía local: (787) 857-5050
+
+REGLAS IMPORTANTES:
+- Solo respondes preguntas relacionadas con la escuela, sus servicios, programas y comunidad.
+- Si alguien pregunta sobre algo fuera del ámbito escolar, educadamente redirige la conversación.
+- No inventas información. Si no la tienes, dices "Consulta con la dirección escolar al (787) 857-2020".
+- Para emergencias activas, siempre dices primero: "Llama al 9-1-1 de inmediato".
+`;
+
+  // ============================================================
+  //  HISTORIAL DE CONVERSACIÓN (multi-turno)
+  // ============================================================
+  var conversationHistory = [];
+
+  // El modelo y la API Key se gestionan en el proxy (gemini-proxy.js).
+
+  // ============================================================
+  //  LLAMADA AL PROXY (Cloudflare Worker) → Gemini
+  // ============================================================
+  async function callGemini(userMessage) {
+    if (!PROXY_URL || PROXY_URL.includes('TU-WORKER')) {
+      return '⚠️ El asistente aún no está configurado. El administrador debe desplegar el proxy y actualizar PROXY_URL en este archivo.';
+    }
+
+    // ── Llamar al proxy ──────────────────────────────────────────
+    var response;
+    try {
+      response = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userMessage,
+          history: conversationHistory,   // historial sin el mensaje actual
+          systemPrompt: SYSTEM_PROMPT
+        })
+      });
+    } catch (e) {
+      console.error('Error de red al llamar al proxy:', e);
+      return '❌ No se pudo conectar con el asistente. Verifica tu conexión o que el proxy esté activo.';
+    }
+
+    // ── Leer respuesta (el proxy siempre devuelve JSON) ──────────
+    var data;
+    try {
+      data = await response.json();
+    } catch (e) {
+      console.error('Respuesta no es JSON válido:', e);
+      return '❌ Respuesta inesperada del servidor (' + response.status + ').';
+    }
+
+    // ── Manejar errores HTTP ─────────────────────────────────────
+    if (!response.ok) {
+      // El proxy normaliza todos los errores a { error: "string" }
+      var errMsg = (data && data.error) ? data.error : 'Error ' + response.status;
+      console.error('Proxy error:', response.status, errMsg);
+      if (response.status === 429) return '⏳ Límite de solicitudes alcanzado. Espera unos segundos e intenta de nuevo.';
+      if (response.status === 503) return '❌ El servicio de IA no está disponible en este momento.';
+      return '❌ ' + errMsg;
+    }
+
+    // ── Manejar error de contenido (ej: filtros de seguridad) ────
+    if (data.error) {
+      console.warn('Error de contenido desde el proxy:', data.error);
+      return '⚠️ ' + data.error;
+    }
+
+    // ── Éxito: el proxy devuelve { reply: "texto" } ──────────────
+    var botReply = (data.reply && data.reply.trim())
+      ? data.reply
+      : 'No pude generar una respuesta. Intenta de nuevo.';
+
+    conversationHistory.push({ role: 'user',  parts: [{ text: userMessage }] });
+    conversationHistory.push({ role: 'model', parts: [{ text: botReply }] });
+    if (conversationHistory.length > 20) conversationHistory = conversationHistory.slice(-20);
+
+    return botReply;
+  }
+
+  // ============================================================
+  //  LÓGICA DEL CHAT
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', function() {
+    var input    = document.getElementById('userInput');
+    var btn      = document.getElementById('sendBtn');
+    var messages = document.getElementById('chatMessages');
+    var isSending = false;
+
+    function addMessage(text, sender) {
+      var div = document.createElement('div');
+      div.className = 'message ' + sender;
+      // Convertir saltos de línea y negrita básica de Markdown
+      div.innerHTML = text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/\n/g, '<br>');
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+      return div;
+    }
+
+    function showTyping() {
+      var div = document.createElement('div');
+      div.className = 'message bot';
+      div.id = 'typingIndicator';
+      div.innerHTML = '<span class="typing-dots"><span></span><span></span><span></span></span>';
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function hideTyping() {
+      var el = document.getElementById('typingIndicator');
+      if (el) el.remove();
+    }
+
+    async function handleUserMessage() {
+      if (isSending) return;
+      var text = input.value.trim();
+      if (!text) return;
+
+      isSending = true;
+      btn.disabled = true;
+      btn.style.opacity = '0.5';
+      input.value = '';
+
+      addMessage(text, 'user');
+      showTyping();
+
+      try {
+        var reply = await callGemini(text);
+        hideTyping();
+        addMessage(reply, 'bot');
+      } catch(e) {
+        hideTyping();
+        addMessage('❌ No se pudo conectar. Verifica tu conexión a internet.', 'bot');
+        console.error(e);
+        // Revertir el último mensaje del usuario del historial si falló
+        if (conversationHistory.length && conversationHistory[conversationHistory.length-1].role === 'user') {
+          conversationHistory.pop();
+        }
+      }
+
+      isSending = false;
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      input.focus();
+    }
+
+    btn.addEventListener('click', handleUserMessage);
+    input.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') handleUserMessage();
+    });
+  });
+  </script>
+  <script src="js/global-header.js"></script>
+
+</body>
+
+</html>

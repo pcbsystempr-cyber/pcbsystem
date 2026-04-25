@@ -1,13 +1,13 @@
 // Admin Dashboard JavaScript
-(function() {
+(function () {
   'use strict';
 
   // Configuration
   const SECTIONS = {
-    biblioteca: {
-      title: 'Gestión de Biblioteca',
-      folder: 'galeriabiblioteca',
-      page: 'biblioteca.html'
+    dashboard: {
+      title: 'Dashboard General',
+      folder: null,
+      page: null
     },
     comedor: {
       title: 'Gestión de Comedor',
@@ -28,13 +28,58 @@
       title: 'Configuración del Bot de Avisos',
       folder: null,
       page: null
+    },
+    novedades: {
+      title: 'Gestión de Novedades',
+      folder: null,
+      page: null
+    },
+    talleres: {
+      title: 'Talleres para Padres',
+      folder: null,
+      page: 'talleres-padres.html'
+    },
+    certificaciones: {
+      title: 'Certificaciones Online',
+      folder: null,
+      page: 'certificaciones-padres.html'
+    },
+    anuncios_comunidad: {
+      title: 'Anuncios de la Comunidad',
+      folder: null,
+      page: null
     }
   };
 
+  // Secciones planeadas para próximas etapas (placeholder "Próximamente").
+  // Cada entrada define el título y subtítulo que se muestran en el topbar.
+  const PROXIMAMENTE = {
+    publicaciones_todas:    { title: 'Todas las publicaciones',    subtitle: 'Vista unificada de todas las publicaciones del sistema',                  icon: '📂' },
+    publicaciones_crear:    { title: 'Crear publicación',          subtitle: 'Formulario inteligente único para todas las categorías',                 icon: '➕' },
+    biblioteca:             { title: 'Biblioteca',                 subtitle: 'Gestión del catálogo y recursos de la biblioteca escolar',               icon: '📚' },
+    reservas:               { title: 'Reservas',                   subtitle: 'Reservas de libros, salones y equipos',                                  icon: '📅' },
+    alertas:                { title: 'Alertas',                    subtitle: 'Configuración de alertas urgentes y de emergencia',                      icon: '🚨' },
+    popup_principal:        { title: 'Popup Principal',            subtitle: 'Configura qué se muestra en el popup del portal público',                icon: '💬' },
+    notificaciones:         { title: 'Notificaciones',             subtitle: 'Envío y bandeja de notificaciones a usuarios',                           icon: '📲' },
+    usuarios:               { title: 'Usuarios',                   subtitle: 'Gestión de cuentas administrativas y de personal',                       icon: '👥' },
+    roles:                  { title: 'Roles y permisos',           subtitle: 'Definición de roles (Director, Maestro, Bibliotecario, etc.)',          icon: '🛡️' },
+    configuracion:          { title: 'Configuración del portal',   subtitle: 'Parámetros generales del portal PCBSystem',                              icon: '⚙️' },
+    idioma_tema:            { title: 'Idioma y tema visual',       subtitle: 'Preferencias de idioma y modo claro/oscuro por defecto',                 icon: '🌐' },
+    exportar:               { title: 'Exportar datos',             subtitle: 'Descarga de datos en JSON, CSV o copias de seguridad',                   icon: '📤' },
+    reporte_actividad:      { title: 'Actividad del sistema',      subtitle: 'Auditoría y registro de eventos administrativos',                        icon: '📊' },
+    reporte_publicaciones:  { title: 'Publicaciones más vistas',   subtitle: 'Métricas de visualización por publicación',                              icon: '🔥' },
+    reporte_servicios:      { title: 'Servicios más usados',       subtitle: 'Estadísticas de uso por módulo y servicio',                              icon: '🚀' },
+    historial:              { title: 'Historial de cambios',       subtitle: 'Bitácora de cambios y versiones de contenido',                           icon: '📜' }
+  };
+
   // State
-  let currentSection = 'biblioteca';
+  let currentSection = 'dashboard';
   let contentData = {};
   let imageToDelete = null;
+  let recToEditIndex = null;
+  let newsToEditId = null;
+  let botItemToEdit = null;
+  let galleryItemToEdit = null; // { id, folder } of gallery item being edited
 
   // DOM Elements
   const navButtons = document.querySelectorAll('.nav-btn');
@@ -60,8 +105,46 @@
   const btnConfirmDelete = document.getElementById('btnConfirmDelete');
   const btnCancelDelete = document.getElementById('btnCancelDelete');
   const botConfigSection = document.getElementById('botConfigSection');
+  const novedadesSection = document.getElementById('novedadesSection');
+  const anunciosComunidadSection = document.getElementById('anunciosComunidadSection');
   const botItemsList = document.getElementById('botItemsList');
   const btnSaveBotConfig = document.getElementById('btnSaveBotConfig');
+
+  // Edit news modal
+  const editNewsModal = document.getElementById('editNewsModal');
+  const editNewsTitle = document.getElementById('editNewsTitle');
+  const editNewsMessage = document.getElementById('editNewsMessage');
+  const editNewsImageUrl = document.getElementById('editNewsImageUrl');
+  const btnSaveNewsEdit = document.getElementById('btnSaveNewsEdit');
+  const btnCancelNewsEdit = document.getElementById('btnCancelNewsEdit');
+
+  // Edit gallery item modal
+  const editGalleryItemModal = document.getElementById('editGalleryItemModal');
+  const editGalleryTitle = document.getElementById('editGalleryTitle');
+  const editGalleryDesc = document.getElementById('editGalleryDesc');
+  const editGalleryImgPreview = document.getElementById('editGalleryImgPreview');
+  const editGalleryImgFile = document.getElementById('editGalleryImgFile');
+  const btnSaveGalleryEdit = document.getElementById('btnSaveGalleryEdit');
+  const btnCancelGalleryEdit = document.getElementById('btnCancelGalleryEdit');
+
+  // Edit bot item modal
+  const editBotItemModal = document.getElementById('editBotItemModal');
+  const editBotTitle = document.getElementById('editBotTitle');
+  const editBotDesc = document.getElementById('editBotDesc');
+  const editBotImgPreview = document.getElementById('editBotImgPreview');
+  const editBotImgFile = document.getElementById('editBotImgFile');
+  const btnSaveBotItemEdit = document.getElementById('btnSaveBotItemEdit');
+  const btnCancelBotItemEdit = document.getElementById('btnCancelBotItemEdit');
+
+  // Recomendaciones del comedor
+  const recomendacionesAdminSection = document.getElementById('recomendacionesAdminSection');
+  const recomendacionesAdminList = document.getElementById('recomendacionesAdminList');
+  const recCount = document.getElementById('recCount');
+  const editRecModal = document.getElementById('editRecModal');
+  const editRecNombre = document.getElementById('editRecNombre');
+  const editRecTexto = document.getElementById('editRecTexto');
+  const btnSaveRecEdit = document.getElementById('btnSaveRecEdit');
+  const btnCancelRecEdit = document.getElementById('btnCancelRecEdit');
 
   // Upload method state
   let uploadMethod = 'file'; // 'file' or 'url'
@@ -70,7 +153,8 @@
   function init() {
     loadContentData();
     setupEventListeners();
-    renderGallery();
+    // Arrancar en Dashboard General (Centro de Control unificado).
+    switchSection('dashboard');
   }
 
   // Load content data from localStorage and JSON file
@@ -163,6 +247,11 @@
         const section = btn.dataset.section;
         switchSection(section);
       });
+    });
+
+    // Botones de acceso rápido del Dashboard General
+    document.querySelectorAll('.dash-quick-btn[data-goto]').forEach(btn => {
+      btn.addEventListener('click', () => switchSection(btn.dataset.goto));
     });
 
     // Add image button
@@ -275,6 +364,8 @@
 
   // Switch section
   function switchSection(section) {
+    // Si la sección no está registrada en SECTIONS ni en PROXIMAMENTE, ignorar.
+    if (!SECTIONS[section] && !PROXIMAMENTE[section]) return;
     currentSection = section;
 
     // Update nav buttons
@@ -282,38 +373,124 @@
       btn.classList.toggle('active', btn.dataset.section === section);
     });
 
-    // Update title
-    sectionTitle.textContent = SECTIONS[section].title;
+    // Update title & subtitle
+    const meta = SECTIONS[section] || PROXIMAMENTE[section];
+    sectionTitle.textContent = meta.title;
+    const subtitles = {
+      dashboard: 'Centro de Control Administrativo del PCBSystem',
+      comedor: 'Administra las imágenes y menú del comedor escolar',
+      promociones: 'Gestiona las promociones e inscripciones visibles en el sitio',
+      avisos: 'Publicación y edición de avisos institucionales',
+      bot: 'Selecciona qué avisos muestra el bot flotante del sitio',
+      novedades: 'La novedad más reciente aparecerá en el popup del portal',
+      talleres: 'Crea y edita talleres para padres — visibles en talleres-padres.html',
+      certificaciones: 'Crea y edita certificaciones online — visibles en certificaciones-padres.html',
+      anuncios_comunidad: 'Aprueba, rechaza o elimina los anuncios enviados por la comunidad'
+    };
+    const subtitleEl = document.getElementById('sectionSubtitle');
+    if (subtitleEl) subtitleEl.textContent = subtitles[section] || (PROXIMAMENTE[section] ? PROXIMAMENTE[section].subtitle : '');
 
-    // Show/hide buttons based on section
-    if (section === 'comedor') {
-      btnEditMenu.style.display = 'inline-block';
-      btnAddImage.style.display = 'inline-block';
+    // Show/hide topbar buttons
+    const gallerySections = ['comedor', 'promociones', 'avisos'];
+    btnEditMenu.style.display = section === 'comedor' ? 'inline-flex' : 'none';
+    btnAddImage.style.display = gallerySections.includes(section) ? 'inline-flex' : 'none';
+
+    // Fetch extra sections
+    const talleresSection = document.getElementById('talleresSection');
+    const certificacionesSection = document.getElementById('certificacionesSection');
+    const dashboardSection = document.getElementById('dashboardSection');
+    const proximamenteSection = document.getElementById('proximamenteSection');
+    const statsRow = document.getElementById('statsRow');
+
+    // Hide all special sections
+    botConfigSection.style.display = 'none';
+    recomendacionesAdminSection.style.display = 'none';
+    novedadesSection.style.display = 'none';
+    if (anunciosComunidadSection) anunciosComunidadSection.style.display = 'none';
+    if (talleresSection) talleresSection.style.display = 'none';
+    if (certificacionesSection) certificacionesSection.style.display = 'none';
+    if (dashboardSection) dashboardSection.style.display = 'none';
+    if (proximamenteSection) proximamenteSection.style.display = 'none';
+    galleryGrid.style.display = 'none';
+    emptyState.style.display = 'none';
+
+    // El stats-row clásico se oculta en Dashboard (que tiene su propio resumen) y en placeholders.
+    if (statsRow) statsRow.style.display = (section === 'dashboard' || PROXIMAMENTE[section]) ? 'none' : 'grid';
+
+    if (section === 'dashboard') {
+      if (dashboardSection) dashboardSection.style.display = 'block';
+      renderDashboard();
+    } else if (PROXIMAMENTE[section]) {
+      renderProximamente(section);
+      if (proximamenteSection) proximamenteSection.style.display = 'block';
     } else if (section === 'bot') {
-      btnEditMenu.style.display = 'none';
-      btnAddImage.style.display = 'none';
-    } else {
-      btnEditMenu.style.display = 'none';
-      btnAddImage.style.display = 'inline-block';
-    }
-
-    // Show/hide sections
-    if (section === 'bot') {
-      galleryGrid.style.display = 'none';
-      emptyState.style.display = 'none';
       botConfigSection.style.display = 'block';
       renderBotConfig();
+    } else if (section === 'novedades') {
+      novedadesSection.style.display = 'block';
+      renderNovedades();
+    } else if (section === 'anuncios_comunidad') {
+      if (anunciosComunidadSection) anunciosComunidadSection.style.display = 'block';
+      renderAnunciosComunidad();
+    } else if (section === 'talleres') {
+      if (talleresSection) talleresSection.style.display = 'block';
+      renderTalleres();
+    } else if (section === 'certificaciones') {
+      if (certificacionesSection) certificacionesSection.style.display = 'block';
+      renderCertificaciones();
+    } else if (section === 'comedor') {
+      galleryGrid.style.display = 'grid';
+      recomendacionesAdminSection.style.display = 'block';
+      renderRecomendaciones();
+      renderGallery();
     } else {
       galleryGrid.style.display = 'grid';
-      botConfigSection.style.display = 'none';
-    }
-
-    // Hide forms and render gallery
-    hideUploadForm();
-    hideMenuEditor();
-    if (section !== 'bot') {
       renderGallery();
     }
+
+    hideUploadForm();
+    hideMenuEditor();
+    updateStats();
+  }
+
+  // ── Renderizar placeholder "Próximamente" para módulos en construcción ──
+  function renderProximamente(section) {
+    const meta = PROXIMAMENTE[section];
+    if (!meta) return;
+    const iconEl  = document.getElementById('proxIcon');
+    const titleEl = document.getElementById('proxTitle');
+    const textEl  = document.getElementById('proxText');
+    if (iconEl)  iconEl.textContent = meta.icon || '🚧';
+    if (titleEl) titleEl.textContent = meta.title;
+    if (textEl)  textEl.textContent = meta.subtitle + ' — Disponible en una próxima etapa del Centro de Control Administrativo.';
+  }
+
+  // ── Renderizar Dashboard General ──
+  function renderDashboard() {
+    const data = contentData || {};
+    const promos    = (data.promociones || []).length;
+    const avisos    = (data.avisos || []).length;
+    const novedades = (data.novedades || []).length;
+    const talleres  = (typeof getTalleres === 'function' ? getTalleres() : []).length;
+    const certs     = (typeof getCertificaciones === 'function' ? getCertificaciones() : []).length;
+    const menu      = data.menu_comedor || {};
+    const menuItems = ((menu.desayuno || []).length) + ((menu.almuerzo || []).length);
+
+    // Avisos críticos = novedades marcadas como is_critical
+    const criticos  = (data.novedades || []).filter(n => n && (n.is_critical || n.isCritical)).length;
+    // Solicitudes pendientes ≈ anuncios de comunidad por aprobar (badge ya implementado)
+    const badgeEl   = document.getElementById('badgePendientes');
+    const pendN     = badgeEl ? parseInt(badgeEl.textContent, 10) || 0 : 0;
+
+    const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    setText('dashTotalPublicaciones',    promos + avisos + novedades + talleres + certs);
+    setText('dashAvisosCriticos',        criticos);
+    setText('dashPromocionesActivas',    promos);
+    setText('dashTalleresPublicados',    talleres);
+    setText('dashCertsDisponibles',      certs);
+    setText('dashMenuPublicado',         menuItems > 0 ? menuItems + ' items' : '—');
+    setText('dashSolicitudesPendientes', pendN);
+    setText('dashLastUpdate',            new Date().toLocaleString('es-PR'));
   }
 
   // Show upload form
@@ -373,7 +550,7 @@
 
     // Show preview
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       filePreview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
     };
     reader.readAsDataURL(file);
@@ -435,7 +612,7 @@
 
       // Create image object
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         const imageData = {
           id: `${currentSection}_${Date.now()}`,
           filename: file.name,
@@ -518,8 +695,24 @@
       const imgSrc = item.url || item.base64 || item.path;
       const sourceLabel = item.isExternal ? '🌐 URL Externa' : '📁 Archivo Local';
 
+      // Check if this is the menu image
+      const isMenuImage = currentSection === 'comedor' &&
+        contentData.menu_comedor &&
+        contentData.menu_comedor.menuImage &&
+        contentData.menu_comedor.menuImage.id === item.id;
+
+      const menuButton = currentSection === 'comedor' ? `
+        <button class="btn-icon menu-action ${isMenuImage ? 'active' : ''}" 
+                onclick="adminApp.setMenuImage('${item.id}')" 
+                title="${isMenuImage ? 'Es la imagen actual del menú' : 'Establecer como Menú del Día'}"
+                style="${isMenuImage ? 'background-color: var(--primary); color: white;' : ''}">
+          ${isMenuImage ? '⭐' : '🍽️'}
+        </button>
+      ` : '';
+
       return `
-        <div class="gallery-item" data-id="${item.id}">
+        <div class="gallery-item ${isMenuImage ? 'highlight-menu' : ''}" data-id="${item.id}" style="${isMenuImage ? 'border: 3px solid var(--primary); box-shadow: 0 0 15px rgba(29, 53, 87, 0.3);' : ''}">
+          ${isMenuImage ? '<div style="position: absolute; top: 10px; left: 10px; background: var(--primary); color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; z-index: 10;">⭐ Menú del Día</div>' : ''}
           <img src="${imgSrc}" alt="${item.title}" class="gallery-item-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22250%22%3E%3Crect fill=%22%23f5f7fa%22 width=%22300%22 height=%22250%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2218%22 fill=%22%23999%22%3E📷 Imagen%3C/text%3E%3C/svg%3E'">
           <div class="gallery-item-content">
             <div class="gallery-item-title">${item.title}</div>
@@ -529,6 +722,11 @@
                 ${sourceLabel}: ${item.filename}
               </div>
               <div class="gallery-item-actions">
+                ${menuButton}
+                <button class="btn-icon" onclick="adminApp.editGalleryItem('${item.id}')" title="Editar"
+                  style="background:#f0f4ff; color:#667eea;">
+                  ✏️
+                </button>
                 <button class="btn-icon delete" onclick="adminApp.deleteImage('${item.id}')" title="Eliminar">
                   🗑️
                 </button>
@@ -621,20 +819,166 @@
     const selectedIds = botConfig.selectedIds || [];
 
     botItemsList.innerHTML = allItems.map(item => `
-      <div class="bot-item">
+      <div class="bot-item" style="display:flex; align-items:center; gap:0.8rem; padding:0.75rem; border:1px solid #e8ecf0; border-radius:10px; margin-bottom:0.6rem; background:#fafbfc;">
         <input
           type="checkbox"
           class="bot-item-checkbox"
           data-item-id="${item.id}"
           ${selectedIds.includes(item.id) ? 'checked' : ''}
+          style="width:18px; height:18px; flex-shrink:0; cursor:pointer;"
         >
-        <img src="${item.base64 || item.path}" alt="${item.title}" class="bot-item-preview" onerror="this.style.display='none'">
-        <div class="bot-item-info">
-          <h4>${item.title || 'Sin título'}</h4>
-          <p>${item.description || 'Sin descripción'}</p>
+        <img src="${item.base64 || item.path}" alt="${item.title}" class="bot-item-preview"
+          style="width:56px; height:56px; object-fit:cover; border-radius:8px; flex-shrink:0;"
+          onerror="this.style.display='none'">
+        <div class="bot-item-info" style="flex:1; min-width:0;">
+          <h4 style="margin:0 0 0.2rem; color:#2c3e50; font-size:0.95rem;">${item.title || 'Sin título'}</h4>
+          <p style="margin:0; color:#7f8c8d; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${item.description || 'Sin descripción'}</p>
         </div>
+        <button onclick="adminApp.editBotItem('${item.id}')" title="Editar"
+          style="background:#f0f4ff; color:#667eea; border:none; border-radius:7px; padding:0.5rem 0.75rem; cursor:pointer; font-size:1rem; flex-shrink:0; transition:background 0.2s;"
+          onmouseover="this.style.background='#667eea';this.style.color='white'"
+          onmouseout="this.style.background='#f0f4ff';this.style.color='#667eea'">✏️</button>
+        <button onclick="adminApp.deleteBotItem('${item.id}')" title="Eliminar"
+          style="background:#fff0f0; color:#e74c3c; border:none; border-radius:7px; padding:0.5rem 0.75rem; cursor:pointer; font-size:1rem; flex-shrink:0; transition:background 0.2s;"
+          onmouseover="this.style.background='#e74c3c';this.style.color='white'"
+          onmouseout="this.style.background='#fff0f0';this.style.color='#e74c3c'">🗑️</button>
       </div>
     `).join('');
+  }
+
+  // ── Editar ítem de galería (comedor, promociones, etc.) ─────────────────
+
+  function editGalleryItem(id) {
+    let found = null;
+    let foundFolder = null;
+    for (const folder of Object.keys(contentData)) {
+      if (!Array.isArray(contentData[folder])) continue;
+      const item = contentData[folder].find(i => i.id === id);
+      if (item) { found = item; foundFolder = folder; break; }
+    }
+    if (!found) return;
+    galleryItemToEdit = { id, folder: foundFolder };
+    editGalleryTitle.value = found.title || '';
+    editGalleryDesc.value = found.description || '';
+    editGalleryImgFile.value = '';
+    const src = found.base64 || found.url || found.path || '';
+    editGalleryImgPreview.innerHTML = src
+      ? `<img src="${src}" style="max-width:100%; max-height:140px; border-radius:8px; border:1px solid #e2e8f0;">`
+      : `<p style="color:#95a5a6; font-size:0.9rem;">Sin imagen</p>`;
+    editGalleryItemModal.classList.add('active');
+  }
+
+  function closeGalleryItemModal() {
+    editGalleryItemModal.classList.remove('active');
+    galleryItemToEdit = null;
+    editGalleryTitle.value = '';
+    editGalleryDesc.value = '';
+    editGalleryImgPreview.innerHTML = '';
+    editGalleryImgFile.value = '';
+  }
+
+  function saveGalleryItemEdit() {
+    if (!galleryItemToEdit) return;
+    const title = editGalleryTitle.value.trim();
+    const desc = editGalleryDesc.value.trim();
+    if (!title) { alert('⚠️ El título no puede estar vacío.'); return; }
+
+    function applyGalleryEdit(newBase64) {
+      const { id, folder } = galleryItemToEdit;
+      const idx = contentData[folder].findIndex(i => i.id === id);
+      if (idx !== -1) {
+        contentData[folder][idx].title = title;
+        contentData[folder][idx].description = desc;
+        if (newBase64) contentData[folder][idx].base64 = newBase64;
+      }
+      saveContentData();
+      closeGalleryItemModal();
+      renderGallery();
+      alert('✅ Imagen actualizada correctamente.');
+    }
+
+    const file = editGalleryImgFile.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => applyGalleryEdit(e.target.result);
+      reader.readAsDataURL(file);
+    } else {
+      applyGalleryEdit(null);
+    }
+  }
+
+  // ── Editar ítem del bot ──────────────────────────────────────────────────
+
+  function editBotItem(id) {
+    const avisos = contentData.avisos || [];
+    const promociones = contentData.promociones || [];
+    const allItems = [...avisos, ...promociones];
+    const item = allItems.find(i => i.id === id);
+    if (!item) return;
+
+    botItemToEdit = item;
+    editBotTitle.value = item.title || '';
+    editBotDesc.value = item.description || '';
+    editBotImgFile.value = '';
+
+    const src = item.base64 || item.path || '';
+    editBotImgPreview.innerHTML = src
+      ? `<img src="${src}" style="max-width:100%; max-height:140px; border-radius:8px; border:1px solid #e2e8f0;">`
+      : `<p style="color:#95a5a6; font-size:0.9rem;">Sin imagen</p>`;
+
+    editBotItemModal.classList.add('active');
+  }
+
+  function closeBotItemModal() {
+    editBotItemModal.classList.remove('active');
+    botItemToEdit = null;
+    editBotTitle.value = '';
+    editBotDesc.value = '';
+    editBotImgPreview.innerHTML = '';
+    editBotImgFile.value = '';
+  }
+
+  function saveBotItemEdit() {
+    if (!botItemToEdit) return;
+    const title = editBotTitle.value.trim();
+    const desc = editBotDesc.value.trim();
+    if (!title) { alert('⚠️ El título no puede estar vacío.'); return; }
+
+    function applyEdit(newBase64) {
+      // Update in avisos or promociones
+      ['avisos', 'promociones'].forEach(folder => {
+        if (!contentData[folder]) return;
+        const idx = contentData[folder].findIndex(i => i.id === botItemToEdit.id);
+        if (idx !== -1) {
+          contentData[folder][idx].title = title;
+          contentData[folder][idx].description = desc;
+          if (newBase64) contentData[folder][idx].base64 = newBase64;
+        }
+      });
+      localStorage.setItem('pcb_content_data', JSON.stringify(contentData));
+      closeBotItemModal();
+      renderBotConfig();
+      alert('✅ Cambios guardados correctamente.');
+    }
+
+    const file = editBotImgFile.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = e => applyEdit(e.target.result);
+      reader.readAsDataURL(file);
+    } else {
+      applyEdit(null);
+    }
+  }
+
+  function deleteBotItem(id) {
+    if (!confirm('¿Eliminar este aviso/promoción? Esta acción no se puede deshacer.')) return;
+    ['avisos', 'promociones'].forEach(folder => {
+      if (!contentData[folder]) return;
+      contentData[folder] = contentData[folder].filter(i => i.id !== id);
+    });
+    saveContentData();
+    renderBotConfig();
   }
 
   // Save bot configuration
@@ -653,21 +997,697 @@
     alert(`✅ Configuración guardada!\n\n${selectedIds.length} avisos/promociones seleccionados para mostrar en el bot.`);
   }
 
-  // Setup event listeners
+  // Set menu image
+  function setMenuImage(id) {
+    if (confirm('¿Quieres establecer esta imagen como el "Menú del Día"?')) {
+      const items = contentData.comedor || [];
+      const image = items.find(item => item.id === id);
+
+      if (image) {
+        if (!contentData.menu_comedor) contentData.menu_comedor = {};
+
+        // Determine best source for the image
+        const imgSrc = image.url || image.path || image.base64;
+
+        contentData.menu_comedor.menuImage = {
+          id: image.id,
+          src: imgSrc,
+          timestamp: Date.now()
+        };
+
+        saveContentData();
+        renderGallery();
+        alert('✅ Imagen del Menú del Día actualizada!');
+      }
+    }
+  }
+
+  // ── Gestión de Novedades (Supabase) ────────────────────────────────────
+
+  async function renderNovedades() {
+    const newsList = document.getElementById('newsList');
+    const newsForm = document.getElementById('newsForm');
+    if (!newsList || !newsForm) return;
+
+    async function renderNews() {
+      newsList.innerHTML = '<li style="color:#95a5a6; padding:10px;">⏳ Cargando novedades...</li>';
+      try {
+        const allNews = await window.novedadesDB.getAll();
+        if (!allNews || allNews.length === 0) {
+          newsList.innerHTML = '<li style="color:#95a5a6; padding:10px;">No hay noticias activas.</li>';
+          return;
+        }
+        newsList.innerHTML = allNews.map((news, i) => `
+          <li style="padding:15px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; background:${i === 0 ? '#f0f9ff' : 'transparent'};">
+            <div style="display:flex; align-items:center; gap:15px;">
+              ${news.image_url
+                ? `<img src="${news.image_url}" style="width:50px; height:50px; object-fit:cover; border-radius:6px;">`
+                : `<div style="width:50px; height:50px; background:#eee; border-radius:6px; display:flex; align-items:center; justify-content:center;">📷</div>`}
+              <div>
+                <strong style="color:#2c3e50;">${news.title}</strong>
+                ${i === 0 ? '<span style="background:#2ecc71; color:white; padding:2px 6px; border-radius:4px; font-size:0.7rem; margin-left:5px;">ACTIVA</span>' : ''}
+                ${news.is_critical ? '<span style="background:#e74c3c; color:white; padding:2px 6px; border-radius:4px; font-size:0.7rem; margin-left:5px;">🚨 CRÍTICA</span>' : ''}
+                <p style="margin:0; color:#7f8c8d; font-size:0.9rem;">${news.message}</p>
+                <small style="color:#95a5a6;">${new Date(news.created_at).toLocaleDateString()} ${new Date(news.created_at).toLocaleTimeString()}</small>
+              </div>
+            </div>
+            <div style="display:flex; gap:0.4rem;">
+              <button onclick="adminApp.editNews('${news.id}')"
+                style="background:#f0f4ff; color:#667eea; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:1rem;"
+                onmouseover="this.style.background='#667eea';this.style.color='white'"
+                onmouseout="this.style.background='#f0f4ff';this.style.color='#667eea'">✏️</button>
+              <button onclick="adminApp.deleteNews('${news.id}')"
+                style="background:#fff0f0; color:#e74c3c; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:1rem;"
+                onmouseover="this.style.background='#e74c3c';this.style.color='white'"
+                onmouseout="this.style.background='#fff0f0';this.style.color='#e74c3c'">🗑️</button>
+            </div>
+          </li>
+        `).join('');
+      } catch (err) {
+        newsList.innerHTML = '<li style="color:#e74c3c; padding:10px;">⚠️ Error al cargar novedades. Verifica la conexión.</li>';
+        console.error('novedadesDB.getAll:', err);
+      }
+    }
+
+    // Bind submit only once
+    if (!newsForm._bound) {
+      newsForm._bound = true;
+      newsForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const title      = document.getElementById('newsTitle').value.trim();
+        const message    = document.getElementById('newsMessage').value.trim();
+        const imageUrl   = document.getElementById('newsImage').value.trim();
+        const isCritical = !!document.getElementById('newsIsCritical')?.checked;
+        if (!title || !message) { alert('⚠️ Título y mensaje son obligatorios.'); return; }
+        try {
+          await window.novedadesDB.add({ title, message, imageUrl, isCritical });
+          newsForm.reset();
+          await renderNews();
+          alert(isCritical
+            ? '✅ Novedad CRÍTICA publicada. Aparecerá siempre en el popup hasta que la elimines o la edites.'
+            : '✅ Novedad publicada. Aparecerá en el popup solo en la primera visita de cada usuario.');
+        } catch (err) {
+          alert('❌ Error al publicar: ' + err.message);
+        }
+      });
+    }
+
+    await renderNews();
+  }
+
+  async function editNews(id) {
+    try {
+      const all  = await window.novedadesDB.getAll();
+      const news = all.find(n => n.id === id);
+      if (!news) return;
+      newsToEditId = id;
+      editNewsTitle.value    = news.title     || '';
+      editNewsMessage.value  = news.message   || '';
+      editNewsImageUrl.value = news.image_url || '';
+      const cb = document.getElementById('editNewsIsCritical');
+      if (cb) cb.checked = !!news.is_critical;
+      editNewsModal.classList.add('active');
+    } catch (err) {
+      alert('❌ Error al cargar novedad: ' + err.message);
+    }
+  }
+
+  function closeNewsModal() {
+    editNewsModal.classList.remove('active');
+    newsToEditId = null;
+    editNewsTitle.value    = '';
+    editNewsMessage.value  = '';
+    editNewsImageUrl.value = '';
+    const cb = document.getElementById('editNewsIsCritical');
+    if (cb) cb.checked = false;
+  }
+
+  async function saveNewsEdit() {
+    if (!newsToEditId) return;
+    const title   = editNewsTitle.value.trim();
+    const message = editNewsMessage.value.trim();
+    if (!title || !message) { alert('⚠️ El título y el mensaje son obligatorios.'); return; }
+    try {
+      await window.novedadesDB.update(newsToEditId, {
+        title,
+        message,
+        imageUrl:   editNewsImageUrl.value.trim(),
+        isCritical: !!document.getElementById('editNewsIsCritical')?.checked
+      });
+      closeNewsModal();
+      await renderNovedades();
+    } catch (err) {
+      alert('❌ Error al guardar: ' + err.message);
+    }
+  }
+
+  async function deleteNews(id) {
+    if (!confirm('¿Seguro que deseas eliminar esta novedad?')) return;
+    try {
+      await window.novedadesDB.remove(id);
+      await renderNovedades();
+    } catch (err) {
+      alert('❌ Error al eliminar: ' + err.message);
+    }
+  }
+
+  // ── Recomendaciones del Comedor ─────────────────────────────────────────
+
+  const REC_KEY = 'comedor_recomendaciones';
+
+  function getRecomendaciones() {
+    return JSON.parse(localStorage.getItem(REC_KEY) || '[]');
+  }
+
+  function saveRecomendaciones(data) {
+    localStorage.setItem(REC_KEY, JSON.stringify(data));
+  }
+
+  function formatRecDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('es-PR', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function renderRecomendaciones() {
+    const recs = getRecomendaciones();
+    recCount.textContent = recs.length;
+
+    if (recs.length === 0) {
+      recomendacionesAdminList.innerHTML = `
+        <div style="text-align:center; color:#95a5a6; padding:2rem;">
+          <p style="font-size:2rem;">💬</p>
+          <p>No hay recomendaciones todavía.</p>
+        </div>`;
+      return;
+    }
+
+    recomendacionesAdminList.innerHTML = recs.map((r, i) => `
+      <div style="display:flex; gap:1rem; align-items:flex-start; padding:1rem; border:1px solid #e8ecf0; border-radius:10px; margin-bottom:0.8rem; background:#fafbfc;">
+        <div style="width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,#667eea,#764ba2); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:1.1rem; flex-shrink:0;">
+          ${r.nombre.charAt(0).toUpperCase()}
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap; margin-bottom:0.3rem;">
+            <strong style="color:#2c3e50;">${r.nombre}</strong>
+            <span style="font-size:0.78rem; color:#95a5a6;">${formatRecDate(r.fecha)}</span>
+          </div>
+          <p style="margin:0; color:#555; font-size:0.93rem; line-height:1.5;">${r.texto}</p>
+        </div>
+        <div style="display:flex; gap:0.4rem; flex-shrink:0;">
+          <button onclick="adminApp.editRecomendacion(${i})" title="Editar"
+            style="background:#f0f4ff; color:#667eea; border:none; border-radius:7px; padding:0.45rem 0.7rem; cursor:pointer; font-size:0.95rem; transition:background 0.2s;"
+            onmouseover="this.style.background='#667eea';this.style.color='white'"
+            onmouseout="this.style.background='#f0f4ff';this.style.color='#667eea'">✏️</button>
+          <button onclick="adminApp.deleteRecomendacion(${i})" title="Eliminar"
+            style="background:#fff0f0; color:#e74c3c; border:none; border-radius:7px; padding:0.45rem 0.7rem; cursor:pointer; font-size:0.95rem; transition:background 0.2s;"
+            onmouseover="this.style.background='#e74c3c';this.style.color='white'"
+            onmouseout="this.style.background='#fff0f0';this.style.color='#e74c3c'">🗑️</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function deleteRecomendacion(index) {
+    if (!confirm('¿Eliminar esta recomendación? Esta acción no se puede deshacer.')) return;
+    const recs = getRecomendaciones();
+    recs.splice(index, 1);
+    saveRecomendaciones(recs);
+    renderRecomendaciones();
+  }
+
+  function editRecomendacion(index) {
+    const recs = getRecomendaciones();
+    const rec = recs[index];
+    if (!rec) return;
+    recToEditIndex = index;
+    editRecNombre.value = rec.nombre;
+    editRecTexto.value = rec.texto;
+    editRecModal.classList.add('active');
+  }
+
+  function saveRecEdit() {
+    if (recToEditIndex === null) return;
+    const nombre = editRecNombre.value.trim();
+    const texto = editRecTexto.value.trim();
+    if (!nombre || !texto) {
+      alert('⚠️ El nombre y la recomendación no pueden estar vacíos.');
+      return;
+    }
+    const recs = getRecomendaciones();
+    recs[recToEditIndex].nombre = nombre;
+    recs[recToEditIndex].texto = texto;
+    saveRecomendaciones(recs);
+    closeEditRecModal();
+    renderRecomendaciones();
+  }
+
+  function closeEditRecModal() {
+    editRecModal.classList.remove('active');
+    recToEditIndex = null;
+    editRecNombre.value = '';
+    editRecTexto.value = '';
+  }
+
+  // ── Setup event listeners
   const originalSetupEventListeners = setupEventListeners;
-  setupEventListeners = function() {
+  setupEventListeners = function () {
     originalSetupEventListeners();
 
     // Bot config save button
     if (btnSaveBotConfig) {
       btnSaveBotConfig.addEventListener('click', saveBotConfig);
     }
+
+    // Edit news modal
+    if (btnSaveNewsEdit) btnSaveNewsEdit.addEventListener('click', saveNewsEdit);
+    if (btnCancelNewsEdit) btnCancelNewsEdit.addEventListener('click', closeNewsModal);
+    if (editNewsModal) editNewsModal.addEventListener('click', e => { if (e.target === editNewsModal) closeNewsModal(); });
+
+    // Edit gallery item modal
+    if (btnSaveGalleryEdit) btnSaveGalleryEdit.addEventListener('click', saveGalleryItemEdit);
+    if (btnCancelGalleryEdit) btnCancelGalleryEdit.addEventListener('click', closeGalleryItemModal);
+    if (editGalleryItemModal) editGalleryItemModal.addEventListener('click', e => { if (e.target === editGalleryItemModal) closeGalleryItemModal(); });
+
+    // Edit bot item modal
+    if (btnSaveBotItemEdit) btnSaveBotItemEdit.addEventListener('click', saveBotItemEdit);
+    if (btnCancelBotItemEdit) btnCancelBotItemEdit.addEventListener('click', closeBotItemModal);
+    if (editBotItemModal) editBotItemModal.addEventListener('click', e => { if (e.target === editBotItemModal) closeBotItemModal(); });
+
+    // Edit recommendation modal
+    if (btnSaveRecEdit) {
+      btnSaveRecEdit.addEventListener('click', saveRecEdit);
+    }
+    if (btnCancelRecEdit) {
+      btnCancelRecEdit.addEventListener('click', closeEditRecModal);
+    }
+    if (editRecModal) {
+      editRecModal.addEventListener('click', (e) => {
+        if (e.target === editRecModal) closeEditRecModal();
+      });
+    }
   };
+
+  // ══════════════════════════════════════════════
+  //  TALLERES PARA PADRES — CRUD
+  // ══════════════════════════════════════════════
+  function getTalleres() {
+    try { return JSON.parse(localStorage.getItem('pcb_talleres') || '[]'); } catch(e) { return []; }
+  }
+  function saveTalleres(list) {
+    localStorage.setItem('pcb_talleres', JSON.stringify(list));
+    updateStats();
+  }
+
+  function renderTalleres() {
+    const list = getTalleres();
+    const container = document.getElementById('talleresList');
+    if (!container) return;
+    if (list.length === 0) {
+      container.innerHTML = '<div class="empty-state"><div class="empty-icon">🎓</div><h3>No hay talleres</h3><p>Agrega el primer taller usando el formulario de arriba</p></div>';
+      return;
+    }
+    const modalityMap = { virtual:'🖥️ Virtual', presencial:'🏫 Presencial', hibrido:'🔀 Híbrido' };
+    const badgeMap = { virtual:'badge-virtual', presencial:'badge-presencial', hibrido:'badge-hibrido' };
+    container.innerHTML = list.map((t, i) => `
+      <div class="item-row">
+        <div class="item-row-info">
+          <h4>${t.nombre}</h4>
+          <p>${t.instructor ? t.instructor + ' · ' : ''}${t.fecha || ''} ${t.duracion ? '· ' + t.duracion : ''}</p>
+        </div>
+        <span class="item-badge ${badgeMap[t.modalidad] || 'badge-virtual'}">${modalityMap[t.modalidad] || t.modalidad}</span>
+        <div class="item-row-actions">
+          <button class="btn btn-secondary btn-sm" onclick="adminApp.editTaller(${i})">✏️ Editar</button>
+          <button class="btn btn-danger btn-sm" onclick="adminApp.deleteTaller(${i})">🗑️</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function editTaller(index) {
+    const list = getTalleres();
+    const t = list[index];
+    if (!t) return;
+    document.getElementById('tallerEditId').value = index;
+    document.getElementById('tallerNombre').value = t.nombre || '';
+    document.getElementById('tallerInstructor').value = t.instructor || '';
+    document.getElementById('tallerDescripcion').value = t.descripcion || '';
+    document.getElementById('tallerCategoria').value = t.categoria || 'tecnologia';
+    document.getElementById('tallerModalidad').value = t.modalidad || 'virtual';
+    document.getElementById('tallerFecha').value = t.fecha || '';
+    document.getElementById('tallerDuracion').value = t.duracion || '';
+    document.getElementById('tallerCupos').value = t.cupos || '';
+    document.getElementById('tallerImagen').value = t.imagen || '';
+    document.getElementById('tallerEnlace').value = t.enlace || '';
+    document.getElementById('tallerForm').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function deleteTaller(index) {
+    if (!confirm('¿Eliminar este taller?')) return;
+    const list = getTalleres();
+    list.splice(index, 1);
+    saveTalleres(list);
+    renderTalleres();
+  }
+
+  // ══════════════════════════════════════════════
+  //  CERTIFICACIONES ONLINE — CRUD
+  // ══════════════════════════════════════════════
+  function getCertificaciones() {
+    try { return JSON.parse(localStorage.getItem('pcb_certificaciones') || '[]'); } catch(e) { return []; }
+  }
+  function saveCertificaciones(list) {
+    localStorage.setItem('pcb_certificaciones', JSON.stringify(list));
+    updateStats();
+  }
+
+  function renderCertificaciones() {
+    const list = getCertificaciones();
+    const container = document.getElementById('certsList');
+    if (!container) return;
+    if (list.length === 0) {
+      container.innerHTML = '<div class="empty-state"><div class="empty-icon">🏆</div><h3>No hay certificaciones</h3><p>Agrega la primera certificación usando el formulario de arriba</p></div>';
+      return;
+    }
+    const formatoMap = { enlinea:'🌐 En línea', grabado:'🎥 Grabado', hibrido:'🔀 Híbrido' };
+    const badgeMap = { enlinea:'badge-enlinea', grabado:'badge-grabado', hibrido:'badge-hibrido' };
+    container.innerHTML = list.map((c, i) => `
+      <div class="item-row">
+        <div class="item-row-info">
+          <h4>${c.nombre}</h4>
+          <p>${c.proveedor ? c.proveedor + ' · ' : ''}${c.duracion || ''} ${c.precio ? '· ' + c.precio : ''}</p>
+        </div>
+        <span class="item-badge ${badgeMap[c.formato] || 'badge-enlinea'}">${formatoMap[c.formato] || c.formato}</span>
+        <div class="item-row-actions">
+          <button class="btn btn-secondary btn-sm" onclick="adminApp.editCert(${i})">✏️ Editar</button>
+          <button class="btn btn-danger btn-sm" onclick="adminApp.deleteCert(${i})">🗑️</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function editCert(index) {
+    const list = getCertificaciones();
+    const c = list[index];
+    if (!c) return;
+    document.getElementById('certEditId').value = index;
+    document.getElementById('certNombre').value = c.nombre || '';
+    document.getElementById('certProveedor').value = c.proveedor || '';
+    document.getElementById('certDescripcion').value = c.descripcion || '';
+    document.getElementById('certDuracion').value = c.duracion || '';
+    document.getElementById('certNivel').value = c.nivel || 'principiante';
+    document.getElementById('certFormato').value = c.formato || 'enlinea';
+    document.getElementById('certPrecio').value = c.precio || '';
+    document.getElementById('certEnlace').value = c.enlace || '';
+    document.getElementById('certImagen').value = c.imagen || '';
+    document.getElementById('certForm').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function deleteCert(index) {
+    if (!confirm('¿Eliminar esta certificación?')) return;
+    const list = getCertificaciones();
+    list.splice(index, 1);
+    saveCertificaciones(list);
+    renderCertificaciones();
+  }
+
+  // ══════════════════════════════════════════════
+  //  STATS
+  // ══════════════════════════════════════════════
+  function updateStats() {
+    const data = contentData || {};
+    const promos = (data.promociones || []).length;
+    const avisos = (data.avisos || []).length;
+    const talleres = getTalleres().length;
+    const certs = getCertificaciones().length;
+    const sP = document.getElementById('statPromos'); if (sP) sP.textContent = promos;
+    const sA = document.getElementById('statAvisos'); if (sA) sA.textContent = avisos;
+    const sT = document.getElementById('statTalleres'); if (sT) sT.textContent = talleres;
+    const sC = document.getElementById('statCerts'); if (sC) sC.textContent = certs;
+  }
 
   // Export functions for global access
   window.adminApp = {
-    deleteImage
+    deleteImage,
+    setMenuImage,
+    deleteRecomendacion,
+    editRecomendacion,
+    deleteNews,
+    editNews,
+    editBotItem,
+    deleteBotItem,
+    editGalleryItem,
+    editTaller,
+    deleteTaller,
+    editCert,
+    deleteCert,
+    aprobarAnuncio,
+    rechazarAnuncio,
+    eliminarAnuncio,
+    reloadAnuncios,
+    editarAnuncio,
+    cerrarModalEdicion,
+    quitarImagenEdicion,
+    guardarEdicionAnuncio
   };
+
+  // ── Talleres form submit ──
+  document.addEventListener('DOMContentLoaded', function() {
+    const tallerForm = document.getElementById('tallerForm');
+    if (tallerForm) {
+      tallerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const editId = document.getElementById('tallerEditId').value;
+        const taller = {
+          nombre: document.getElementById('tallerNombre').value.trim(),
+          instructor: document.getElementById('tallerInstructor').value.trim(),
+          descripcion: document.getElementById('tallerDescripcion').value.trim(),
+          categoria: document.getElementById('tallerCategoria').value,
+          modalidad: document.getElementById('tallerModalidad').value,
+          fecha: document.getElementById('tallerFecha').value,
+          duracion: document.getElementById('tallerDuracion').value.trim(),
+          cupos: document.getElementById('tallerCupos').value,
+          imagen: document.getElementById('tallerImagen').value.trim(),
+          enlace: document.getElementById('tallerEnlace').value.trim(),
+          id: editId !== '' ? getTalleres()[parseInt(editId)]?.id : ('t_' + Date.now())
+        };
+        const list = getTalleres();
+        if (editId !== '') { list[parseInt(editId)] = taller; }
+        else { list.push(taller); }
+        saveTalleres(list);
+        tallerForm.reset();
+        document.getElementById('tallerEditId').value = '';
+        renderTalleres();
+        alert('✅ Taller guardado correctamente.');
+      });
+      document.getElementById('btnCancelTaller').addEventListener('click', function() {
+        tallerForm.reset();
+        document.getElementById('tallerEditId').value = '';
+      });
+    }
+
+    // ── Certificaciones form submit ──
+    const certForm = document.getElementById('certForm');
+    if (certForm) {
+      certForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const editId = document.getElementById('certEditId').value;
+        const cert = {
+          nombre: document.getElementById('certNombre').value.trim(),
+          proveedor: document.getElementById('certProveedor').value.trim(),
+          descripcion: document.getElementById('certDescripcion').value.trim(),
+          duracion: document.getElementById('certDuracion').value.trim(),
+          nivel: document.getElementById('certNivel').value,
+          formato: document.getElementById('certFormato').value,
+          precio: document.getElementById('certPrecio').value.trim(),
+          enlace: document.getElementById('certEnlace').value.trim(),
+          imagen: document.getElementById('certImagen').value.trim(),
+          id: editId !== '' ? getCertificaciones()[parseInt(editId)]?.id : ('c_' + Date.now())
+        };
+        const list = getCertificaciones();
+        if (editId !== '') { list[parseInt(editId)] = cert; }
+        else { list.push(cert); }
+        saveCertificaciones(list);
+        certForm.reset();
+        document.getElementById('certEditId').value = '';
+        renderCertificaciones();
+        alert('✅ Certificación guardada correctamente.');
+      });
+      document.getElementById('btnCancelCert').addEventListener('click', function() {
+        certForm.reset();
+        document.getElementById('certEditId').value = '';
+      });
+    }
+
+    // ── Theme Toggle ──
+    const themeBtn = document.getElementById('adminThemeToggle');
+    const themeLabel = document.getElementById('themeLabel');
+    function applyTheme(isDark) {
+      document.body.classList.toggle('admin-dark', isDark);
+      localStorage.setItem('adminTheme', isDark ? 'dark' : 'light');
+      if (themeLabel) themeLabel.textContent = isDark ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+    }
+    // Set initial label
+    const isDark = localStorage.getItem('adminTheme') === 'dark';
+    if (themeLabel) themeLabel.textContent = isDark ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function() {
+        applyTheme(!document.body.classList.contains('admin-dark'));
+      });
+    }
+  });
+
+  // ══════════════════════════════════════════════
+  //  ANUNCIOS COMUNIDAD (IIFE scope — accessible from switchSection & window.adminApp)
+  // ══════════════════════════════════════════════
+
+  async function renderAnunciosComunidad(filtro) {
+    const lista = document.getElementById('anunciosList');
+    const badge = document.getElementById('badgePendientes');
+    if (!lista) return;
+
+    const filtroSel = filtro || document.getElementById('filtroAnuncio')?.value || '';
+    lista.innerHTML = '<p style="padding:1rem;color:var(--muted);">⏳ Cargando anuncios...</p>';
+
+    try {
+      let todos = await window.anunciosDB.getAll();
+
+      // Badge de pendientes
+      const pendientes = todos.filter(a => !a.aprobado && !a.rechazado).length;
+      if (badge) { badge.textContent = pendientes; badge.style.display = pendientes > 0 ? 'inline' : 'none'; }
+
+      // Filtro
+      if (filtroSel === 'pendiente') {
+        todos = todos.filter(a => !a.aprobado && !a.rechazado);
+      } else if (filtroSel) {
+        todos = todos.filter(a => a.categoria === filtroSel);
+      }
+
+      if (!todos.length) {
+        lista.innerHTML = '<p style="padding:1rem;color:var(--muted);">No hay anuncios con este filtro.</p>';
+        return;
+      }
+
+      const CAT_LABEL = { objetos_perdidos:'🔍 Objetos Perdidos', actividades:'🎉 Actividades', recaudaciones:'💰 Recaudaciones', avisos:'📢 Avisos', promociones:'🏷️ Promociones', aviso:'📢 Aviso' };
+      const hoy = new Date().toISOString().slice(0, 10);
+
+      lista.innerHTML = todos.map(a => {
+        const caducado  = a.fecha_caducidad && a.fecha_caducidad < hoy;
+        const estado    = a.rechazado ? '❌ Rechazado' : a.aprobado ? (caducado ? '⌛ Caducado' : '✅ Aprobado') : '⏳ Pendiente';
+        const colorBg   = a.rechazado ? '#fff0f0' : a.aprobado ? (caducado ? '#f5f5f5' : '#f0fff4') : '#fffbea';
+        const colorBdr  = a.rechazado ? '#e74c3c' : a.aprobado ? (caducado ? '#aaa' : '#27ae60') : '#f39c12';
+        return `
+        <div class="aac-card" style="border-left:4px solid ${colorBdr};background:${colorBg};">
+          <div class="aac-row">
+            <div class="aac-info">
+              <div class="aac-title-row">
+                <span class="aac-title">${a.titulo}</span>
+                <span class="aac-cat">${CAT_LABEL[a.categoria] || a.categoria}</span>
+                <span class="aac-status">${estado}</span>
+              </div>
+              <p class="aac-msg">${a.mensaje}</p>
+              <div class="aac-meta">
+                <span>👤 ${a.nombre_autor || 'Anónimo'}</span>
+                ${a.contacto ? `<span>📞 ${a.contacto}</span>` : ''}
+                <span>📅 ${new Date(a.created_at).toLocaleDateString()}</span>
+                ${a.fecha_caducidad ? `<span>⏰ Caduca: ${a.fecha_caducidad}</span>` : ''}
+              </div>
+            </div>
+            <div class="aac-actions">
+              ${!a.aprobado && !a.rechazado ? `<button class="aac-btn aac-btn-aprobar" onclick="adminApp.aprobarAnuncio('${a.id}')">✅ Aprobar</button>` : ''}
+              ${!a.rechazado ? `<button class="aac-btn aac-btn-rechazar" onclick="adminApp.rechazarAnuncio('${a.id}')">❌ Rechazar</button>` : ''}
+              <button class="aac-btn aac-btn-editar" onclick="adminApp.editarAnuncio('${a.id}')" aria-label="Editar">✏️</button>
+              <button class="aac-btn aac-btn-borrar" onclick="adminApp.eliminarAnuncio('${a.id}')" aria-label="Borrar">🗑️</button>
+            </div>
+          </div>
+          ${a.imagen_url ? `<img class="aac-img" src="${a.imagen_url}" onerror="this.style.display='none'">` : ''}
+        </div>`;
+      }).join('');
+
+      // Filtro select
+      const sel = document.getElementById('filtroAnuncio');
+      if (sel && !sel._bound) {
+        sel._bound = true;
+        sel.addEventListener('change', () => renderAnunciosComunidad(sel.value));
+      }
+    } catch (err) {
+      lista.innerHTML = `<p style="color:#e74c3c;padding:1rem;">⚠️ Error al cargar: ${err.message}</p>`;
+    }
+  }
+
+  async function aprobarAnuncio(id) {
+    try { await window.anunciosDB.approve(id); renderAnunciosComunidad(); }
+    catch(e) { alert('❌ Error: ' + e.message); }
+  }
+  async function rechazarAnuncio(id) {
+    try { await window.anunciosDB.reject(id); renderAnunciosComunidad(); }
+    catch(e) { alert('❌ Error: ' + e.message); }
+  }
+  async function eliminarAnuncio(id) {
+    if (!confirm('¿Eliminar este anuncio permanentemente?')) return;
+    try { await window.anunciosDB.remove(id); renderAnunciosComunidad(); }
+    catch(e) { alert('❌ Error: ' + e.message); }
+  }
+  function reloadAnuncios() { renderAnunciosComunidad(); }
+
+  // Cache del anuncio que se está editando
+  let _anuncioEditando = null;
+
+  async function editarAnuncio(id) {
+    try {
+      const todos = await window.anunciosDB.getAll();
+      const a = todos.find(x => x.id === id);
+      if (!a) return alert('No se encontró el anuncio.');
+      _anuncioEditando = a;
+
+      document.getElementById('editAnuncioId').value  = a.id;
+      document.getElementById('editTitulo').value      = a.titulo || '';
+      document.getElementById('editMensaje').value     = a.mensaje || '';
+      document.getElementById('editCategoria').value   = a.categoria || 'aviso';
+      document.getElementById('editCaducidad').value   = a.fecha_caducidad || '';
+      document.getElementById('editAutor').value       = a.nombre_autor || '';
+      document.getElementById('editContacto').value    = a.contacto || '';
+
+      const prevWrap = document.getElementById('editImagenPreviewWrap');
+      const prevImg  = document.getElementById('editImagenPreview');
+      if (a.imagen_url) {
+        prevImg.src = a.imagen_url;
+        prevWrap.style.display = 'block';
+      } else {
+        prevWrap.style.display = 'none';
+      }
+
+      const modal = document.getElementById('modalEditarAnuncio');
+      modal.style.display = 'flex';
+    } catch(e) { alert('❌ Error al cargar: ' + e.message); }
+  }
+
+  function cerrarModalEdicion() {
+    document.getElementById('modalEditarAnuncio').style.display = 'none';
+    _anuncioEditando = null;
+  }
+
+  function quitarImagenEdicion() {
+    if (_anuncioEditando) _anuncioEditando._quitarImagen = true;
+    document.getElementById('editImagenPreviewWrap').style.display = 'none';
+  }
+
+  async function guardarEdicionAnuncio() {
+    const id = document.getElementById('editAnuncioId').value;
+    if (!id) return;
+    const fields = {
+      titulo:          document.getElementById('editTitulo').value.trim(),
+      mensaje:         document.getElementById('editMensaje').value.trim(),
+      categoria:       document.getElementById('editCategoria').value,
+      fecha_caducidad: document.getElementById('editCaducidad').value || null,
+      nombre_autor:    document.getElementById('editAutor').value.trim() || 'Anónimo',
+      contacto:        document.getElementById('editContacto').value.trim() || null,
+    };
+    if (_anuncioEditando?._quitarImagen) fields.imagen_url = null;
+    if (!fields.titulo || !fields.mensaje) return alert('El título y el mensaje son obligatorios.');
+    try {
+      await window.anunciosDB.update(id, fields);
+      cerrarModalEdicion();
+      renderAnunciosComunidad();
+    } catch(e) { alert('❌ Error al guardar: ' + e.message); }
+  }
 
   // Start the app
   init();
