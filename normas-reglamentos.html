@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es" id="htmlRoot">
 
 <head>
@@ -389,51 +389,6 @@
       .quick-stats { grid-template-columns: 1fr; }
       .article-title-row, .chapter-header { flex-direction:column; align-items:flex-start; }
       .hero-actions { width:100%; }
-      .reg-article.card { padding: 1.25rem 1rem; }
-      .section-body { padding: .85rem .8rem 1rem; }
-      .legal-item {
-        padding: .7rem .65rem;
-        gap: .5rem;
-        grid-template-columns: auto minmax(0, 1fr);
-      }
-      .legal-mark {
-        min-width: 1.8rem;
-        padding: .25rem .35rem;
-        font-size: .85rem;
-      }
-      .legal-text {
-        min-width: 0;
-        overflow-wrap: anywhere;
-        word-wrap: break-word;
-        hyphens: auto;
-        line-height: 1.7;
-      }
-      .legal-paragraph {
-        text-align: left;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        hyphens: auto;
-        line-height: 1.7;
-      }
-      .legal-line {
-        overflow-x: auto;
-        font-size: .82rem;
-      }
-      .article-title-row h3 { font-size: 1rem; line-height: 1.3; }
-      .chapter-header { padding: 1rem; }
-      .chapter-header h2 { font-size: 1.1rem; line-height: 1.3; }
-      .section-accordion summary { padding: .85rem .9rem; font-size: .95rem; }
-      .section-chip { font-size: .8rem; padding: .35rem .65rem; }
-      .toc-links { max-height: 40vh; }
-    }
-    @media (max-width: 400px) {
-      .reg-article.card { padding: 1rem .8rem; }
-      .section-body { padding: .75rem .6rem .9rem; }
-      .legal-item { padding: .6rem .55rem; gap: .4rem; }
-      .legal-mark { min-width: 1.6rem; font-size: .8rem; padding: .22rem .3rem; }
-      .legal-text, .legal-paragraph { font-size: .92rem; }
-      .article-title-row h3 { font-size: .95rem; }
-      .chapter-header h2 { font-size: 1rem; }
     }
   </style>
 
@@ -2189,8 +2144,6 @@
       document.querySelectorAll('.chapter-block').forEach(section => observer.observe(section));
     });
   </script>
-  <script src="js/global-header.js"></script>
-
 
 </body>
 

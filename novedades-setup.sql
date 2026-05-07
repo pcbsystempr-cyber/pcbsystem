@@ -9,12 +9,8 @@ CREATE TABLE IF NOT EXISTS novedades (
   message     TEXT                     NOT NULL,
   image_url   TEXT,
   active      BOOLEAN                  DEFAULT true,
-  is_critical BOOLEAN                  DEFAULT false,
   created_at  TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
-
--- Para bases ya existentes (idempotente):
-ALTER TABLE novedades ADD COLUMN IF NOT EXISTS is_critical BOOLEAN DEFAULT false;
 
 -- Permitir lectura pública (para el popup de index.html)
 ALTER TABLE novedades ENABLE ROW LEVEL SECURITY;
