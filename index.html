@@ -154,10 +154,7 @@
         const isDark = document.body.classList.toggle('dark-mode');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
         const btn = document.getElementById('mhcThemeBtn');
-        if (btn) {
-          btn.setAttribute('aria-pressed', String(isDark));
-          btn.setAttribute('title', isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
-        }
+        if (btn) btn.textContent = isDark ? '🌙' : '☀️';
       };
 
       window.toggleMobileLanguage = function() {
@@ -177,10 +174,7 @@
         // Sincronizar iconos de los controles móviles al cargar
         const isDark = document.body.classList.contains('dark-mode');
         const themeBtn = document.getElementById('mhcThemeBtn');
-        if (themeBtn) {
-          themeBtn.setAttribute('aria-pressed', String(isDark));
-          themeBtn.setAttribute('title', isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
-        }
+        if (themeBtn) themeBtn.textContent = isDark ? '🌙' : '☀️';
         const savedLang = localStorage.getItem('language') || 'es';
         const langBtn = document.getElementById('mhcLangBtn');
         // Muestra la bandera del idioma AL QUE puedes cambiar
@@ -303,12 +297,11 @@
                 <li><a href="solicitudes.html" data-translate="📄 Solicitud de Documentos">📄 Solicitud de Documentos</a></li>
                 <li><a href="https://pcbsystempr-cyber.github.io/Servicio-Tecnico/" data-translate="🔧 Servicios Técnicos">🔧 Servicios Técnicos</a></li>
                 <!-- <li><a href="enfermeria.html">⚕️ Enfermería</a></li> -->
-                <li><a href="https://pcbsystempr-cyber.github.io/Unidad_de_Apoyo_Socioemocional_Prueba/" data-translate="🧠 Orientación">🧠 Orientación</a></li>
+                <li><a href="https://pcbsystempr-cyber.github.io/Unidad_de_Apoyo_Socioemocional_Prueba/" target="_self" data-translate="🧠 Orientación">🧠 Orientación</a></li>
                 <li><a href="biblioteca.html" data-translate="📚 Biblioteca">📚 Biblioteca</a></li>
                 <li><a href="comedor.html" data-translate="🍽️ Comedor">🍽️ Comedor</a></li>
                 <li><a href="padres.html" data-translate="👨‍👩‍👧 Portal de Padres">👨‍👩‍👧 Portal de Padres</a></li>
                 <li><a href="seguridad.html" data-translate="🛡️ Seguridad">🛡️ Seguridad</a></li>
-                <li><a href="excursiones/excursiones.html" data-translate="📋 Formulario de Excursión">📋 Formulario de Excursión</a></li>
               </ul>
             </li>
             <li><a href="#vida" data-translate="Vida estudiantil">Vida estudiantil</a></li>
@@ -318,14 +311,9 @@
         <!-- Controles rápidos solo en móvil -->
         <div class="mobile-header-controls" id="mobileHeaderControls">
           <button class="mhc-btn" id="mhcThemeBtn" onclick="toggleMobileTheme()" title="Cambiar tema" aria-label="Cambiar tema">
-            <svg class="mhc-icon mhc-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="4"></circle>
-              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
-            </svg>
-            <svg class="mhc-icon mhc-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
+            ☀️
           </button>
+
         </div>
         <button class="hamburger-menu" id="hamburgerBtn" aria-label="Abrir menú">
           <span></span>
@@ -369,7 +357,7 @@
         <a href="solicitudes.html" class="theme-option">
           <span>📄</span> Solicitud de Documentos
         </a>
-        <a href="https://pcbsystempr-cyber.github.io/Servicio-Tecnico/" class="theme-option">
+        <a href="https://pcbsystempr-cyber.github.io/Servicio-Tecnico/" target="_self" class="theme-option">
           <span>🔧</span> Servicios Técnicos
         </a>
         <!-- <a href="enfermeria.html" class="theme-option">
@@ -389,9 +377,6 @@
         </a>
         <a href="seguridad.html" class="theme-option">
           <span>🛡️</span> Seguridad
-        </a>
-        <a href="excursiones/excursiones.html" class="theme-option">
-          <span>📋</span> Formulario de Excursión
         </a>
 
       </div>
@@ -607,15 +592,15 @@
           </a>
         </article>
 
-        <!-- Apoyo socioemocional -->
-        <article class="card">
+        <!-- Apoyo socioemocional (oculto: se muestra en Servicios al Estudiante) -->
+        <article class="card" style="display:none;">
           <div class="card-icon">💚</div>
           <h3 data-translate="Apoyo socioemocional">Apoyo socioemocional</h3>
           <p
             data-translate="Servicio de consejería, trabajo social y apoyo psicológico para el bienestar del estudiantado.">
             Servicio de consejería, trabajo social y apoyo psicológico para el bienestar del estudiantado.
           </p>
-          <a href="https://pcbsystempr-cyber.github.io/Unidad_de_Apoyo_Socioemocional_Prueba/" class="btn btn-secondary btn-small"
+          <a href="https://pcbsystempr-cyber.github.io/Unidad_de_Apoyo_Socioemocional_Prueba/" target="_self" class="btn btn-secondary btn-small"
             target="_blank" rel="noopener" data-translate="Ver página de apoyo socioemocional">
             Ver página de apoyo socioemocional
           </a>
@@ -657,207 +642,43 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════
-       PUBLICAR ANUNCIO COMUNITARIO
-       ══════════════════════════════════════ -->
-  <style>
-    .publish-announcement-section { padding: 4rem 0; }
-
-    .publish-banner {
-      position: relative;
-      border-radius: 28px;
-      padding: 3rem 2.5rem;
-      overflow: hidden;
-      cursor: pointer;
-      isolation: isolate;
-      box-shadow: 0 25px 60px rgba(15, 42, 74, 0.35), 0 0 0 1px rgba(255,255,255,0.08);
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
-    }
-    .publish-banner:hover {
-      transform: translateY(-6px) scale(1.01);
-      box-shadow: 0 35px 80px rgba(15, 42, 74, 0.5), 0 0 0 1px rgba(56, 189, 248, 0.45);
-    }
-    .publish-banner:active { transform: translateY(-2px) scale(0.995); }
-
-    .publish-banner-bg {
-      position: absolute; inset: 0; z-index: -2;
-      background: linear-gradient(135deg, #0F2A4A 0%, #1E4F86 45%, #38BDF8 100%);
-      background-size: 300% 300%;
-      animation: pbGradientShift 12s ease infinite;
-    }
-    .publish-banner-glow {
-      position: absolute; inset: -40%; z-index: -1;
-      background:
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.30) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(56, 189, 248, 0.45) 0%, transparent 45%),
-        radial-gradient(circle at 50% 90%, rgba(30, 79, 134, 0.55) 0%, transparent 40%);
-      filter: blur(40px);
-      animation: pbGlowRotate 18s linear infinite;
-      pointer-events: none;
-    }
-
-    .publish-banner-particles {
-      position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
-    }
-    .publish-banner-particles span {
-      position: absolute; display: block;
-      width: 10px; height: 10px; border-radius: 50%;
-      background: rgba(255,255,255,0.7);
-      box-shadow: 0 0 12px rgba(255,255,255,0.8);
-      animation: pbFloat linear infinite;
-      bottom: -20px;
-    }
-    .publish-banner-particles span:nth-child(1){ left:5%;  width:8px; height:8px; animation-duration:14s; animation-delay:0s; }
-    .publish-banner-particles span:nth-child(2){ left:18%; width:14px;height:14px;animation-duration:18s; animation-delay:2s; }
-    .publish-banner-particles span:nth-child(3){ left:32%; width:6px; height:6px; animation-duration:11s; animation-delay:1s; }
-    .publish-banner-particles span:nth-child(4){ left:48%; width:12px;height:12px;animation-duration:16s; animation-delay:4s; }
-    .publish-banner-particles span:nth-child(5){ left:62%; width:9px; height:9px; animation-duration:13s; animation-delay:0.5s; }
-    .publish-banner-particles span:nth-child(6){ left:75%; width:11px;height:11px;animation-duration:17s; animation-delay:3s; }
-    .publish-banner-particles span:nth-child(7){ left:88%; width:7px; height:7px; animation-duration:12s; animation-delay:2.5s; }
-    .publish-banner-particles span:nth-child(8){ left:95%; width:13px;height:13px;animation-duration:15s; animation-delay:1.5s; }
-
-    .publish-banner-content {
-      position: relative; z-index: 1; text-align: center; color: #fff;
-      max-width: 720px; margin: 0 auto;
-    }
-
-    .publish-banner-icon {
-      font-size: 4.5rem; line-height: 1;
-      margin-bottom: 1rem; display: inline-block;
-      filter: drop-shadow(0 6px 20px rgba(0,0,0,0.3));
-      animation: pbIconBounce 2.6s ease-in-out infinite;
-    }
-
-    .publish-banner-title {
-      color: #fff !important;
-      font-size: clamp(1.6rem, 3.6vw, 2.4rem);
-      font-weight: 900; line-height: 1.2; margin: 0 0 0.7rem;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.25);
-    }
-    .publish-banner-subtitle {
-      color: #E0F2FE; font-size: clamp(0.95rem, 1.6vw, 1.1rem);
-      line-height: 1.6; margin: 0 auto 1.5rem; max-width: 560px;
-    }
-
-    .publish-banner-tags {
-      display: flex; flex-wrap: wrap; gap: 0.55rem;
-      justify-content: center; margin-bottom: 1.8rem;
-    }
-    .pb-chip {
-      background: rgba(255,255,255,0.16);
-      border: 1px solid rgba(255,255,255,0.35);
-      color: #FFFFFF; font-size: 0.82rem; font-weight: 600;
-      padding: 0.4rem 0.85rem; border-radius: 999px;
-      backdrop-filter: blur(8px);
-      transition: transform 0.25s ease, background 0.25s ease;
-    }
-    .publish-banner:hover .pb-chip { background: rgba(255,255,255,0.26); }
-    .pb-chip:hover { transform: translateY(-2px) scale(1.05); }
-
-    .publish-banner-cta {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      background: #FFFFFF; color: #0F2A4A;
-      border: 4px solid rgba(255,255,255,0.35);
-      cursor: pointer;
-      font-size: 1.05rem; font-weight: 800;
-      padding: 1rem 2rem; border-radius: 999px;
-      box-shadow: 0 10px 30px rgba(15, 42, 74, 0.35), 0 0 0 0 rgba(255,255,255,0.6);
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      animation: pbCtaPulse 2.4s ease-in-out infinite;
-    }
-    .publish-banner-cta:hover {
-      transform: translateY(-3px) scale(1.04);
-      background: #F0F9FF;
-      box-shadow: 0 16px 40px rgba(15, 42, 74, 0.45), 0 0 0 6px rgba(255,255,255,0.28);
-    }
-    .publish-banner-cta:active { transform: translateY(-1px) scale(0.98); }
-    .pb-cta-arrow { transition: transform 0.3s ease; display: inline-block; }
-    .publish-banner-cta:hover .pb-cta-arrow { transform: translateX(6px); }
-    .pb-cta-icon { font-size: 1.2rem; }
-
-    @keyframes pbGradientShift {
-      0%,100% { background-position: 0% 50%; }
-      50%     { background-position: 100% 50%; }
-    }
-    @keyframes pbGlowRotate {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-    @keyframes pbFloat {
-      0%   { transform: translateY(0) translateX(0) scale(0.6); opacity: 0; }
-      10%  { opacity: 0.9; }
-      50%  { transform: translateY(-50vh) translateX(20px) scale(1); opacity: 0.8; }
-      90%  { opacity: 0.5; }
-      100% { transform: translateY(-100vh) translateX(-15px) scale(0.4); opacity: 0; }
-    }
-    @keyframes pbIconBounce {
-      0%,100% { transform: translateY(0) rotate(-6deg); }
-      50%     { transform: translateY(-12px) rotate(6deg); }
-    }
-    @keyframes pbCtaPulse {
-      0%,100% { box-shadow: 0 10px 30px rgba(15, 42, 74, 0.35), 0 0 0 0 rgba(255,255,255,0.6); }
-      50%     { box-shadow: 0 10px 30px rgba(15, 42, 74, 0.35), 0 0 0 14px rgba(255,255,255,0); }
-    }
-
-    body.dark-mode .publish-banner {
-      box-shadow: 0 25px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(56,189,248,0.25);
-    }
-    body.dark-mode .publish-banner-cta { color: #0F2A4A; background: #fff; }
-    body.dark-mode .publish-banner-cta:hover { background: #F0F9FF; }
-
-    @media (max-width: 768px) {
-      .publish-banner { padding: 2.2rem 1.4rem; border-radius: 22px; }
-      .publish-banner-icon { font-size: 3.5rem; }
-      .publish-banner-cta { padding: 0.9rem 1.6rem; font-size: 0.98rem; }
-      .pb-chip { font-size: 0.75rem; padding: 0.35rem 0.7rem; }
-    }
-    @media (max-width: 480px) {
-      .publish-announcement-section { padding: 2.5rem 0; }
-      .publish-banner { padding: 1.8rem 1.1rem; border-radius: 20px; }
-      .publish-banner-icon { font-size: 3rem; margin-bottom: 0.6rem; }
-      .publish-banner-tags { gap: 0.4rem; margin-bottom: 1.3rem; }
-      .pb-chip { font-size: 0.72rem; padding: 0.3rem 0.6rem; }
-      .publish-banner-cta { width: 100%; justify-content: center; padding: 0.85rem 1.2rem; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .publish-banner-bg, .publish-banner-glow, .publish-banner-particles span,
-      .publish-banner-icon, .publish-banner-cta { animation: none !important; }
-    }
-  </style>
-
-  <section id="publicar-anuncio" class="section section-alt publish-announcement-section">
+  <!-- PUBLICAR ANUNCIO EN LA COMUNIDAD -->
+  <section id="publicar-anuncio" class="section section-alt">
     <div class="container">
-      <div class="publish-banner" onclick="abrirModalAnuncio()" role="button" tabindex="0"
-           aria-label="Publicar anuncio en la comunidad"
-           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();abrirModalAnuncio();}">
-        <div class="publish-banner-bg"></div>
-        <div class="publish-banner-glow"></div>
-        <div class="publish-banner-particles" aria-hidden="true">
-          <span></span><span></span><span></span><span></span>
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <div class="publish-banner-content">
-          <div class="publish-banner-icon">📢</div>
-          <h2 class="publish-banner-title" data-translate="¡Publica tu anuncio en la comunidad!">
-            ¡Publica tu anuncio en la comunidad!
-          </h2>
-          <p class="publish-banner-subtitle" data-translate="Comparte avisos, actividades, objetos perdidos, recaudaciones y promociones con toda la escuela. Tu anuncio será visible tras la aprobación del administrador.">
-            Comparte avisos, actividades, objetos perdidos, recaudaciones y promociones con toda la escuela. Tu anuncio será visible tras la aprobación del administrador.
-          </p>
-          <div class="publish-banner-tags">
-            <span class="pb-chip" data-translate="📢 Avisos">📢 Avisos</span>
-            <span class="pb-chip" data-translate="🎉 Actividades">🎉 Actividades</span>
-            <span class="pb-chip" data-translate="🔍 Objetos perdidos">🔍 Objetos perdidos</span>
-            <span class="pb-chip" data-translate="💰 Recaudaciones">💰 Recaudaciones</span>
-            <span class="pb-chip" data-translate="🏷️ Promociones">🏷️ Promociones</span>
-          </div>
-          <button type="button" class="publish-banner-cta"
-                  onclick="event.stopPropagation();abrirModalAnuncio();">
-            <span class="pb-cta-icon">📌</span>
-            <span data-translate="Publicar anuncio">Publicar anuncio</span>
-            <span class="pb-cta-arrow">→</span>
-          </button>
-        </div>
+      <div class="section-header">
+        <h2 data-translate="📢 ¡Publica tu anuncio en la comunidad!">📢 ¡Publica tu anuncio en la comunidad!</h2>
+        <p data-translate="Comparte avisos, actividades, objetos perdidos, recaudaciones y promociones con toda la escuela. Tu anuncio será visible tras la aprobación del administrador.">
+          Comparte avisos, actividades, objetos perdidos, recaudaciones y promociones con toda la escuela. Tu anuncio será visible tras la aprobación del administrador.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <article class="card service-card">
+          <div class="service-icon">📰</div>
+          <h3 data-translate="Avisos y Actividades">Avisos y Actividades</h3>
+          <p data-translate="Publica avisos importantes, actividades escolares y eventos de la comunidad.">Publica avisos importantes, actividades escolares y eventos de la comunidad.</p>
+          <a href="#" onclick="event.preventDefault();showProntoPopup()" class="btn btn-secondary btn-small" data-translate="Publicar anuncio">
+            Publicar anuncio
+          </a>
+        </article>
+
+        <article class="card service-card">
+          <div class="service-icon">🔍</div>
+          <h3 data-translate="Objetos Perdidos">Objetos Perdidos</h3>
+          <p data-translate="Reporta o reclama objetos perdidos dentro del plantel escolar.">Reporta o reclama objetos perdidos dentro del plantel escolar.</p>
+          <a href="#" onclick="event.preventDefault();showProntoPopup()" class="btn btn-secondary btn-small" data-translate="Reportar objeto">
+            Reportar objeto
+          </a>
+        </article>
+
+        <article class="card service-card">
+          <div class="service-icon">💰</div>
+          <h3 data-translate="Recaudaciones y Promociones">Recaudaciones y Promociones</h3>
+          <p data-translate="Comparte campañas de recaudación de fondos y promociones de la escuela.">Comparte campañas de recaudación de fondos y promociones de la escuela.</p>
+          <a href="#" onclick="event.preventDefault();showProntoPopup()" class="btn btn-secondary btn-small" data-translate="Publicar promoción">
+            Publicar promoción
+          </a>
+        </article>
       </div>
     </div>
   </section>
@@ -1049,7 +870,7 @@
         <div class="slideshow-wrapper">
           <!-- Slides -->
           <div class="slide fade active">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/index.html" target="_blank" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
               <img src="galeriaslideshow/pcbsystemlogo1.png" alt="Elaboración de Productos Agricolas">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1062,7 +883,7 @@
             </a>
           </div>
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/index.html" target="_blank" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
               <img src="galeriaslideshow/epaFFA.jpeg" alt="Elaboración de Productos Agricolas">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1075,7 +896,7 @@
           </div>
 
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/index.html" target="_blank" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
               <img src="galeriaslideshow/acfccla.jpeg" alt="Artes Culinarias">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1087,7 +908,7 @@
           </div>
 
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/index.html" target="_blank" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
               <img src="galeriaslideshow/computecskillsusa.jpeg" alt="Computec">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1099,7 +920,7 @@
           </div>
 
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/index.html" target="_blank" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
               <img src="galeriaslideshow/cosmetologiaskillsusa.jpeg" alt="Cosmetología">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1112,7 +933,7 @@
           </div>
 
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/index.html" target="_blank" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
               <img src="galeriaslideshow/enfermeriahosa.jpg" alt="Enfermería">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1123,7 +944,7 @@
             </a>
           </div>
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/index.html" target="_blank" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
               <img src="galeriaslideshow/decaempresarismo.jpg" alt="Representante de Ventas y Servicios Empresariales">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1135,7 +956,7 @@
             </a>
           </div>
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/index.html" target="_blank" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
               <img src="galeriaslideshow/seguridadpublica.jpg" alt="Seguridad Publica">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1166,7 +987,7 @@
 
         <!-- CTA Button -->
         <div class="programs-cta" style="margin-top: 2rem;">
-          <a href="https://pcbsystempr-cyber.github.io/Casa-Abierta/" class="btn btn-primary" target="_blank" rel="noopener"
+          <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" class="btn btn-primary" target="_blank" rel="noopener"
             data-translate="Ver todos los programas y Casa Abierta">
             Ver todos los programas y Casa Abierta
           </a>
@@ -1222,7 +1043,7 @@
           <h3 data-translate="Microsoft Teams">Microsoft Teams</h3>
           <p data-translate="Acceso a clases virtuales y colaboración en línea.">Acceso a clases virtuales y
             colaboración en línea.</p>
-          <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=5e3ce6c0-2b1f-4285-8d4b-75ee78787346&scope=openId%20profile%20openid%20offline_access&redirect_uri=https%3A%2F%2Fteams.microsoft.com%2Fv2&client-request-id=019be6e8-5a6c-7d37-b129-894db9c8d8ef&response_mode=fragment&response_type=code&x-client-SKU=msal.js.browser&x-client-VER=3.30.0&client_info=1&code_challenge=6ZqFlWHLh3RpNojFPjlqU4h9HyciQoVF24L_a1_WF4A&code_challenge_method=S256&nonce=019be6e8-5a6c-7bdb-9075-c5ce0aa099ac&state=eyJpZCI6IjAxOWJlNmU4LTVhNmMtNzY5MS1hNGRlLWQ4YTQ0MTU4OGMxYyIsIm1ldGEiOnsiaW50ZXJhY3Rpb25UeXBlIjoicmVkaXJlY3QifX0%3D%7Chttps%3A%2F%2Fteams.microsoft.com%2Fv2%2F%3Fculture%3Den-us%26country%3Dus%26enablemcasfort21%3Dtrue"
+          <a href="https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=5e3ce6c0-2b1f-4285-8d4b-75ee78787346&scope=openId%20profile%20openid%20offline_access&redirect_uri=https%3A%2F%2Fteams.microsoft.com%2Fv2&client-request-id=019be6e8-5a6c-7d37-b129-894db9c8d8ef&response_mode=fragment&response_type=code&x-client-SKU=msal.js.browser&x-client-VER=3.30.0&client_info=1&code_challenge=6ZqFlWHLh3RpNojFPjlqU4h9HyciQoVF24L_a1_WF4A&code_challenge_method=S256&nonce=019be6e8-5a6c-7bdb-9075-c5ce0aa099ac&state=eyJpZCI6IjAxOWJlNmU4LTVhNmMtNzY5MS1hNGRlLWQ4YTQ0MTU4OGMxYyIsIm1ldGEiOnsiaW50ZXJhY3Rpb25UeXBlIjoicmVkaXJlY3QifX0%3D%7Chttps%3A%2F%2Fteams.microsoft.com%2Fv2%2F%3Fculture%3Den-us%26country%3Dus%26enablemcasfort21%3Dtrue" target="_self"
             class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Acceder a Teams">
             Acceder a Teams
           </a>
@@ -1234,8 +1055,7 @@
           <h3 data-translate="Power DE">Power DE</h3>
           <p data-translate="Portal de información estudiantil del Departamento de Educación.">Portal de información
             estudiantil del Departamento de Educación.</p>
-          <a href="https://informacionestudiantil.dde.pr/public/create_multi_student_account.html"
-            class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Acceder a Power DE">
+          <a href="https://informacionestudiantil.dde.pr/public/create_multi_student_account.html" target="_self" class="btn btn-secondary btn-small" target="_blank" rel="noopener" data-translate="Acceder a Power DE">
             Acceder a Power DE
           </a>
         </article>
@@ -1246,7 +1066,7 @@
           <h3 data-translate="Calcular IGS">Calcular IGS</h3>
           <p data-translate="Calculadora de Índice General de Solicitud.">Calculadora de Índice General de Solicitud.
           </p>
-          <a href="https://admisiones.upr.edu/calculadora-igs/" class="btn btn-secondary btn-small" target="_blank"
+          <a href="https://admisiones.upr.edu/calculadora-igs/" target="_self" class="btn btn-secondary btn-small" target="_blank"
             rel="noopener" data-translate="Calcular ahora">
             Calcular ahora
           </a>
@@ -1257,7 +1077,7 @@
           <div class="service-icon">📢</div>
           <h3 data-translate="DECACoop">DECACoop</h3>
           <p data-translate="Portal de mercadeo y publicidad institucional DECACoop.">Portal de mercadeo y publicidad institucional DECACoop.</p>
-          <a href="https://pcbsystempr-cyber.github.io/DECA_de_Barranquitas_up/" class="btn btn-secondary btn-small" target="_blank"
+          <a href="https://decacoopdebarranquitas.vercel.app/" target="_self" class="btn btn-secondary btn-small" target="_blank"
             rel="noopener" data-translate="Acceder a DECACoop">
             Acceder a DECACoop
           </a>
@@ -1268,7 +1088,7 @@
           <div class="service-icon">💻</div>
           <h3 data-translate="Computec">Computec</h3>
           <p data-translate="Programa de habilidades computacionales y tecnológicas.">Programa de habilidades computacionales y tecnológicas.</p>
-          <a href="https://pcbsystempr-cyber.github.io/pcbsystem/index.html" class="btn btn-secondary btn-small" target="_blank"
+          <a href="https://pcbsystempr-cyber.github.io/ComputecPCB2026-Advance/" target="_self" class="btn btn-secondary btn-small" target="_blank"
             rel="noopener" data-translate="Acceder a Computec">
             Acceder a Computec
           </a>
@@ -1279,12 +1099,12 @@
           <div class="service-icon">📂</div>
           <h3 data-translate="Recursos para Estudiantes">Recursos para Estudiantes</h3>
           <p data-translate="Acceso a materiales educativos, guías y recursos de apoyo.">Acceso a materiales educativos, guías y recursos de apoyo.</p>
-          <a href="https://pcbsystempr-cyber.github.io/Recursos-para-estudiantes-y-maestros/" class="btn btn-secondary btn-small" data-translate="Ver recursos">
+          <a href="recursos-estudiantes.html" class="btn btn-secondary btn-small" data-translate="Ver recursos">
             Ver recursos
           </a>
         </article>
 
-        <!-- Preparación Académica -->
+        <!-- Preparación Académica 
         <article class="card service-card">
           <div class="service-icon">📖</div>
           <h3 data-translate="Preparación Académica">Preparación Académica</h3>
@@ -1293,7 +1113,7 @@
             rel="noopener" data-translate="Ver recursos">
             Ver recursos
           </a>
-        </article>
+        </article> -->
 
       </div>
     </div>
@@ -1316,7 +1136,7 @@
           <h3 data-translate="Servicios Técnicos">Servicios Técnicos</h3>
           <p data-translate="Soporte técnico y mantenimiento de equipos escolares.">Soporte técnico y mantenimiento de
             equipos escolares.</p>
-          <a href="https://pcbsystempr-cyber.github.io/Servicio-Tecnico/" class="btn btn-secondary btn-small" target="_blank"
+          <a href="https://pcbsystempr-cyber.github.io/Servicio-Tecnico/" target="_self" class="btn btn-secondary btn-small" target="_blank"
             rel="noopener" data-translate="Acceder al servicio">
             Acceder al servicio
           </a>
@@ -1327,7 +1147,7 @@
           <div class="service-icon">🖨️</div>
           <h3 data-translate="Impresión para Maestros">Impresión para Maestros</h3>
           <p data-translate="Sistema de impresión y copias para materiales educativos.">Sistema de impresión y copias para materiales educativos.</p>
-          <a href="https://pcbsystempr-cyber.github.io/CopiasPCB/" class="btn btn-secondary btn-small" target="_blank"
+          <a href="https://pcbsystempr-cyber.github.io/CopiasPCB/" target="_self" class="btn btn-secondary btn-small" target="_blank"
             rel="noopener" data-translate="Acceder a Impresión">
             Acceder a Impresión
           </a>
@@ -1343,15 +1163,23 @@
           </a>
         </article>
 
-        <!-- Plan de Excursión -->
+        <!-- Plan de Excursiones -->
         <article class="card service-card">
-          <div class="service-icon">📋</div>
-          <h3 data-translate="Plan de Excursión">Plan de Excursión</h3>
-          <p data-translate="Completa, guarda y exporta el formulario oficial de autorización de excursiones con todos sus anejos.">
-            Completa, guarda y exporta el formulario oficial de autorización de excursiones con todos sus anejos.
-          </p>
-          <a href="excursiones/excursiones.html" class="btn btn-secondary btn-small" data-translate="Abrir formulario">
-            Abrir formulario
+          <div class="service-icon">🚌</div>
+          <h3 data-translate="Plan de Excursiones">Plan de Excursiones</h3>
+          <p data-translate="Solicitud oficial de autorización para actividades curriculares y educativas fuera del plantel.">Solicitud oficial de autorización para actividades curriculares y educativas fuera del plantel.</p>
+          <a href="excursiones/excursiones.html" class="btn btn-secondary btn-small" data-translate="Llenar formulario">
+            Llenar formulario
+          </a>
+        </article>
+
+        <!-- PCBLearning -->
+        <article class="card service-card">
+          <div class="service-icon">🎓</div>
+          <h3 data-translate="PCBLearning">PCBLearning</h3>
+          <p data-translate="Plataforma de certificaciones para maestros, estudiantes y personal escolar en el uso eficiente del sistema y otras certificaciones de la escuela.">Plataforma de certificaciones para maestros, estudiantes y personal escolar en el uso eficiente del sistema y otras certificaciones de la escuela.</p>
+          <a href="PCBLearning.html" class="btn btn-secondary btn-small" data-translate="Acceder a PCBLearning">
+            Acceder a PCBLearning
           </a>
         </article>
       </div>
@@ -1376,7 +1204,7 @@
           <p data-translate="Monitorea el progreso académico y las notas de tu hijo en tiempo real.">
             Monitorea el progreso académico y las notas de tu hijo en tiempo real.
           </p>
-          <a href="https://informacionestudiantil.dde.pr/public/home.html" class="btn btn-secondary btn-small"
+          <a href="https://informacionestudiantil.dde.pr/public/home.html" target="_self" class="btn btn-secondary btn-small"
             target="_blank" rel="noopener" data-translate="Ver calificaciones">
             Ver calificaciones
           </a>
@@ -1438,7 +1266,7 @@
           <p data-translate="Accede a los servicios de orientación, consejería y apoyo socioemocional.">
             Accede a los servicios de orientación, consejería y apoyo socioemocional.
           </p>
-          <a href="orientacion.html" class="btn btn-secondary btn-small" data-translate="Ver servicios">
+          <a href="https://pcbsystempr-cyber.github.io/Unidad_de_Apoyo_Socioemocional_Prueba/" target="_self" class="btn btn-secondary btn-small" data-translate="Ver servicios">
             Ver servicios
           </a>
         </article>
@@ -1500,7 +1328,7 @@
           <p data-translate="Recursos de apoyo emocional, salud mental y seguridad para los estudiantes.">
             Recursos de apoyo emocional, salud mental y seguridad para los estudiantes.
           </p>
-          <a href="https://pcbsystempr-cyber.github.io/Unidad_de_Apoyo_Socioemocional_Prueba/" class="btn btn-secondary btn-small"
+          <a href="https://pcbsystempr-cyber.github.io/Unidad_de_Apoyo_Socioemocional_Prueba/" target="_self" class="btn btn-secondary btn-small"
             target="_blank" rel="noopener" data-translate="Ver recursos">
             Ver recursos
           </a>
@@ -1583,7 +1411,7 @@
               data-translate="La información de fechas, categorías y registro se publica previamente en la escuela y redes.">
               La información de fechas, categorías y registro se publica previamente en la escuela y redes.
             </p>
-            <a href="https://pcbsystempr-cyber.github.io/Day-Gaming_Day-FinalA/" class="btn btn-secondary btn-small"
+            <a href="https://pcbsystempr-cyber.github.io/Day-Gaming_Day-FinalA/" target="_self" class="btn btn-secondary btn-small"
               target="_blank" rel="noopener" data-translate="Ver página del Gaming Day">
               Ver página del Gaming Day
             </a>
@@ -1798,51 +1626,24 @@
       }
     }
     .mhc-btn {
-      position: relative;
-      width: 38px; height: 38px;
+      width: 30px; height: 30px;
       border-radius: 50%;
-      border: 1.5px solid rgba(255,255,255,0.35);
-      background: linear-gradient(135deg, rgba(56,189,248,0.22) 0%, rgba(255,255,255,0.10) 100%);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       color: white;
+      font-size: 0.9rem;
+      line-height: 1;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer;
-      transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      transition: background 0.2s, transform 0.18s;
       flex-shrink: 0;
       padding: 0;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(15,42,74,0.30), inset 0 1px 0 rgba(255,255,255,0.20);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    .mhc-btn:hover {
-      transform: scale(1.08);
-      border-color: rgba(255,255,255,0.55);
-      box-shadow: 0 6px 18px rgba(56,189,248,0.40), inset 0 1px 0 rgba(255,255,255,0.30);
-    }
+    .mhc-btn:hover  { background: rgba(255,255,255,0.3); transform: scale(1.12); }
     .mhc-btn:active { transform: scale(0.92); }
-    .mhc-btn:focus-visible {
-      outline: 2px solid #38BDF8;
-      outline-offset: 2px;
-    }
-    /* Iconos sol/luna animados dentro del botón */
-    .mhc-btn .mhc-icon {
-      position: absolute;
-      width: 18px; height: 18px;
-      pointer-events: none;
-      transition: transform 0.45s cubic-bezier(.4,0,.2,1), opacity 0.30s ease;
-    }
-    .mhc-btn .mhc-icon-sun  { color: #FFD56B; transform: rotate(0deg) scale(1); opacity: 1; }
-    .mhc-btn .mhc-icon-moon { color: #E0F2FE; transform: rotate(-90deg) scale(0.4); opacity: 0; }
-    body.dark-mode .mhc-btn .mhc-icon-sun  { transform: rotate(90deg) scale(0.4); opacity: 0; }
-    body.dark-mode .mhc-btn .mhc-icon-moon { transform: rotate(0deg)  scale(1);   opacity: 1; }
-    body.dark-mode .mhc-btn {
-      background: linear-gradient(135deg, rgba(15,42,74,0.55) 0%, rgba(30,79,134,0.35) 100%);
-      border-color: rgba(56,189,248,0.45);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.45), inset 0 1px 0 rgba(56,189,248,0.20);
-    }
-    body.dark-mode .mhc-btn:hover {
-      box-shadow: 0 6px 18px rgba(56,189,248,0.45), inset 0 1px 0 rgba(56,189,248,0.30);
-    }
 
     /* Destacar el ítem Publicar Anuncio del sidebar */
     .sidebar-publish-item {
@@ -1862,56 +1663,50 @@
     <div class="ma-box">
       <div class="ma-header">
         <div>
-          <h3 data-translate="📌 Publicar en PCB Community">📌 Publicar en PCB Community</h3>
-          <p data-translate="Tu anuncio será visible tras aprobación del admin.">Tu anuncio será visible tras aprobación del admin.</p>
+          <h3>📌 Publicar en PCB Community</h3>
+          <p>Tu anuncio será visible tras aprobación del admin.</p>
         </div>
         <button class="ma-close" onclick="cerrarModalAnuncio()">✕</button>
       </div>
       <form id="formAnuncioPublico" class="ma-body">
         <div class="ma-grid">
           <div>
-            <label class="ma-label" data-translate="Categoría *">Categoría *</label>
+            <label class="ma-label">Categoría *</label>
             <select id="anuncioCategoria" class="ma-input" required>
-              <option value="avisos" data-translate="📢 Aviso">📢 Aviso</option>
-              <option value="objetos_perdidos" data-translate="🔍 Objeto Perdido">🔍 Objeto Perdido</option>
-              <option value="actividades" data-translate="🎉 Actividad">🎉 Actividad</option>
-              <option value="recaudaciones" data-translate="💰 Recaudación">💰 Recaudación</option>
-              <option value="promociones" data-translate="🏷️ Promoción">🏷️ Promoción</option>
+              <option value="avisos">📢 Aviso</option>
+              <option value="objetos_perdidos">🔍 Objeto Perdido</option>
+              <option value="actividades">🎉 Actividad</option>
+              <option value="recaudaciones">💰 Recaudación</option>
+              <option value="promociones">🏷️ Promoción</option>
             </select>
           </div>
           <div>
-            <label class="ma-label" data-translate="Caduca el (opcional)">Caduca el (opcional)</label>
+            <label class="ma-label">Caduca el (opcional)</label>
             <input type="date" id="anuncioCaducidad" class="ma-input">
           </div>
         </div>
         <div>
-          <label class="ma-label" data-translate="Título *">Título *</label>
+          <label class="ma-label">Título *</label>
           <input type="text" id="anuncioTitulo" class="ma-input" required maxlength="80"
-            placeholder="Ej: Se perdió mochila azul en la cafetería"
-            data-translate-placeholder="Ej: Se perdió mochila azul en la cafetería">
+            placeholder="Ej: Se perdió mochila azul en la cafetería">
         </div>
         <div>
-          <label class="ma-label" data-translate="Mensaje *">Mensaje *</label>
+          <label class="ma-label">Mensaje *</label>
           <textarea id="anuncioMensaje" class="ma-input" required rows="3" maxlength="400"
-            placeholder="Describe el detalle de tu anuncio..."
-            data-translate-placeholder="Describe el detalle de tu anuncio..."></textarea>
+            placeholder="Describe el detalle de tu anuncio..."></textarea>
         </div>
         <div class="ma-grid">
           <div>
-            <label class="ma-label" data-translate="Tu nombre (opcional)">Tu nombre (opcional)</label>
-            <input type="text" id="anuncioAutor" class="ma-input" maxlength="60"
-              placeholder="Anónimo"
-              data-translate-placeholder="Anónimo">
+            <label class="ma-label">Tu nombre (opcional)</label>
+            <input type="text" id="anuncioAutor" class="ma-input" maxlength="60" placeholder="Anónimo">
           </div>
           <div>
-            <label class="ma-label" data-translate="Contacto (opcional)">Contacto (opcional)</label>
-            <input type="text" id="anuncioContacto" class="ma-input" maxlength="80"
-              placeholder="Email o teléfono"
-              data-translate-placeholder="Email o teléfono">
+            <label class="ma-label">Contacto (opcional)</label>
+            <input type="text" id="anuncioContacto" class="ma-input" maxlength="80" placeholder="Email o teléfono">
           </div>
         </div>
         <div>
-          <label class="ma-label" data-translate="📷 Imagen (opcional)">📷 Imagen (opcional)</label>
+          <label class="ma-label">📷 Imagen (opcional)</label>
           <!-- Dropzone / selector de galería -->
           <div class="ma-dropzone" id="anuncioDropzone"
                onclick="document.getElementById('anuncioImagenFile').click()"
@@ -1919,8 +1714,8 @@
                ondragleave="this.classList.remove('drag-over')"
                ondrop="handleDropAnuncio(event)">
             <div class="ma-dz-icon">🖼️</div>
-            <div class="ma-dz-text" data-translate="Toca aquí para seleccionar una imagen">Toca aquí para seleccionar una imagen</div>
-            <div class="ma-dz-sub" data-translate="JPG, PNG o WEBP · máx. 5 MB">JPG, PNG o WEBP · máx. 5 MB</div>
+            <div class="ma-dz-text">Toca aquí para seleccionar una imagen</div>
+            <div class="ma-dz-sub">JPG, PNG o WEBP · máx. 5 MB</div>
             <input type="file" id="anuncioImagenFile" accept="image/*"
                    style="display:none" onchange="previewAnuncioImage(this)">
           </div>
@@ -1931,7 +1726,7 @@
           </div>
         </div>
         <div id="anuncioMsg"></div>
-        <button type="submit" id="btnEnviarAnuncio" class="ma-submit" data-translate="📤 Enviar Anuncio">📤 Enviar Anuncio</button>
+        <button type="submit" id="btnEnviarAnuncio" class="ma-submit">📤 Enviar Anuncio</button>
       </form>
     </div>
   </div>
@@ -1955,21 +1750,21 @@
   <!-- Popup Expandido de Novedades -->
   <div id="promoPopupExpanded" class="promo-popup-expanded">
     <div class="promo-expanded-content">
-      <button class="promo-expanded-close" onclick="closeExpandedPromo()" title="Cerrar" aria-label="Cerrar">✕</button>
-      <div class="promo-expanded-scroll">
-        <div class="promo-expanded-header">
-          <h2 class="promo-expanded-title" data-translate="📢 ¡Novedades!">📢 ¡Novedades!</h2>
-        </div>
-        <div class="promo-expanded-body">
-          <p class="promo-expanded-message" data-translate="¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.">¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.</p>
-          <img
-            src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-            alt="Estudiantes" class="promo-expanded-img">
-          <div class="promo-expanded-actions">
-            <a href="promociones.html" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 20px;">
-              <i class="fas fa-gift"></i> <span data-translate="Ver Promociones">Ver Promociones</span>
-            </a>
-          </div>
+      <button class="promo-expanded-close" onclick="closeExpandedPromo()" title="Cerrar">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="promo-expanded-header">
+        <h2 class="promo-expanded-title" data-translate="📢 ¡Novedades!">📢 ¡Novedades!</h2>
+      </div>
+      <div class="promo-expanded-body">
+        <p class="promo-expanded-message" data-translate="¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.">¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.</p>
+        <img
+          src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+          alt="Estudiantes" class="promo-expanded-img">
+        <div class="promo-expanded-actions">
+          <a href="promociones.html" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 20px;">
+            <i class="fas fa-gift"></i> <span data-translate="Ver Promociones">Ver Promociones</span>
+          </a>
         </div>
       </div>
     </div>
@@ -2064,19 +1859,10 @@
       max-width: 600px;
       width: 90%;
       max-height: 90vh;
-      overflow: hidden;
+      overflow-y: auto;
       position: relative;
-      display: flex;
-      flex-direction: column;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       animation: scaleIn 0.3s ease;
-    }
-
-    .promo-expanded-scroll {
-      flex: 1 1 auto;
-      min-height: 0;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
     }
 
     body.dark-mode .promo-expanded-content {
@@ -2086,10 +1872,10 @@
 
     .promo-expanded-close {
       position: absolute;
-      top: 14px;
-      right: 14px;
-      background: rgba(231, 76, 60, 0.12);
-      border: 1.5px solid rgba(231, 76, 60, 0.35);
+      top: 15px;
+      right: 15px;
+      background: rgba(231, 76, 60, 0.1);
+      border: none;
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -2097,15 +1883,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.25s ease;
-      z-index: 20;
+      transition: all 0.3s ease;
+      z-index: 10;
       color: #e74c3c;
-      font-size: 1.15rem;
-      font-weight: 700;
-      line-height: 1;
-      font-family: inherit;
-      padding: 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      font-size: 24px;
     }
 
     .promo-expanded-close:hover {
@@ -2125,7 +1906,7 @@
     }
 
     .promo-expanded-header {
-      padding: 30px 70px 20px 30px;
+      padding: 30px 30px 20px;
       border-bottom: 2px solid #f0f0f0;
     }
 
@@ -2532,34 +2313,11 @@
     document.getElementById('modalAnuncio').addEventListener('click', function(e) {
       if (e.target === this) cerrarModalAnuncio();
     });
-    // Auto-abrir el modal cuando se llega desde otra página con ?publicar=1
-    (function(){
-      try {
-        var params = new URLSearchParams(location.search);
-        if (params.get('publicar') === '1') {
-          setTimeout(function(){ window.abrirModalAnuncio(); }, 250);
-          // Limpiar el query param para que no se reabra al recargar
-          if (history.replaceState) {
-            params.delete('publicar');
-            var clean = location.pathname + (params.toString() ? '?' + params.toString() : '') + location.hash;
-            history.replaceState(null, '', clean);
-          }
-        }
-      } catch(e) {}
-    })();
     document.getElementById('formAnuncioPublico').addEventListener('submit', async function(e) {
       e.preventDefault();
       const btn = document.getElementById('btnEnviarAnuncio');
       const msg = document.getElementById('anuncioMsg');
-      const _t = function(key){
-        try {
-          var lang = (typeof getSavedLanguage === 'function') ? getSavedLanguage() : 'es';
-          var dict = (typeof translations !== 'undefined') ? translations : (window.translations || null);
-          if (dict && dict[lang] && dict[lang][key]) return dict[lang][key];
-        } catch(_) {}
-        return key;
-      };
-      btn.disabled = true; btn.textContent = _t('⏳ Enviando...');
+      btn.disabled = true; btn.textContent = '⏳ Enviando...';
       try {
         await window.anunciosDB.add({
           titulo:         document.getElementById('anuncioTitulo').value.trim(),
@@ -2571,209 +2329,58 @@
           fechaCaducidad: document.getElementById('anuncioCaducidad').value || null
         });
         msg.className = 'ok'; msg.style.display = 'block';
-        msg.textContent = _t('✅ ¡Anuncio enviado! Aparecerá en el popup tras la aprobación del administrador.');
+        msg.textContent = '✅ ¡Anuncio enviado! Aparecerá en el popup tras la aprobación del administrador.';
         this.reset();
         clearAnuncioImage();
         setTimeout(cerrarModalAnuncio, 3500);
       } catch(err) {
         msg.className = 'err'; msg.style.display = 'block';
-        msg.textContent = _t('❌ Error al enviar: ') + err.message;
+        msg.textContent = '❌ Error al enviar: ' + err.message;
       }
-      btn.disabled = false; btn.textContent = _t('📤 Enviar Anuncio');
+      btn.disabled = false; btn.textContent = '📤 Enviar Anuncio';
     });
 
-    // Show promo after 3 seconds — prioriza novedades CRÍTICAS (siempre visibles);
-    // las novedades estándar y los anuncios comunitarios solo se muestran en la primera visita.
+    // Show promo after 3 seconds — combina novedades admin + anuncios comunidad
     setTimeout(async () => {
       const popup         = document.getElementById('promoPopup');
       const expandedPopup = document.getElementById('promoPopupExpanded');
 
-      const SEEN_KEY = 'pcb_seen_popup_ids';
-      function getSeenIds() {
-        try { return JSON.parse(localStorage.getItem(SEEN_KEY) || '[]'); } catch(_) { return []; }
-      }
-      function markSeen(id) {
-        if (!id) return;
-        const ids = getSeenIds();
-        if (!ids.includes(id)) { ids.push(id); localStorage.setItem(SEEN_KEY, JSON.stringify(ids)); }
-      }
-
       try {
-        const [critica, novedadStd, anuncios] = await Promise.all([
-          window.novedadesDB ? window.novedadesDB.getLatestCritical() : Promise.resolve(null),
-          window.novedadesDB ? window.novedadesDB.getLatestStandard() : Promise.resolve(null),
-          window.anunciosDB  ? window.anunciosDB.getActive()           : Promise.resolve([])
+        // Obtener la fuente más reciente activa (novedad admin ó anuncio comunidad)
+        const [novedad, anuncios] = await Promise.all([
+          window.novedadesDB  ? window.novedadesDB.getLatest()   : Promise.resolve(null),
+          window.anunciosDB   ? window.anunciosDB.getActive()     : Promise.resolve([])
         ]);
 
+        // Elegir el más reciente entre ambas fuentes
+        const latestAnuncio = anuncios && anuncios.length ? anuncios[0] : null;
         let item = null;
-        let isCritical = false;
-
-        if (critica) {
-          // Prioridad máxima: novedad crítica — siempre se muestra.
-          item = critica;
-          isCritical = true;
+        if (novedad && latestAnuncio) {
+          item = new Date(novedad.created_at) >= new Date(latestAnuncio.created_at) ? novedad : latestAnuncio;
         } else {
-          // Elegir el más reciente entre la novedad estándar y el último anuncio comunitario.
-          const latestAnuncio = anuncios && anuncios.length ? anuncios[0] : null;
-          if (novedadStd && latestAnuncio) {
-            item = new Date(novedadStd.created_at) >= new Date(latestAnuncio.created_at) ? novedadStd : latestAnuncio;
-          } else {
-            item = novedadStd || latestAnuncio;
-          }
-          // Solo primera visita: si ya se mostró este item en este dispositivo, no se vuelve a abrir.
-          if (item && getSeenIds().includes(item.id)) {
-            return;
-          }
+          item = novedad || latestAnuncio;
         }
 
-        if (!item) return;
+        if (item) {
+          const title   = item.title   || item.titulo;
+          const message = item.message || item.mensaje;
+          const imgUrl  = item.image_url || item.imagen_url;
 
-        const title   = item.title   || item.titulo;
-        const message = item.message || item.mensaje;
-        const imgUrl  = item.image_url || item.imagen_url;
+          popup.querySelector('.promo-title').textContent   = title;
+          popup.querySelector('.promo-preview').textContent = message;
+          expandedPopup.querySelector('.promo-expanded-title').textContent   = title;
+          expandedPopup.querySelector('.promo-expanded-message').textContent = message;
 
-        popup.querySelector('.promo-title').textContent   = title;
-        popup.querySelector('.promo-preview').textContent = message;
-        expandedPopup.querySelector('.promo-expanded-title').textContent   = title;
-        expandedPopup.querySelector('.promo-expanded-message').textContent = message;
-
-        const expandedImg = expandedPopup.querySelector('.promo-expanded-img');
-        if (imgUrl) { expandedImg.src = imgUrl; expandedImg.style.display = 'block'; }
-        else { expandedImg.style.display = 'none'; }
-
-        if (!isCritical) markSeen(item.id);
-
-        popup.classList.add('active');
+          const expandedImg = expandedPopup.querySelector('.promo-expanded-img');
+          if (imgUrl) { expandedImg.src = imgUrl; expandedImg.style.display = 'block'; }
+          else { expandedImg.style.display = 'none'; }
+        }
       } catch (e) {
         console.warn('No se pudo cargar novedad:', e);
       }
+
+      popup.classList.add('active');
     }, 3000);
-  </script>
-
-  <!-- ══════════════════════════════════════
-       SCROLL REVEAL — Animaciones globales
-       ══════════════════════════════════════ -->
-  <style>
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: opacity, transform;
-    }
-    .reveal.reveal-left  { transform: translateX(-50px); }
-    .reveal.reveal-right { transform: translateX(50px); }
-    .reveal.reveal-zoom  { transform: scale(0.9); }
-    .reveal.reveal-fade  { transform: none; }
-
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translate(0,0) scale(1);
-    }
-
-    /* Stagger para hijos (cards en grids) */
-    .reveal-stagger > .reveal { transition-delay: 0s; }
-    .reveal-stagger > .reveal:nth-child(1).is-visible { transition-delay: 0.05s; }
-    .reveal-stagger > .reveal:nth-child(2).is-visible { transition-delay: 0.15s; }
-    .reveal-stagger > .reveal:nth-child(3).is-visible { transition-delay: 0.25s; }
-    .reveal-stagger > .reveal:nth-child(4).is-visible { transition-delay: 0.35s; }
-    .reveal-stagger > .reveal:nth-child(5).is-visible { transition-delay: 0.45s; }
-    .reveal-stagger > .reveal:nth-child(6).is-visible { transition-delay: 0.55s; }
-    .reveal-stagger > .reveal:nth-child(7).is-visible { transition-delay: 0.65s; }
-    .reveal-stagger > .reveal:nth-child(8).is-visible { transition-delay: 0.75s; }
-
-    @media (prefers-reduced-motion: reduce) {
-      .reveal {
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-      }
-    }
-  </style>
-
-  <script>
-    (function () {
-      // Respeta usuarios que prefieren menos movimiento
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        return;
-      }
-
-      function applyReveal() {
-        // Encabezados de sección -> fade-up
-        document.querySelectorAll('.section .section-header').forEach(el => {
-          el.classList.add('reveal');
-        });
-
-        // Contenedores de hero/centrado
-        document.querySelectorAll('.hero-content-centered, .hero-actions').forEach(el => {
-          el.classList.add('reveal', 'reveal-fade');
-        });
-
-        // Banner publicar anuncio -> zoom
-        document.querySelectorAll('.publish-banner').forEach(el => {
-          el.classList.add('reveal', 'reveal-zoom');
-        });
-
-        // Grids con cards: stagger en hijos
-        document.querySelectorAll('.grid-2, .grid-3, .grid-4').forEach(grid => {
-          grid.classList.add('reveal-stagger');
-          Array.from(grid.children).forEach(child => child.classList.add('reveal'));
-        });
-
-        // Cards sueltas dentro de secciones (no dentro de un grid ya marcado)
-        document.querySelectorAll('.section .card').forEach(card => {
-          if (!card.classList.contains('reveal')) {
-            card.classList.add('reveal');
-          }
-        });
-
-        // Slideshow / contenedor de programas
-        document.querySelectorAll('.slideshow-container, .programs-cta').forEach(el => {
-          el.classList.add('reveal');
-        });
-
-        // Lista de eventos
-        document.querySelectorAll('.event-list, #proximos-eventos-container').forEach(el => {
-          el.classList.add('reveal', 'reveal-right');
-        });
-
-        // Columna izquierda en grid-2 vs derecha
-        document.querySelectorAll('.grid-2').forEach(grid => {
-          const kids = grid.children;
-          if (kids[0]) kids[0].classList.add('reveal-left');
-          if (kids[1]) kids[1].classList.add('reveal-right');
-        });
-      }
-
-      function observeAll() {
-        const elements = document.querySelectorAll('.reveal');
-        if (!('IntersectionObserver' in window)) {
-          elements.forEach(el => el.classList.add('is-visible'));
-          return;
-        }
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              io.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-
-        elements.forEach(el => io.observe(el));
-      }
-
-      function init() {
-        applyReveal();
-        observeAll();
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
-    })();
   </script>
 </body>
 
