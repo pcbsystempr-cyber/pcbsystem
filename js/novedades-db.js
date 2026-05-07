@@ -48,45 +48,18 @@
   }
 
   /**
-   * Devuelve la novedad CRÍTICA activa más reciente (siempre visible en el popup).
-   */
-  async function getLatestCritical() {
-    const res = await fetch(
-      BASE + '?active=eq.true&is_critical=eq.true&order=created_at.desc&limit=1',
-      { headers: HEADERS }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data[0] || null;
-  }
-
-  /**
-   * Devuelve la novedad ESTÁNDAR activa más reciente (solo primera visita).
-   */
-  async function getLatestStandard() {
-    const res = await fetch(
-      BASE + '?active=eq.true&is_critical=eq.false&order=created_at.desc&limit=1',
-      { headers: HEADERS }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data[0] || null;
-  }
-
-  /**
    * Publica una nueva novedad.
-   * @param {Object} p - { title, message, imageUrl, isCritical }
+   * @param {Object} p - { title, message, imageUrl }
    */
-  async function add({ title, message, imageUrl, isCritical }) {
+  async function add({ title, message, imageUrl }) {
     const res = await fetch(BASE, {
       method: 'POST',
       headers: HEADERS,
       body: JSON.stringify({
-        title:       title,
-        message:     message,
-        image_url:   imageUrl || null,
-        active:      true,
-        is_critical: !!isCritical
+        title:     title,
+        message:   message,
+        image_url: imageUrl || null,
+        active:    true
       })
     });
     if (!res.ok) throw new Error('Error al publicar novedad: ' + res.status);
@@ -97,19 +70,17 @@
   /**
    * Edita una novedad existente.
    * @param {string} id - UUID de la novedad
-   * @param {Object} p  - { title, message, imageUrl, isCritical }
+   * @param {Object} p  - { title, message, imageUrl }
    */
-  async function update(id, { title, message, imageUrl, isCritical }) {
-    const body = {
-      title:     title,
-      message:   message,
-      image_url: imageUrl || null
-    };
-    if (typeof isCritical !== 'undefined') body.is_critical = !!isCritical;
+  async function update(id, { title, message, imageUrl }) {
     const res = await fetch(BASE + '?id=eq.' + id, {
       method: 'PATCH',
       headers: HEADERS,
-      body: JSON.stringify(body)
+      body: JSON.stringify({
+        title:     title,
+        message:   message,
+        image_url: imageUrl || null
+      })
     });
     if (!res.ok) throw new Error('Error al actualizar novedad: ' + res.status);
     const data = await res.json();
@@ -129,5 +100,5 @@
   }
 
   // Exportar al scope global
-  window.novedadesDB = { getAll, getLatest, getLatestCritical, getLatestStandard, add, update, remove };
+  window.novedadesDB = { getAll, getLatest, add, update, remove };
 })();
