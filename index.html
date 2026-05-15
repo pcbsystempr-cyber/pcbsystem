@@ -77,6 +77,276 @@
     body.dark-mode .news-grid .card p {
       color: #9CA3AF !important;
     }
+
+    /* ════════════════════════════════════════════════
+       HERO — diseño tech refinado
+       ════════════════════════════════════════════════ */
+
+    /* Capas de fondo: aurora suave + grid tech */
+    .hero-aurora,
+    .hero-grid-pattern {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Aurora: gradientes radiales que respiran muy lentamente */
+    .hero-aurora {
+      background:
+        radial-gradient(ellipse 55% 40% at 18% 28%, rgba(56, 189, 248, 0.32), transparent 65%),
+        radial-gradient(ellipse 50% 35% at 82% 72%, rgba(167, 139, 250, 0.28), transparent 65%),
+        radial-gradient(ellipse 40% 28% at 65% 18%, rgba(244, 114, 182, 0.18), transparent 65%);
+      filter: blur(35px);
+      animation: heroAurora 22s ease-in-out infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes heroAurora {
+      0%, 100% { transform: scale(1) translate(0, 0);    opacity: 0.85; }
+      33%      { transform: scale(1.06) translate(18px, -12px); opacity: 1; }
+      66%      { transform: scale(0.97) translate(-14px, 10px); opacity: 0.9; }
+    }
+
+    /* Grid pattern muy sutil con desvanecido radial — estética tech */
+    .hero-grid-pattern {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 60px 60px;
+      -webkit-mask-image: radial-gradient(ellipse 75% 55% at 50% 50%, #000 35%, transparent 90%);
+              mask-image: radial-gradient(ellipse 75% 55% at 50% 50%, #000 35%, transparent 90%);
+      opacity: 0.7;
+    }
+
+    /* Contenido por encima de las capas */
+    .hero .container { position: relative; z-index: 2; }
+
+    /* Eyebrow / badge superior */
+    .hero-eyebrow {
+      display: inline-block;
+      padding: 0.5rem 1.15rem;
+      border-radius: 50px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.22);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #f1f5f9;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(-10px);
+      animation: heroFadeDown 0.8s 0.1s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    @keyframes heroFadeDown { to { opacity: 1; transform: translateY(0); } }
+
+    /* Título: gradiente refinado, sin shine constante */
+    .hero-content-centered h1 {
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    /* Word-by-word reveal — efecto premium (gradiente por palabra) */
+    .hero-word {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #c7d2fe 100%);
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      opacity: 0;
+      transform: translateY(38px);
+      filter: blur(8px);
+      animation: heroWordReveal 0.85s cubic-bezier(.2,.8,.2,1) forwards;
+      animation-delay: calc(0.25s + var(--i, 0) * 0.07s);
+      will-change: opacity, transform, filter;
+    }
+    @keyframes heroWordReveal {
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+
+    /* Párrafo y botones — entrada con delay calculado */
+    .hero-content-centered p {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: heroFadeUp 0.9s var(--p-delay, 0.85s) cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    .hero-content-centered .hero-actions {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: heroFadeUp 0.9s var(--btn-delay, 1.05s) cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    @keyframes heroFadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* Botones — shine en hover */
+    .hero-actions .btn {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s ease, filter 0.35s ease;
+    }
+    .hero-actions .btn::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.40), transparent);
+      transform: skewX(-22deg);
+      transition: left 0.7s ease;
+      pointer-events: none;
+    }
+    .hero-actions .btn:hover {
+      transform: translateY(-4px) scale(1.035);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.28);
+      filter: brightness(1.05);
+    }
+    .hero-actions .btn:hover::after { left: 130%; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero-content-centered h1 { font-size: 2.1rem !important; line-height: 1.18; }
+      .hero-content-centered p  { font-size: 1rem; }
+      .hero-eyebrow { font-size: 0.78rem; padding: 0.4rem 0.95rem; }
+      .hero-aurora { filter: blur(25px); }
+      .hero-grid-pattern { background-size: 40px 40px; opacity: 0.5; }
+      .hero-word { transform: translateY(24px); filter: blur(5px); }
+    }
+    @media (max-width: 480px) {
+      .hero-content-centered h1 { font-size: 1.75rem !important; }
+      .hero-actions .btn { width: 100%; }
+    }
+
+    /* ── Respeta preferencia de movimiento reducido ── */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-aurora,
+      .hero-eyebrow,
+      .hero-word,
+      .hero-content-centered p,
+      .hero-content-centered .hero-actions {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+      }
+    }
+
+    /* ════════════════════════════════════════════════
+       SCROLL REVEAL — animaciones tech modernas
+       ════════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transition: opacity 0.85s cubic-bezier(.2,.8,.2,1),
+                  transform 0.85s cubic-bezier(.2,.8,.2,1),
+                  filter 0.85s cubic-bezier(.2,.8,.2,1);
+      will-change: opacity, transform, filter;
+    }
+    .reveal-up      { transform: translateY(48px); }
+    .reveal-left    { transform: translateX(-48px); }
+    .reveal-right   { transform: translateX(48px); }
+    .reveal-scale   { transform: scale(0.92); }
+    .reveal-blur    { filter: blur(10px); transform: translateY(28px); }
+    .reveal-flip    { transform: perspective(800px) rotateX(14deg) translateY(28px); transform-origin: top center; }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+
+    /* Stagger automático para hijos de grids */
+    .reveal[data-stagger="1"] { transition-delay: 0.05s; }
+    .reveal[data-stagger="2"] { transition-delay: 0.15s; }
+    .reveal[data-stagger="3"] { transition-delay: 0.25s; }
+    .reveal[data-stagger="4"] { transition-delay: 0.35s; }
+    .reveal[data-stagger="5"] { transition-delay: 0.45s; }
+    .reveal[data-stagger="6"] { transition-delay: 0.55s; }
+    .reveal[data-stagger="7"] { transition-delay: 0.65s; }
+    .reveal[data-stagger="8"] { transition-delay: 0.75s; }
+    .reveal[data-stagger="9"] { transition-delay: 0.85s; }
+
+    /* Línea decorativa que cruza al revelarse el section-header */
+    .section-header.reveal { position: relative; }
+    .section-header.reveal::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6);
+      border-radius: 3px;
+      transform: translateX(-50%);
+      transition: width 0.9s 0.4s cubic-bezier(.2,.8,.2,1);
+      box-shadow: 0 0 14px rgba(167, 139, 250, 0.55);
+    }
+    .section-header.reveal.in-view::after { width: 90px; }
+
+    /* Brillo sutil que recorre los cards al revelarse (efecto tech) */
+    .card.reveal,
+    .service-card.reveal {
+      position: relative;
+      overflow: hidden;
+    }
+    .card.reveal::before,
+    .service-card.reveal::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 70%;
+      height: 100%;
+      background: linear-gradient(120deg,
+        transparent 0%,
+        rgba(56, 189, 248, 0.10) 35%,
+        rgba(167, 139, 250, 0.18) 50%,
+        rgba(244, 114, 182, 0.10) 65%,
+        transparent 100%);
+      transform: skewX(-20deg);
+      pointer-events: none;
+      z-index: 1;
+      transition: left 1.2s cubic-bezier(.2,.8,.2,1) 0.3s;
+    }
+    .card.reveal.in-view::before,
+    .service-card.reveal.in-view::before { left: 140%; }
+
+    /* En modo oscuro el brillo es más visible */
+    body.dark-mode .card.reveal::before,
+    body.dark-mode .service-card.reveal::before {
+      background: linear-gradient(120deg,
+        transparent 0%,
+        rgba(56, 189, 248, 0.18) 35%,
+        rgba(167, 139, 250, 0.28) 50%,
+        rgba(244, 114, 182, 0.18) 65%,
+        transparent 100%);
+    }
+
+    /* En móvil reducir distancias para que no se sienta lento */
+    @media (max-width: 768px) {
+      .reveal-up    { transform: translateY(28px); }
+      .reveal-left  { transform: translateX(-28px); }
+      .reveal-right { transform: translateX(28px); }
+      .reveal-blur  { filter: blur(6px); transform: translateY(18px); }
+      .reveal       { transition-duration: 0.65s; }
+      .reveal[data-stagger="4"],
+      .reveal[data-stagger="5"],
+      .reveal[data-stagger="6"],
+      .reveal[data-stagger="7"],
+      .reveal[data-stagger="8"],
+      .reveal[data-stagger="9"] { transition-delay: 0.25s; }
+    }
+
+    /* Respeta motion reducido */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+      }
+      .section-header.reveal::after { transition: none !important; width: 90px !important; }
+      .card.reveal::before,
+      .service-card.reveal::before { display: none !important; }
+    }
   </style>
 </head>
 
@@ -502,9 +772,12 @@
 
   <!-- HERO / INICIO -->
   <section id="inicio" class="hero">
+    <div class="hero-aurora" aria-hidden="true"></div>
+    <div class="hero-grid-pattern" aria-hidden="true"></div>
     <div class="container">
       <div class="hero-content-centered">
-        <h1 data-translate="Formación vocacional con visión de futuro">Formación vocacional con visión de futuro</h1>
+        <span class="hero-eyebrow" data-translate="✨ Escuela Superior Vocacional Pablo Colón Berdecia">✨ Escuela Superior Vocacional Pablo Colón Berdecia</span>
+        <h1 data-translate="Transformación Digital Escolar con Visión de Futuro">Transformación Digital Escolar con Visión de Futuro</h1>
         <p
           data-translate="Escuela Superior Vocacional que prepara estudiantes con bases académicas y técnicas para continuar estudios o entrar al mundo laboral.">
           Escuela Superior Vocacional que prepara estudiantes con bases académicas y técnicas
@@ -561,7 +834,7 @@
             data-translate="Fechas y detalles se informan por la oficina escolar y comunicados oficiales.">
             Fechas y detalles se informan por la oficina escolar y comunicados oficiales.
           </p>
-          <a href="https://de.pr.gov/MATRICULA//" class="btn btn-secondary btn-small" target="_blank" rel="noopener"
+          <a href="https://de.pr.gov/MATRICULA//" target="_self" class="btn btn-secondary btn-small" target="_blank" rel="noopener"
             data-translate="Ver página de Matrícula">
             Ver página de Matrícula
           </a>
@@ -817,21 +1090,21 @@
           <span style="font-size:1.8rem;flex-shrink:0;">🆘</span>
           <div><div style="color:#fca5a5;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;">EMERGENCIA</div><div style="color:#fff;font-weight:800;font-size:1.2rem;">9-1-1</div></div>
         </a>
-        <a href="tel:7878575050" style="display:flex;align-items:center;gap:1rem;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);border-radius:14px;padding:0.85rem 1.1rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(59,130,246,0.22)'" onmouseout="this.style.background='rgba(59,130,246,0.12)'">
+        <a href="tel:7878572020" style="display:flex;align-items:center;gap:1rem;background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3);border-radius:14px;padding:0.85rem 1.1rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(59,130,246,0.22)'" onmouseout="this.style.background='rgba(59,130,246,0.12)'">
           <span style="font-size:1.8rem;flex-shrink:0;">👮</span>
-          <div><div style="color:#93c5fd;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;">POLICÍA DE PUERTO RICO</div><div style="color:#fff;font-weight:800;font-size:1.2rem;">(787) 857-5050</div></div>
+          <div><div style="color:#93c5fd;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;">POLICÍA DE PUERTO RICO</div><div style="color:#fff;font-weight:800;font-size:1.2rem;">(787) 857-2020</div></div>
         </a>
-        <a href="tel:7878572020" style="display:flex;align-items:center;gap:1rem;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);border-radius:14px;padding:0.85rem 1.1rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.22)'" onmouseout="this.style.background='rgba(16,185,129,0.12)'">
+        <a href="tel:7878572897" style="display:flex;align-items:center;gap:1rem;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);border-radius:14px;padding:0.85rem 1.1rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.22)'" onmouseout="this.style.background='rgba(16,185,129,0.12)'">
           <span style="font-size:1.8rem;flex-shrink:0;">🏫</span>
-          <div><div style="color:#6ee7b7;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;">DIRECCIÓN ESCOLAR</div><div style="color:#fff;font-weight:800;font-size:1.2rem;">(787) 857-2020</div></div>
+          <div><div style="color:#6ee7b7;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;">DIRECCIÓN ESCOLAR</div><div style="color:#fff;font-weight:800;font-size:1.2rem;">(787) 857-2897</div></div>
         </a>
-        <a href="tel:7878572021" style="display:flex;align-items:center;gap:1rem;background:rgba(168,85,247,0.12);border:1px solid rgba(168,85,247,0.3);border-radius:14px;padding:0.85rem 1.1rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(168,85,247,0.22)'" onmouseout="this.style.background='rgba(168,85,247,0.12)'">
+        <a href="tel:7878572897" style="display:flex;align-items:center;gap:1rem;background:rgba(168,85,247,0.12);border:1px solid rgba(168,85,247,0.3);border-radius:14px;padding:0.85rem 1.1rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(168,85,247,0.22)'" onmouseout="this.style.background='rgba(168,85,247,0.12)'">
           <span style="font-size:1.8rem;flex-shrink:0;">🏥</span>
-          <div><div style="color:#c4b5fd;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;">ENFERMERÍA ESCOLAR</div><div style="color:#fff;font-weight:800;font-size:1.2rem;">(787) 857-2021</div></div>
+          <div><div style="color:#c4b5fd;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;">ENFERMERÍA ESCOLAR</div><div style="color:#fff;font-weight:800;font-size:1.2rem;">(787) 857-2897</div></div>
         </a>
-        <a href="tel:7878572022" style="display:flex;align-items:center;gap:1rem;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);border-radius:14px;padding:0.85rem 1.1rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.22)'" onmouseout="this.style.background='rgba(245,158,11,0.12)'">
+        <a href="tel:787857289" style="display:flex;align-items:center;gap:1rem;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);border-radius:14px;padding:0.85rem 1.1rem;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(245,158,11,0.22)'" onmouseout="this.style.background='rgba(245,158,11,0.12)'">
           <span style="font-size:1.8rem;flex-shrink:0;">🛡️</span>
-          <div><div style="color:#fcd34d;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;">GUARDIA DE SEGURIDAD</div><div style="color:#fff;font-weight:800;font-size:1.2rem;">(787) 857-2022</div></div>
+          <div><div style="color:#fcd34d;font-weight:700;font-size:0.82rem;letter-spacing:0.05em;">GUARDIA DE SEGURIDAD</div><div style="color:#fff;font-weight:800;font-size:1.2rem;">(787) 857-2897</div></div>
         </a>
       </div>
       <p style="text-align:center;color:rgba(255,255,255,0.38);font-size:0.78rem;margin-top:1.25rem;">Toca cualquier número para llamar directamente</p>
@@ -1104,7 +1377,7 @@
           </a>
         </article>
 
-        <!-- Preparación Académica 
+        <!-- Preparación Académica
         <article class="card service-card">
           <div class="service-icon">📖</div>
           <h3 data-translate="Preparación Académica">Preparación Académica</h3>
@@ -2386,6 +2659,170 @@
       popup.classList.add('active');
     }, 3000);
   </script>
+
+  <!-- ════════════════════════════════════════════════
+       SCROLL REVEAL — auto-asignación + IntersectionObserver
+       ════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      // Si el navegador no soporta IntersectionObserver, no hacer nada (todo queda visible)
+      if (!('IntersectionObserver' in window)) return;
+
+      // Respeta preferencia de movimiento reducido
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      // 1) Etiquetar automáticamente los elementos animables
+      function tagElements() {
+        // section-header → fade-up + línea decorativa
+        document.querySelectorAll('.section-header').forEach(el => {
+          if (!el.classList.contains('reveal')) el.classList.add('reveal', 'reveal-up');
+        });
+
+        // Cards y service-cards dentro de grids → stagger por columna
+        document.querySelectorAll('.grid-2, .grid-3, .grid-4, .news-grid, .social-grid').forEach(grid => {
+          const items = grid.children;
+          let idx = 0;
+          for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            // Solo elementos visibles y con apariencia de tarjeta
+            if (item.style.display === 'none') continue;
+            if (!item.classList.contains('reveal')) {
+              // Alterna efecto: blur en pares, scale en impares para look tech
+              const fx = (i % 2 === 0) ? 'reveal-up' : 'reveal-blur';
+              item.classList.add('reveal', fx);
+              item.setAttribute('data-stagger', String((idx % 6) + 1));
+              idx++;
+            }
+          }
+        });
+
+        // Cards sueltos fuera de grids
+        document.querySelectorAll('section .card').forEach(c => {
+          if (!c.classList.contains('reveal')) c.classList.add('reveal', 'reveal-up');
+        });
+
+        // Bloques destacados específicos del index
+        document.querySelectorAll('.event-list, .social-card, .promociones-grid > *').forEach(el => {
+          if (!el.classList.contains('reveal')) el.classList.add('reveal', 'reveal-scale');
+        });
+      }
+
+      // 2) Observar y revelar
+      function setupObserver() {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: '0px 0px -8% 0px',
+          threshold: 0.12
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      }
+
+      // Si ya hay elementos en viewport al cargar, mostrarlos sin animar
+      function revealAlreadyVisible() {
+        const vh = window.innerHeight;
+        document.querySelectorAll('.reveal').forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < vh * 0.85 && rect.bottom > 0) {
+            el.classList.add('in-view');
+          }
+        });
+      }
+
+      function init() {
+        tagElements();
+        revealAlreadyVisible();
+        setupObserver();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+
+  <!-- ════════════════════════════════════════════════
+       HERO — word-by-word reveal del título (re-aplicable)
+       ════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      var heading = document.querySelector('.hero-content-centered h1');
+      if (!heading) return;
+
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var splitting = false;
+
+      function splitWords() {
+        if (splitting) return;
+        // Si ya está envuelto, no volver a procesar
+        if (heading.querySelector('.hero-word')) return;
+
+        var raw = heading.textContent.trim();
+        if (!raw) return;
+
+        splitting = true;
+        var words = raw.split(/\s+/);
+        var frag = document.createDocumentFragment();
+        words.forEach(function (w, i) {
+          var span = document.createElement('span');
+          span.className = 'hero-word';
+          span.style.setProperty('--i', i);
+          span.textContent = w;
+          frag.appendChild(span);
+          if (i < words.length - 1) frag.appendChild(document.createTextNode(' '));
+        });
+        heading.textContent = '';
+        heading.appendChild(frag);
+
+        // Ajustar delays del párrafo y botones según número de palabras
+        var totalDelay = 0.25 + words.length * 0.07;
+        var content = heading.parentElement;
+        if (content) {
+          var p = content.querySelector('p');
+          var actions = content.querySelector('.hero-actions');
+          if (p) p.style.setProperty('--p-delay', (totalDelay + 0.05) + 's');
+          if (actions) actions.style.setProperty('--btn-delay', (totalDelay + 0.20) + 's');
+        }
+        splitting = false;
+      }
+
+      function init() {
+        splitWords();
+
+        if (reduceMotion) return;
+
+        // Re-aplicar cuando cambie el idioma (translatePage hace heading.textContent = ...)
+        var observer = new MutationObserver(function (mutations) {
+          for (var i = 0; i < mutations.length; i++) {
+            var m = mutations[i];
+            if (m.type === 'characterData' || m.type === 'childList') {
+              if (!heading.querySelector('.hero-word')) {
+                splitWords();
+                break;
+              }
+            }
+          }
+        });
+        observer.observe(heading, { childList: true, characterData: true, subtree: true });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+
 </body>
 
 </html>
