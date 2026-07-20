@@ -347,6 +347,227 @@
       .card.reveal::before,
       .service-card.reveal::before { display: none !important; }
     }
+
+    /* ════════════════════════════════════════════════
+       WELCOME ROLE POPUP — glass / tech aesthetic
+       ════════════════════════════════════════════════ */
+    .welcome-popup {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      background: radial-gradient(circle at 30% 20%, rgba(99,102,241,0.28), transparent 55%),
+                  radial-gradient(circle at 75% 80%, rgba(236,72,153,0.22), transparent 55%),
+                  rgba(7, 11, 25, 0.72);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      opacity: 0;
+      transition: opacity .45s ease;
+    }
+    .welcome-popup.is-open { display: flex; opacity: 1; }
+
+    .welcome-popup-card {
+      position: relative;
+      width: min(820px, 100%);
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 2.25rem 2rem 2rem;
+      border-radius: 22px;
+      background: linear-gradient(160deg, rgba(255,255,255,0.96) 0%, rgba(245,247,251,0.92) 100%);
+      border: 1px solid rgba(99,102,241,0.18);
+      box-shadow: 0 30px 80px -20px rgba(15, 23, 42, 0.55),
+                  0 0 0 1px rgba(255,255,255,0.6) inset;
+      transform: translateY(24px) scale(.97);
+      opacity: 0;
+      transition: transform .55s cubic-bezier(.2,.8,.2,1), opacity .45s ease;
+    }
+    .welcome-popup.is-open .welcome-popup-card { transform: none; opacity: 1; }
+    body.dark-mode .welcome-popup-card {
+      background: linear-gradient(160deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border-color: rgba(129, 140, 248, 0.28);
+      box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7),
+                  0 0 0 1px rgba(129,140,248,0.12) inset;
+    }
+
+    .welcome-popup-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg, transparent 0 39px, rgba(99,102,241,0.045) 39px 40px),
+        repeating-linear-gradient(
+        90deg, transparent 0 39px, rgba(99,102,241,0.045) 39px 40px);
+      mask-image: radial-gradient(ellipse at center, #000 0%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 0%, transparent 80%);
+    }
+    body.dark-mode .welcome-popup-card::before {
+      background: repeating-linear-gradient(
+        0deg, transparent 0 39px, rgba(129,140,248,0.07) 39px 40px),
+        repeating-linear-gradient(
+        90deg, transparent 0 39px, rgba(129,140,248,0.07) 39px 40px);
+    }
+
+    .welcome-popup-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.85);
+      color: var(--text-main);
+      font-size: 1.1rem; line-height: 1;
+      cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: transform .25s ease, background .25s ease;
+      z-index: 2;
+    }
+    .welcome-popup-close:hover { transform: rotate(90deg); background: #fff; }
+    body.dark-mode .welcome-popup-close {
+      background: rgba(30, 41, 59, 0.85);
+      color: #e2e8f0;
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .welcome-popup-header { position: relative; text-align: center; margin-bottom: 1.75rem; z-index: 1; }
+    .welcome-popup-eyebrow {
+      display: inline-block;
+      padding: .4rem .9rem;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(236,72,153,0.12));
+      color: var(--primary);
+      border: 1px solid rgba(99,102,241,0.18);
+      margin-bottom: .85rem;
+    }
+    body.dark-mode .welcome-popup-eyebrow { color: #c7d2fe; border-color: rgba(129,140,248,0.3); }
+    .welcome-popup-title {
+      font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+      margin: 0 0 .55rem;
+      background: linear-gradient(135deg, #1d3557 0%, #6366f1 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+    body.dark-mode .welcome-popup-title {
+      background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 50%, #f9a8d4 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .welcome-popup-sub {
+      color: var(--text-soft);
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .welcome-roles-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .9rem;
+    }
+    @media (max-width: 720px) {
+      .welcome-roles-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 420px) {
+      .welcome-roles-grid { grid-template-columns: 1fr; }
+    }
+
+    .welcome-role {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: .35rem;
+      padding: 1.15rem .9rem 1rem;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(99,102,241,0.14);
+      color: var(--text-main);
+      text-decoration: none;
+      transition: transform .3s cubic-bezier(.2,.8,.2,1),
+                  box-shadow .3s ease,
+                  border-color .3s ease,
+                  background .3s ease;
+      overflow: hidden;
+    }
+    .welcome-role::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(99,102,241,0.10) 100%);
+      opacity: 0;
+      transition: opacity .3s ease;
+      pointer-events: none;
+    }
+    .welcome-role:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99,102,241,0.45);
+      box-shadow: 0 14px 32px -12px rgba(99,102,241,0.4);
+    }
+    .welcome-role:hover::after { opacity: 1; }
+    body.dark-mode .welcome-role {
+      background: rgba(15, 23, 42, 0.55);
+      border-color: rgba(129,140,248,0.22);
+      color: #e2e8f0;
+    }
+    body.dark-mode .welcome-role:hover {
+      border-color: rgba(129,140,248,0.55);
+      box-shadow: 0 14px 32px -12px rgba(99,102,241,0.55);
+    }
+    .welcome-role-emoji {
+      font-size: 1.9rem;
+      line-height: 1;
+      margin-bottom: .25rem;
+      filter: drop-shadow(0 4px 8px rgba(99,102,241,0.25));
+    }
+    .welcome-role-name {
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: .01em;
+    }
+    .welcome-role-desc {
+      font-size: .78rem;
+      color: var(--text-soft);
+      line-height: 1.35;
+    }
+    body.dark-mode .welcome-role-desc { color: #94a3b8; }
+
+    .welcome-popup-footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 1.4rem;
+      text-align: center;
+    }
+    .welcome-popup-skip {
+      background: none;
+      border: none;
+      color: var(--text-soft);
+      font-size: .85rem;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: .25rem .5rem;
+      transition: color .2s ease;
+    }
+    .welcome-popup-skip:hover { color: var(--primary); }
+    body.dark-mode .welcome-popup-skip:hover { color: #c7d2fe; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .welcome-popup, .welcome-popup-card, .welcome-role { transition: none !important; }
+      .welcome-popup-card { transform: none !important; }
+    }
   </style>
 </head>
 
@@ -363,6 +584,53 @@
         <button type="button" class="theme-btn theme-btn-dark" id="btnDarkMode" onclick="document.body.classList.add('dark-mode'); localStorage.setItem('theme', 'dark'); document.getElementById('themePopup').classList.add('hidden');">
           🌙 Modo Oscuro
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup de bienvenida con selección de rol -->
+  <div id="welcomePopup" class="welcome-popup" role="dialog" aria-modal="true" aria-labelledby="welcomePopupTitle" aria-hidden="true">
+    <div class="welcome-popup-card">
+      <button type="button" class="welcome-popup-close" id="welcomePopupClose" aria-label="Cerrar">✕</button>
+      <div class="welcome-popup-header">
+        <span class="welcome-popup-eyebrow" data-translate="👋 Bienvenido/a">👋 Bienvenido/a</span>
+        <h2 id="welcomePopupTitle" class="welcome-popup-title" data-translate="¿Cómo deseas entrar hoy?">¿Cómo deseas entrar hoy?</h2>
+        <p class="welcome-popup-sub" data-translate="Elige tu perfil para llevarte directo a lo que necesitas.">Elige tu perfil para llevarte directo a lo que necesitas.</p>
+      </div>
+      <div class="welcome-roles-grid">
+        <a href="#servicios" class="welcome-role" data-welcome-role="estudiante">
+          <span class="welcome-role-emoji" aria-hidden="true">🎓</span>
+          <span class="welcome-role-name" data-translate="Estudiante">Estudiante</span>
+          <span class="welcome-role-desc" data-translate="Servicios, biblioteca y recursos">Servicios, biblioteca y recursos</span>
+        </a>
+        <a href="#portal-padres" class="welcome-role" data-welcome-role="padre">
+          <span class="welcome-role-emoji" aria-hidden="true">👨‍👩‍👧</span>
+          <span class="welcome-role-name" data-translate="Padre/Madre">Padre/Madre</span>
+          <span class="welcome-role-desc" data-translate="Portal de padres y formularios">Portal de padres y formularios</span>
+        </a>
+        <a href="#servicios-maestro" class="welcome-role" data-welcome-role="maestro">
+          <span class="welcome-role-emoji" aria-hidden="true">👩‍🏫</span>
+          <span class="welcome-role-name" data-translate="Maestro">Maestro</span>
+          <span class="welcome-role-desc" data-translate="Herramientas y certificaciones">Herramientas y certificaciones</span>
+        </a>
+        <a href="admin.html" class="welcome-role" data-welcome-role="administracion">
+          <span class="welcome-role-emoji" aria-hidden="true">🛠️</span>
+          <span class="welcome-role-name" data-translate="Administración">Administración</span>
+          <span class="welcome-role-desc" data-translate="Panel administrativo">Panel administrativo</span>
+        </a>
+        <a href="#publicar-anuncio" class="welcome-role" data-welcome-role="comunidad">
+          <span class="welcome-role-emoji" aria-hidden="true">🤝</span>
+          <span class="welcome-role-name" data-translate="Comunidad">Comunidad</span>
+          <span class="welcome-role-desc" data-translate="Publica anuncios y eventos">Publica anuncios y eventos</span>
+        </a>
+        <a href="#escuela" class="welcome-role" data-welcome-role="visitante">
+          <span class="welcome-role-emoji" aria-hidden="true">🏫</span>
+          <span class="welcome-role-name" data-translate="Visitante">Visitante</span>
+          <span class="welcome-role-desc" data-translate="Conoce la escuela">Conoce la escuela</span>
+        </a>
+      </div>
+      <div class="welcome-popup-footer">
+        <button type="button" class="welcome-popup-skip" id="welcomePopupSkip" data-translate="Explorar por mi cuenta">Explorar por mi cuenta</button>
       </div>
     </div>
   </div>
@@ -792,92 +1060,143 @@
     </div>
   </section>
 
-  <!-- LA ESCUELA (Acerca, Admisiones, Normas, Apoyo) -->
-  <section id="escuela" class="section">
+  <!-- PROGRAMAS VOCACIONALES (SLIDESHOW) -->
+  <section id="programas" class="section section-alt">
     <div class="container">
       <div class="section-header">
-        <h2 data-translate="La escuela">La escuela</h2>
-        <p data-translate="Información básica sobre la institución, matrícula, normas y apoyo a estudiantes.">
-          Información básica sobre la institución, matrícula, normas y apoyo a estudiantes.
+        <h2 data-translate="Programas y talleres vocacionales">Programas y talleres vocacionales</h2>
+        <p data-translate="Oferta vocacional disponible para los estudiantes de la escuela.">
+          Oferta vocacional disponible para los estudiantes de la escuela.
         </p>
       </div>
 
-      <div class="grid-2">
-        <!-- Quiénes somos -->
-        <article class="card">
-          <div class="card-icon">🏫</div>
-          <h3 data-translate="Quiénes somos">Quiénes somos</h3>
-          <p
-            data-translate="Superior Vocacional Pablo Colón Berdecia es una institución educativa comprometida con la formación académica técnica y vocacional de sus estudiantes. Nuestro enfoque combina el desarrollo de conocimiento, destrezas prácticas y valores, preparando a los jóvenes para continuar estudios postsecundarios, integrarse al mundo laboral y contribuir positivamente en la sociedad.S">
-            Superior Vocacional Pablo Colón Berdecia es una institución educativa comprometida con la formación
-            académica técnica y vocacional de sus estudiantes. Nuestro enfoque combina el desarrollo de conocimiento,
-            destrezas prácticas y valores, preparando a los jóvenes para continuar estudios postsecundarios, integrarse
-            al mundo laboral y contribuir positivamente en la sociedad.
-          </p>
-          <a href="quienes-somos.html" class="btn btn-secondary btn-small" data-translate="Conoce más sobre nosotros">
-            Conoce más sobre nosotros
-          </a>
-        </article>
+      <!-- Slideshow Container -->
+      <div class="slideshow-container">
+        <div class="slideshow-wrapper">
+          <!-- Slides -->
+          <div class="slide fade active">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+              <img src="galeriaslideshow/pcbsystemlogo1.png" alt="Elaboración de Productos Agricolas">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Creado por estudiantes. Diseñado para el mundo.">Creado por estudiantes. Diseñado
+                    para el mundo.</h3>
+                  <p data-translate="No es un proyecto escolar. Es un legado al futuro de la educación.">No es un
+                    proyecto escolar. Es un legado al futuro de la educación.</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="slide fade">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+              <img src="galeriaslideshow/EPABanner2026-1920-1080.png" alt="Elaboración de Productos Agricolas">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Procesamiento y Desarrollo de Productos Agrícolas">Sin agricultores no hay comida,
+                    sin comida no hay vida</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
 
-        <!-- Admisiones -->
-        <article class="card">
-          <div class="card-icon">📝</div>
-          <h3 data-translate="Admisiones / Matrícula">Admisiones / Matrícula</h3>
-          <p data-translate="Requisitos generales de matrícula:">Requisitos generales de matrícula:</p>
-          <ul>
-            <li data-translate="Formulario de solicitud completado">Formulario de solicitud completado</li>
-            <li data-translate="Récord de notas y documentos oficiales">Récord de notas y documentos oficiales</li>
-            <li data-translate="Identificación del padre, madre o encargado">Identificación del padre, madre o encargado
-            </li>
-          </ul>
-          <p class="note"
-            data-translate="Fechas y detalles se informan por la oficina escolar y comunicados oficiales.">
-            Fechas y detalles se informan por la oficina escolar y comunicados oficiales.
-          </p>
-          <a href="https://de.pr.gov/MATRICULA//" target="_self" class="btn btn-secondary btn-small" target="_blank" rel="noopener"
-            data-translate="Ver página de Matrícula">
-            Ver página de Matrícula
-          </a>
-        </article>
-      </div>
+          <div class="slide fade">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+              <img src="galeriaslideshow/ArtesCulinariasBanner2026-1920-1080.png" alt="Artes Culinarias">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Cocina Profesional y Gestión Gastronómica">El arte de la buena cocina</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
 
-      <div class="grid-2 section-gap">
-        <!-- Normas -->
-        <article class="card">
-          <div class="card-icon">📋</div>
-          <h3 data-translate="Normas y reglamentos">Normas y reglamentos</h3>
-          <p data-translate="Normas básicas de convivencia y seguridad:">Normas básicas de convivencia y seguridad:</p>
-          <ul>
-            <li data-translate="Respeto entre toda la comunidad escolar.">Respeto entre toda la comunidad escolar.</li>
-            <li data-translate="Uso correcto del uniforme y equipos de seguridad.">Uso correcto del uniforme y equipos
-              de seguridad.</li>
-            <li data-translate="Puntualidad, asistencia y cuidado de las instalaciones.">Puntualidad, asistencia y
-              cuidado de las instalaciones.</li>
-          </ul>
-          <p class="note">
-            <span data-translate="Detalles en el">Detalles en el</span> <strong
-              data-translate="Manual del Estudiante">Manual del Estudiante</strong> <span data-translate="y el">y
-              el</span> <strong data-translate="Reglamento Escolar">Reglamento Escolar</strong>.
-          </p>
-          <a href="normas-reglamentos.html" class="btn btn-secondary btn-small"
-            data-translate="Ver reglamento completo">
-            Ver reglamento completo
-          </a>
-        </article>
+          <div class="slide fade">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+              <img src="galeriaslideshow/ComputecBanner2016-1920-1086.png" alt="Computec">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Formación práctica y tecnológica">Formación práctica y tecnológica</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
 
-        <!-- Apoyo socioemocional (oculto: se muestra en Servicios al Estudiante) -->
-        <article class="card" style="display:none;">
-          <div class="card-icon">💚</div>
-          <h3 data-translate="Apoyo socioemocional">Apoyo socioemocional</h3>
-          <p
-            data-translate="Servicio de consejería, trabajo social y apoyo psicológico para el bienestar del estudiantado.">
-            Servicio de consejería, trabajo social y apoyo psicológico para el bienestar del estudiantado.
-          </p>
-          <a href="https://pcbsystempr-cyber.github.io/Unidad_de_Apoyo_Socioemocional_Prueba/" target="_self" class="btn btn-secondary btn-small"
-            target="_blank" rel="noopener" data-translate="Ver página de apoyo socioemocional">
-            Ver página de apoyo socioemocional
+          <div class="slide fade">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+              <img src="galeriaslideshow/CosmetologiaBanner2026.png" alt="Cosmetología">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Belleza y Cuidado Personal Profesional">Belleza y Cuidado Personal Profesional
+                  </h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <div class="slide fade">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+              <img src="galeriaslideshow/EnfermeriaBanner2026-1920-1080.png" alt="Enfermería">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Cuidado Integral de la Salud">Cuidado Integral de la Salud</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="slide fade">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+              <img src="galeriaslideshow/DECABanner2026-1920-1080.png" alt="Representante de Ventas y Servicios Empresariales">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Representante de Ventas y Servicios Empresariales">Representante de Ventas y
+                    Servicios Empresariales</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="slide fade">
+            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+              <img src="galeriaslideshow/SeguridadPublicaBanner2026-1920-1080.png" alt="Seguridad Publica">
+              <div class="slide-overlay">
+                <div class="slide-text">
+                  <h3 data-translate="Seguridad Publica">Servicio de Seguridad Publica</h3>
+                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Navigation Arrows -->
+          <button class="slide-prev" onclick="changeSlide(-1)" aria-label="Anterior">❮</button>
+          <button class="slide-next" onclick="changeSlide(1)" aria-label="Siguiente">❯</button>
+        </div>
+
+        <!-- Dots/Indicators -->
+        <div class="slide-dots">
+          <span class="dot active" onclick="currentSlide(1)"></span>
+          <span class="dot" onclick="currentSlide(2)"></span>
+          <span class="dot" onclick="currentSlide(3)"></span>
+          <span class="dot" onclick="currentSlide(4)"></span>
+          <span class="dot" onclick="currentSlide(5)"></span>
+          <span class="dot" onclick="currentSlide(6)"></span>
+          <span class="dot" onclick="currentSlide(7)"></span>
+          <span class="dot" onclick="currentSlide(8)"></span>
+          <span class="dot" onclick="currentSlide(9)"></span>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="programs-cta" style="margin-top: 2rem;">
+          <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" class="btn btn-primary" target="_blank" rel="noopener"
+            data-translate="Ver todos los programas y Casa Abierta">
+            Ver todos los programas y Casa Abierta
           </a>
-        </article>
+        </div>
       </div>
     </div>
   </section>
@@ -1127,147 +1446,6 @@
     }
     document.addEventListener('keydown',function(e){ if(e.key==='Escape') hideContactosPopup(); });
   </script>
-
-  <!-- PROGRAMAS VOCACIONALES (SLIDESHOW) -->
-  <section id="programas" class="section section-alt">
-    <div class="container">
-      <div class="section-header">
-        <h2 data-translate="Programas y talleres vocacionales">Programas y talleres vocacionales</h2>
-        <p data-translate="Oferta vocacional disponible para los estudiantes de la escuela.">
-          Oferta vocacional disponible para los estudiantes de la escuela.
-        </p>
-      </div>
-
-      <!-- Slideshow Container -->
-      <div class="slideshow-container">
-        <div class="slideshow-wrapper">
-          <!-- Slides -->
-          <div class="slide fade active">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
-              <img src="galeriaslideshow/pcbsystemlogo1.png" alt="Elaboración de Productos Agricolas">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Creado por estudiantes. Diseñado para el mundo.">Creado por estudiantes. Diseñado
-                    para el mundo.</h3>
-                  <p data-translate="No es un proyecto escolar. Es un legado al futuro de la educación.">No es un
-                    proyecto escolar. Es un legado al futuro de la educación.</p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
-              <img src="galeriaslideshow/epaFFA.jpeg" alt="Elaboración de Productos Agricolas">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Procesamiento y Desarrollo de Productos Agrícolas">Sin agricultores no hay comida,
-                    sin comida no hay vida</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
-              <img src="galeriaslideshow/acfccla.jpeg" alt="Artes Culinarias">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Cocina Profesional y Gestión Gastronómica">El arte de la buena cocina</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
-              <img src="galeriaslideshow/computecskillsusa.jpeg" alt="Computec">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Formación práctica y tecnológica">Formación práctica y tecnológica</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
-              <img src="galeriaslideshow/cosmetologiaskillsusa.jpeg" alt="Cosmetología">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Belleza y Cuidado Personal Profesional">Belleza y Cuidado Personal Profesional
-                  </h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
-              <img src="galeriaslideshow/enfermeriahosa.jpg" alt="Enfermería">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Cuidado Integral de la Salud">Cuidado Integral de la Salud</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
-              <img src="galeriaslideshow/decaempresarismo.jpg" alt="Representante de Ventas y Servicios Empresariales">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Representante de Ventas y Servicios Empresariales">Representante de Ventas y
-                    Servicios Empresariales</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
-              <img src="galeriaslideshow/seguridadpublica.jpg" alt="Seguridad Publica">
-              <div class="slide-overlay">
-                <div class="slide-text">
-                  <h3 data-translate="Seguridad Publica">Servicio de Seguridad Publica</h3>
-                  <p data-translate="Haz clic para ver más">Haz clic para ver más</p>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <!-- Navigation Arrows -->
-          <button class="slide-prev" onclick="changeSlide(-1)" aria-label="Anterior">❮</button>
-          <button class="slide-next" onclick="changeSlide(1)" aria-label="Siguiente">❯</button>
-        </div>
-
-        <!-- Dots/Indicators -->
-        <div class="slide-dots">
-          <span class="dot active" onclick="currentSlide(1)"></span>
-          <span class="dot" onclick="currentSlide(2)"></span>
-          <span class="dot" onclick="currentSlide(3)"></span>
-          <span class="dot" onclick="currentSlide(4)"></span>
-          <span class="dot" onclick="currentSlide(5)"></span>
-          <span class="dot" onclick="currentSlide(6)"></span>
-          <span class="dot" onclick="currentSlide(7)"></span>
-          <span class="dot" onclick="currentSlide(8)"></span>
-          <span class="dot" onclick="currentSlide(9)"></span>
-        </div>
-
-        <!-- CTA Button -->
-        <div class="programs-cta" style="margin-top: 2rem;">
-          <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" class="btn btn-primary" target="_blank" rel="noopener"
-            data-translate="Ver todos los programas y Casa Abierta">
-            Ver todos los programas y Casa Abierta
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
 
 <!-- SERVICIOS AL ESTUDIANTE -->
   <section id="servicios" class="section">
@@ -1622,8 +1800,8 @@
       </div>
 
       <div class="calendar-wrapper">
-        <iframe src="https://de.pr.gov/wp-content/uploads/2026/06/Legal-2026-27.pdf" 
-          title="Calendario Escolar 2026-2027"></iframe>
+        <iframe src="https://de.pr.gov/wp-content/uploads/2026/06/Legal-2026-27.pdf" target="_blank"
+          title="Calendario Escolar 2025-2026"></iframe>
 
         <div class="calendar-actions">
           <a class="btn btn-primary"
@@ -1693,6 +1871,96 @@
       </div>
 
 
+    </div>
+  </section>
+
+  <!-- LA ESCUELA (Acerca, Admisiones, Normas, Apoyo) -->
+  <section id="escuela" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-translate="La escuela">La escuela</h2>
+        <p data-translate="Información básica sobre la institución, matrícula, normas y apoyo a estudiantes.">
+          Información básica sobre la institución, matrícula, normas y apoyo a estudiantes.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <!-- Quiénes somos -->
+        <article class="card">
+          <div class="card-icon">🏫</div>
+          <h3 data-translate="Quiénes somos">Quiénes somos</h3>
+          <p
+            data-translate="Superior Vocacional Pablo Colón Berdecia es una institución educativa comprometida con la formación académica técnica y vocacional de sus estudiantes. Nuestro enfoque combina el desarrollo de conocimiento, destrezas prácticas y valores, preparando a los jóvenes para continuar estudios postsecundarios, integrarse al mundo laboral y contribuir positivamente en la sociedad.S">
+            Superior Vocacional Pablo Colón Berdecia es una institución educativa comprometida con la formación
+            académica técnica y vocacional de sus estudiantes. Nuestro enfoque combina el desarrollo de conocimiento,
+            destrezas prácticas y valores, preparando a los jóvenes para continuar estudios postsecundarios, integrarse
+            al mundo laboral y contribuir positivamente en la sociedad.
+          </p>
+          <a href="quienes-somos.html" class="btn btn-secondary btn-small" data-translate="Conoce más sobre nosotros">
+            Conoce más sobre nosotros
+          </a>
+        </article>
+
+        <!-- Admisiones -->
+        <article class="card">
+          <div class="card-icon">📝</div>
+          <h3 data-translate="Admisiones / Matrícula">Admisiones / Matrícula</h3>
+          <p data-translate="Requisitos generales de matrícula:">Requisitos generales de matrícula:</p>
+          <ul>
+            <li data-translate="Formulario de solicitud completado">Formulario de solicitud completado</li>
+            <li data-translate="Récord de notas y documentos oficiales">Récord de notas y documentos oficiales</li>
+            <li data-translate="Identificación del padre, madre o encargado">Identificación del padre, madre o encargado
+            </li>
+          </ul>
+          <p class="note"
+            data-translate="Fechas y detalles se informan por la oficina escolar y comunicados oficiales.">
+            Fechas y detalles se informan por la oficina escolar y comunicados oficiales.
+          </p>
+          <a href="https://de.pr.gov/MATRICULA//" target="_self" class="btn btn-secondary btn-small" target="_blank" rel="noopener"
+            data-translate="Ver página de Matrícula">
+            Ver página de Matrícula
+          </a>
+        </article>
+      </div>
+
+      <div class="grid-2 section-gap">
+        <!-- Normas -->
+        <article class="card">
+          <div class="card-icon">📋</div>
+          <h3 data-translate="Normas y reglamentos">Normas y reglamentos</h3>
+          <p data-translate="Normas básicas de convivencia y seguridad:">Normas básicas de convivencia y seguridad:</p>
+          <ul>
+            <li data-translate="Respeto entre toda la comunidad escolar.">Respeto entre toda la comunidad escolar.</li>
+            <li data-translate="Uso correcto del uniforme y equipos de seguridad.">Uso correcto del uniforme y equipos
+              de seguridad.</li>
+            <li data-translate="Puntualidad, asistencia y cuidado de las instalaciones.">Puntualidad, asistencia y
+              cuidado de las instalaciones.</li>
+          </ul>
+          <p class="note">
+            <span data-translate="Detalles en el">Detalles en el</span> <strong
+              data-translate="Manual del Estudiante">Manual del Estudiante</strong> <span data-translate="y el">y
+              el</span> <strong data-translate="Reglamento Escolar">Reglamento Escolar</strong>.
+          </p>
+          <a href="normas-reglamentos.html" class="btn btn-secondary btn-small"
+            data-translate="Ver reglamento completo">
+            Ver reglamento completo
+          </a>
+        </article>
+
+        <!-- Apoyo socioemocional (oculto: se muestra en Servicios al Estudiante) -->
+        <article class="card" style="display:none;">
+          <div class="card-icon">💚</div>
+          <h3 data-translate="Apoyo socioemocional">Apoyo socioemocional</h3>
+          <p
+            data-translate="Servicio de consejería, trabajo social y apoyo psicológico para el bienestar del estudiantado.">
+            Servicio de consejería, trabajo social y apoyo psicológico para el bienestar del estudiantado.
+          </p>
+          <a href="https://pcbsystempr-cyber.github.io/Unidad_de_Apoyo_Socioemocional_Prueba/" target="_self" class="btn btn-secondary btn-small"
+            target="_blank" rel="noopener" data-translate="Ver página de apoyo socioemocional">
+            Ver página de apoyo socioemocional
+          </a>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -2658,6 +2926,49 @@
 
       popup.classList.add('active');
     }, 3000);
+  </script>
+
+  <!-- ════════════════════════════════════════════════
+       WELCOME ROLE POPUP — trigger + cierre
+       ════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      const popup = document.getElementById('welcomePopup');
+      if (!popup) return;
+
+      const STORAGE_KEY = 'welcomePopupShown';
+      const DELAY_MS    = 3500;
+
+      function open() {
+        const themePopup = document.getElementById('themePopup');
+        if (themePopup && !themePopup.classList.contains('hidden')) return;
+        if (sessionStorage.getItem(STORAGE_KEY) === '1') return;
+        popup.classList.add('is-open');
+        popup.setAttribute('aria-hidden', 'false');
+        sessionStorage.setItem(STORAGE_KEY, '1');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        popup.classList.remove('is-open');
+        popup.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('welcomePopupClose').addEventListener('click', close);
+      document.getElementById('welcomePopupSkip').addEventListener('click', close);
+      popup.addEventListener('click', function (e) {
+        if (e.target === popup) close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && popup.classList.contains('is-open')) close();
+      });
+      popup.querySelectorAll('.welcome-role').forEach(function (link) {
+        link.addEventListener('click', close);
+      });
+
+      setTimeout(open, DELAY_MS);
+    })();
   </script>
 
   <!-- ════════════════════════════════════════════════

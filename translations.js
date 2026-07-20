@@ -16,7 +16,25 @@ const translations = {
     'Elige cómo quieres ver el sitio web': 'Elige cómo quieres ver el sitio web',
     '☀️ Modo Claro': '☀️ Modo Claro',
     '🌙 Modo Oscuro': '🌙 Modo Oscuro',
-    
+
+    // Popup de bienvenida (selección de rol)
+    '👋 Bienvenido/a': '👋 Bienvenido/a',
+    '¿Cómo deseas entrar hoy?': '¿Cómo deseas entrar hoy?',
+    'Elige tu perfil para llevarte directo a lo que necesitas.': 'Elige tu perfil para llevarte directo a lo que necesitas.',
+    'Estudiante': 'Estudiante',
+    'Servicios, biblioteca y recursos': 'Servicios, biblioteca y recursos',
+    'Padre/Madre': 'Padre/Madre',
+    'Portal de padres y formularios': 'Portal de padres y formularios',
+    'Maestro': 'Maestro',
+    'Herramientas y certificaciones': 'Herramientas y certificaciones',
+    'Administración': 'Administración',
+    'Panel administrativo': 'Panel administrativo',
+    'Comunidad': 'Comunidad',
+    'Publica anuncios y eventos': 'Publica anuncios y eventos',
+    'Visitante': 'Visitante',
+    'Conoce la escuela': 'Conoce la escuela',
+    'Explorar por mi cuenta': 'Explorar por mi cuenta',
+
     // Sidebar menu
     '⚙️ Configuración': '⚙️ Configuración',
     'Cambiar Tema': 'Cambiar Tema',
@@ -27,7 +45,8 @@ const translations = {
     'English': 'English',
     
     // Hero
-    'Formación vocacional con visión de futuro': 'Formación vocacional con visión de futuro',
+    '✨ Escuela Superior Vocacional Pablo Colón Berdecia': '✨ Escuela Superior Vocacional Pablo Colón Berdecia',
+    'Transformación Digital Escolar con Visión de Futuro': 'Transformación Digital Escolar con Visión de Futuro',
     'Escuela Superior Vocacional que prepara estudiantes con bases académicas y técnicas para continuar estudios o entrar al mundo laboral.': 'Escuela Superior Vocacional que prepara estudiantes con bases académicas y técnicas para continuar estudios o entrar al mundo laboral.',
     '🎓 Ver programas vocacionales': '🎓 Ver programas vocacionales',
     '🏫 Conocer la escuela': '🏫 Conocer la escuela',
@@ -745,6 +764,24 @@ const translations = {
     '☀️ Modo Claro': '☀️ Light Mode',
     '🌙 Modo Oscuro': '🌙 Dark Mode',
 
+    // Popup de bienvenida (selección de rol)
+    '👋 Bienvenido/a': '👋 Welcome',
+    '¿Cómo deseas entrar hoy?': 'How would you like to enter today?',
+    'Elige tu perfil para llevarte directo a lo que necesitas.': 'Pick your profile to jump straight to what you need.',
+    'Estudiante': 'Student',
+    'Servicios, biblioteca y recursos': 'Services, library and resources',
+    'Padre/Madre': 'Parent',
+    'Portal de padres y formularios': 'Parent portal and forms',
+    'Maestro': 'Teacher',
+    'Herramientas y certificaciones': 'Tools and certifications',
+    'Administración': 'Administration',
+    'Panel administrativo': 'Admin panel',
+    'Comunidad': 'Community',
+    'Publica anuncios y eventos': 'Post announcements and events',
+    'Visitante': 'Visitor',
+    'Conoce la escuela': 'Discover the school',
+    'Explorar por mi cuenta': 'Explore on my own',
+
     // Sidebar menu
     '⚙️ Configuración': '⚙️ Settings',
     'Cambiar Tema': 'Change Theme',
@@ -755,7 +792,8 @@ const translations = {
     'English': 'English',
 
     // Hero
-    'Formación vocacional con visión de futuro': 'Vocational Training with Future Vision',
+    '✨ Escuela Superior Vocacional Pablo Colón Berdecia': '✨ Pablo Colón Berdecia Vocational High School',
+    'Transformación Digital Escolar con Visión de Futuro': 'School Digital Transformation with a Vision for the Future',
     'Escuela Superior Vocacional que prepara estudiantes con bases académicas y técnicas para continuar estudios o entrar al mundo laboral.': 'Vocational High School that prepares students with academic and technical foundations to continue studies or enter the workforce.',
     '🎓 Ver programas vocacionales': '🎓 View Vocational Programs',
     '🏫 Conocer la escuela': '🏫 Learn About the School',
