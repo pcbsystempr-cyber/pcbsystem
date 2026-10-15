@@ -107,6 +107,11 @@
       "Melocotón",
       "Leche"
     ],
-    "almuerzo": []
+    "almuerzo": [],
+    "menuImage": {
+      "id": "comedor_1770342922294",
+      "src": "galeriacomedor/menu4.jpeg",
+      "timestamp": 1771792274632
+    }
   }
 }
