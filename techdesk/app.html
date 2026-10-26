@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Dashboard · PCB TechDesk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div id="demoBanner" class="demo-banner hidden">MODO DEMOSTRACIÓN · el panel usa datos locales de muestra hasta conectar Supabase.</div>
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Navegación principal">
+      <div class="side-brand"><a class="brand" href="app.html"><div class="brand-mark">PCB</div></a></div>
+      <nav class="nav">
+        <a class="active" href="app.html" aria-label="Dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span class="nav-label">Dashboard</span>
+        </a>
+        <a href="#tickets" aria-label="Boletas">
+          <svg viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M7 8h10M7 12h7"/></svg><span class="nav-label">Boletas</span>
+        </a>
+        <a href="reports.html" data-admin-only aria-label="Reportes">
+          <svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg><span class="nav-label">Reportes</span>
+        </a>
+        <a href="index.html" aria-label="Nueva boleta">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span class="nav-label">Nueva boleta</span>
+        </a>
+        <a href="resueltas.html" aria-label="Boletas resueltas">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span class="nav-label">Boletas resueltas</span>
+        </a>
+      </nav>
+      <div class="sidebar-bottom nav"><button id="logoutBtn" aria-label="Cerrar sesión"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M13 4h5a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-5"/></svg><span class="nav-label">Cerrar sesión</span></button></div>
+    </aside>
+
+    <main class="main">
+      <header class="app-header">
+        <div><h1 id="dashboardTitle">Dashboard</h1><p id="dashboardSubtitle">Centro de operaciones de servicio técnico escolar</p></div>
+        <div class="header-actions">
+          <a class="btn btn-secondary btn-sm" href="index.html">+ Nueva boleta</a>
+          <div class="user-badge"><div class="user-copy"><strong id="userName">—</strong><span id="userRole">—</span></div><div class="avatar" id="userAvatar">PCB</div></div>
+        </div>
+      </header>
+
+      <section class="app-content">
+        <div class="dashboard-strip">
+          <div class="strip-card"><strong>Estado de boletas</strong><div class="strip-pills"><span class="metric-pill metric-open"><b id="stripOpen">0</b> Abiertas</span><span class="metric-pill metric-pending"><b id="stripPending">0</b> Pendientes</span><span class="metric-pill metric-due"><b id="stripDueToday">0</b> Vencen hoy</span><span class="metric-pill metric-overdue"><b id="stripOverdue">0</b> Atrasadas</span></div></div>
+          <div class="strip-card"><strong>Alertas</strong><div class="strip-pills"><span class="metric-pill metric-warning"><b id="stripWarning">0</b> Alta</span><span class="metric-pill metric-critical"><b id="stripCritical">0</b> Crítica</span></div></div>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel span-2">
+            <div class="panel-title"><h2>Estado general del servicio</h2><span id="serviceRateText">0 de 0 resueltas</span></div>
+            <div class="service-progress-head"><div><strong id="serviceRate">0%</strong><span>tasa de resolución</span></div><span>Resumen por categoría</span></div>
+            <div class="progress"><i id="serviceRateBar" style="width:0%"></i></div>
+            <div class="ring-grid">
+              <div class="ring-card"><div class="ring" id="ringComputer"><b id="ringComputerCount">0</b></div><span>Computadoras</span></div>
+              <div class="ring-card"><div class="ring" id="ringNetwork"><b id="ringNetworkCount">0</b></div><span>Internet / Red</span></div>
+              <div class="ring-card"><div class="ring" id="ringPrinter"><b id="ringPrinterCount">0</b></div><span>Impresoras</span></div>
+              <div class="ring-card"><div class="ring" id="ringDisplay"><b id="ringDisplayCount">0</b></div><span>Proyección / AV</span></div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title"><h2>Críticas y atrasadas</h2><span>Prioridad inmediata</span></div>
+            <div id="criticalList" class="compact-list"><div class="empty" style="padding:18px">Sin alertas críticas.</div></div>
+          </section>
+
+          <section class="panel span-2">
+            <div class="panel-title"><h2>Solicitudes recientes</h2><span>Últimas boletas recibidas</span></div>
+            <div id="recentList" class="compact-list"><div class="empty" style="padding:18px">Sin solicitudes recientes.</div></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title"><h2>Carga de técnicos</h2><button id="addTechnicianBtn" data-admin-only class="btn btn-secondary btn-sm" type="button">+ Añadir técnico</button></div>
+            <div id="technicianLoad"><div class="empty" style="padding:18px">Sin técnicos disponibles.</div></div>
+          </section>
+        </div>
+
+        <section class="tickets-section" id="tickets">
+          <div class="tickets-head">
+            <div><h2 id="ticketsTitle">Todas las boletas</h2><p id="ticketsSubtitle">Busca y filtra. Los técnicos ven sus asignadas y todas las resueltas.</p></div>
+          </div>
+          <div class="toolbar">
+            <div class="search"><input id="searchInput" placeholder="Buscar boleta, personal, departamento o problema…"></div>
+            <select id="statusFilter"><option value="">Todos los estados</option><option value="new">Nueva</option><option value="triage">Evaluación</option><option value="assigned">Asignada</option><option value="in_progress">En proceso</option><option value="awaiting_user">Esperando usuario</option><option value="awaiting_parts">Esperando pieza</option><option value="resolved">Resuelta</option><option value="closed">Cerrada</option></select>
+            <select id="priorityFilter"><option value="">Todas las prioridades</option><option value="critical">Crítica</option><option value="high">Alta</option><option value="medium">Media</option><option value="low">Baja</option></select>
+          </div>
+          <div class="card table-card"><div class="table-wrap"><table class="table"><thead><tr><th>Boleta</th><th>Solicitante</th><th>Prioridad</th><th>Estado</th><th>Técnico</th><th>SLA</th><th>Creada</th></tr></thead><tbody id="ticketBody"><tr><td colspan="7"><div class="empty">Cargando…</div></td></tr></tbody></table></div></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <aside id="ticketDrawer" class="drawer"><div class="drawer-head"><div><div id="drawerTitle" style="font-weight:850">Boleta</div><div style="font-size:9px;color:var(--muted)">Historial y acciones</div></div><button id="drawerClose" class="icon-btn">×</button></div><div id="drawerBody" class="drawer-body"></div></aside>
+  <dialog id="technicianDialog" class="modal-dialog"><form id="technicianForm"><div class="panel-title"><div><h2>Añadir técnico</h2><span>La cuenta aparecerá en el menú de asignación.</span></div><button id="cancelTechnician" class="icon-btn" type="button" aria-label="Cerrar">×</button></div><div class="field" style="margin-top:18px"><label>Nombre completo</label><input id="technicianName" required minlength="3" autocomplete="name"></div><div class="field" style="margin-top:12px"><label>Correo / usuario</label><input id="technicianEmail" type="email" required autocomplete="off"></div><div class="field" style="margin-top:12px"><label>Contraseña temporal</label><input id="technicianPassword" type="password" required minlength="8" autocomplete="new-password"><div class="hint">Mínimo 8 caracteres.</div></div><div id="technicianNotice" class="notice error hidden" style="margin-top:12px"></div><div class="form-actions"><button class="btn btn-secondary" type="button" onclick="this.closest('dialog').close()">Cancelar</button><button id="saveTechnician" class="btn btn-primary" type="submit">Crear técnico</button></div></form></dialog>
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>

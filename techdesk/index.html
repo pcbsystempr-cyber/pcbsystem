@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>PCB TechDesk · Solicitud rápida de servicio</title>
+  <meta name="theme-color" content="#071b31">
+  <meta name="description" content="Sistema escolar de boletas de servicio técnico de COMPUTEC">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div id="demoBanner" class="demo-banner hidden">MODO DEMOSTRACIÓN · Los datos se guardan localmente hasta conectar Supabase.</div>
+
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="#solicitud" aria-label="PCB TechDesk">
+        <div class="brand-mark">PCB</div>
+        <div class="brand-copy"><strong id="schoolName">PCB</strong><span id="deptName">COMPUTEC · Servicio Técnico</span></div>
+      </a>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="../../index.html" style="background:#f8fafc;border-color:var(--line-strong);color:var(--navy);font-size:0.85rem;padding:8px 12px;" title="Volver al PCB System">← PCB System</a>
+        <a class="btn btn-secondary" href="#seguimiento">Consultar boleta</a>
+        <a class="btn btn-primary" href="login.html">Personal técnico</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="public-main" id="solicitud">
+    <div class="shell">
+      <section class="public-intro">
+        <div>
+          <span class="eyebrow">PCB TechDesk · solicitud rápida</span>
+          <h1>¿Necesitas ayuda técnica?</h1>
+          <p>Selecciona lo que ocurre y envía la boleta. Diseñado para que maestros y personal escolar puedan completarla desde el celular en menos de un minuto.</p>
+        </div>
+        <div class="quick-chips" aria-label="Ventajas">
+          <span class="quick-chip">⚡ Menos de 1 minuto</span>
+          <span class="quick-chip">📱 Optimizado para celular</span>
+          <span class="quick-chip">🔎 Seguimiento automático</span>
+        </div>
+      </section>
+
+      <div class="quick-layout">
+        <aside class="quick-side">
+          <span class="eyebrow" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);color:#d4e9ff">Fácil y rápido</span>
+          <h2>Solo necesitamos lo esencial.</h2>
+          <p>La información técnica detallada la completa el técnico durante el servicio. Tú solo indicas quién eres, dónde estás y qué está fallando.</p>
+          <div class="quick-step"><b>1</b><div><strong>Identifícate</strong><span>Nombre, área y ubicación.</span></div></div>
+          <div class="quick-step"><b>2</b><div><strong>Selecciona el problema</strong><span>Casi todo se completa con menús.</span></div></div>
+          <div class="quick-step"><b>3</b><div><strong>Envía y guarda tu número</strong><span>Podrás consultar el estado luego.</span></div></div>
+          <div class="side-track">
+            <strong>¿Ya tienes una boleta?</strong>
+            <p>Consulta su estado, técnico asignado y solución.</p>
+            <a class="btn" href="#seguimiento">Consultar estado</a>
+          </div>
+        </aside>
+
+        <section class="card quick-form-card">
+          <div class="quick-form-head">
+            <h2>Nueva boleta de servicio</h2>
+            <p>Los campos con * son obligatorios. Los datos de equipo son opcionales.</p>
+          </div>
+
+          <form id="ticketForm" novalidate>
+
+            <div class="quick-section">
+              <div class="quick-section-title"><b>1</b><strong>¿Quién necesita el servicio?</strong></div>
+              <div class="form-grid">
+                <div class="field full staff-directory-field">
+                  <label for="staffSelect">Personal que solicita el servicio *</label>
+                  <div id="staffSelectMode">
+                    <select id="staffSelect" aria-describedby="staffHelp" required>
+                      <option value="">Selecciona tu nombre</option>
+                      <option value="staff_07" data-name="Acosta Meléndez, Vilmarie" data-email="de140504@miescuela.pr" data-assignment="Inglés" data-schedule="12:50-1:40" data-grade="12" data-department="Inglés">Acosta Meléndez, Vilmarie — Inglés — 12</option>
+                      <option value="staff_03" data-name="Aguayo Guzmán, Danny" data-email="de109743@miescuela.pr" data-assignment="Español" data-schedule="10:10-11:00" data-grade="11" data-department="Español">Aguayo Guzmán, Danny — Español — 11</option>
+                      <option value="staff_20" data-name="Alicea Nieves, Melanie" data-email="de168674@miescuela.pr" data-assignment="Artes Culinarias" data-schedule="7:30-8:30" data-grade="10, 11, 12" data-department="Artes Culinarias">Alicea Nieves, Melanie — Artes Culinarias — 10, 11, 12</option>
+                      <option value="staff_04" data-name="Alvarado Berríos, Angélica" data-email="de151684@miescuela.pr" data-assignment="Español" data-schedule="12:50-1:40" data-grade="12" data-department="Español">Alvarado Berríos, Angélica — Español — 12</option>
+                      <option value="staff_21" data-name="Berrios Colón, Carmen I." data-email="de110258@miescuela.pr" data-assignment="Consejera" data-schedule="---" data-grade="N/A" data-department="Consejería">Berrios Colón, Carmen I. — Consejera</option>
+                      <option value="staff_26" data-name="Berrios Ortiz, Jesús" data-email="de161266@miescuela.pr" data-assignment="Psicólogo" data-schedule="2:30-3:30" data-grade="N/A" data-department="Psicología">Berrios Ortiz, Jesús — Psicólogo</option>
+                      <option value="staff_28" data-name="Berrios Zayas, Janelyz" data-email="de167251@miescuela.pr" data-assignment="Trabajadora Social" data-schedule="2:30-3:30" data-grade="N/A" data-department="Trabajo Social">Berrios Zayas, Janelyz — Trabajadora Social</option>
+                      <option value="staff_47" data-name="Berríos, Ivette" data-email="de000009@miescuela.pr" data-assignment="Educación Especial" data-schedule="8:30-9:20" data-grade="9" data-department="Educación Especial">Berríos, Ivette — Educación Especial — 9</option>
+                      <option value="staff_22" data-name="Bonilla Camacho, José L." data-email="de166341@miescuela.pr" data-assignment="STEM" data-schedule="---" data-grade="---" data-department="STEM">Bonilla Camacho, José L. — STEM</option>
+                      <option value="staff_23" data-name="Camacho Ortiz, Félix" data-email="de172428@miescuela.pr" data-assignment="Matemáticas" data-schedule="---" data-grade="11" data-department="Matemáticas">Camacho Ortiz, Félix — Matemáticas — 11</option>
+                      <option value="staff_24" data-name="Cintrón Ortiz, Nydia I." data-email="de82283@miescuela.pr" data-assignment="---" data-schedule="---" data-grade="---" data-department="Administración / Personal escolar">Cintrón Ortiz, Nydia I. — ---</option>
+                      <option value="staff_19" data-name="Collazo Esparra, Brenda E." data-email="de73409@miescuela.pr" data-assignment="Educación Física" data-schedule="7:30-8:30" data-grade="9-12" data-department="Educación Física">Collazo Esparra, Brenda E. — Educación Física — 9-12</option>
+                      <option value="staff_31" data-name="Colón Aponte, Célida I." data-email="de161775@miescuela.pr" data-assignment="Enfermera" data-schedule="1:40-2:30" data-grade="N/A" data-department="Enfermería">Colón Aponte, Célida I. — Enfermera</option>
+                      <option value="staff_25" data-name="Colón Arroyo, Sheyka" data-email="bibliotecapcb2@gmail.com" data-assignment="Bibliotecaria" data-schedule="1:00-3:30" data-grade="N/A" data-department="Biblioteca / Centro de Recursos">Colón Arroyo, Sheyka — Bibliotecaria</option>
+                      <option value="staff_08" data-name="Colón Ortiz, Luz C." data-email="de91134@miescuela.pr" data-assignment="Matemáticas" data-schedule="10:10-11:00" data-grade="9" data-department="Matemáticas">Colón Ortiz, Luz C. — Matemáticas — 9</option>
+                      <option value="staff_51" data-name="Colón, W." data-email="de000007@miescuela.pr" data-assignment="Ciencia EE" data-schedule="12:00-12:50" data-grade="9, 10, 11" data-department="Educación Especial">Colón, W. — Ciencia EE — 9, 10, 11</option>
+                      <option value="staff_48" data-name="Colón, W." data-email="de000004@miescuela.pr" data-assignment="Educación Especial" data-schedule="8:30-9:20" data-grade="10" data-department="Educación Especial">Colón, W. — Educación Especial — 10</option>
+                      <option value="staff_29" data-name="Cruz Maldonado, Sonia I." data-email="de58390@miescuela.pr" data-assignment="Consejera" data-schedule="1:40-2:30" data-grade="N/A" data-department="Consejería">Cruz Maldonado, Sonia I. — Consejera</option>
+                      <option value="staff_43" data-name="Feliciano Rivera, Eliel" data-email="de108786@miescuela.pr" data-assignment="Educación Especial" data-schedule="8:30-9:20" data-grade="11" data-department="Educación Especial">Feliciano Rivera, Eliel — Educación Especial — 11</option>
+                      <option value="staff_16" data-name="Fuentes Berrios, Elsa" data-email="de172572@miescuela.pr" data-assignment="Aplicaciones Tecnológicas" data-schedule="7:30-8:30" data-grade="9" data-department="Aplicaciones Tecnológicas">Fuentes Berrios, Elsa — Aplicaciones Tecnológicas — 9</option>
+                      <option value="staff_30" data-name="García Rivera, Maricarmen" data-email="de85494@miescuela.pr" data-assignment="Consejera" data-schedule="1:40-2:30" data-grade="N/A" data-department="Consejería">García Rivera, Maricarmen — Consejera</option>
+                      <option value="staff_05" data-name="Hernández Rosado, Coral" data-email="de152598@miescuela.pr" data-assignment="Inglés" data-schedule="9:20-10:10" data-grade="10" data-department="Inglés">Hernández Rosado, Coral — Inglés — 10</option>
+                      <option value="staff_46" data-name="Martínez Maldonado, Iris M." data-email="de143365@miescuela.pr" data-assignment="Educación Especial" data-schedule="11:00-11:50" data-grade="11" data-department="Educación Especial">Martínez Maldonado, Iris M. — Educación Especial — 11</option>
+                      <option value="staff_11" data-name="Matos Ortiz, Glorimar" data-email="de76545@miescuela.pr" data-assignment="Matemáticas" data-schedule="12:50-1:40" data-grade="12" data-department="Matemáticas">Matos Ortiz, Glorimar — Matemáticas — 12</option>
+                      <option value="staff_32" data-name="Nieves Alvarado, Madeline" data-email="de131962@miescuela.pr" data-assignment="Historia" data-schedule="9:20-10:10" data-grade="9" data-department="Historia / Estudios Sociales">Nieves Alvarado, Madeline — Historia — 9</option>
+                      <option value="staff_49" data-name="Núñez, Sra." data-email="de000005@miescuela.pr" data-assignment="Español EE" data-schedule="8:30-9:20" data-grade="9, 10, 11" data-department="Educación Especial">Núñez, Sra. — Español EE — 9, 10, 11</option>
+                      <option value="staff_12" data-name="Ortiz Berdecia, Diana C." data-email="de159697@miescuela.pr" data-assignment="Ciencias" data-schedule="8:30-9:20" data-grade="9" data-department="Ciencias">Ortiz Berdecia, Diana C. — Ciencias — 9</option>
+                      <option value="staff_39" data-name="Ortiz Cartagena, Marta" data-email="de155939@miescuela.pr" data-assignment="Vocacional-Enfermería" data-schedule="7:30-8:30" data-grade="10, 11, 12" data-department="Enfermería">Ortiz Cartagena, Marta — Vocacional-Enfermería — 10, 11, 12</option>
+                      <option value="staff_37" data-name="Ortiz Montesino, Nivia J." data-email="de66472@miescuela.pr" data-assignment="Cosmetología" data-schedule="7:30-8:30" data-grade="10, 11, 12" data-department="Cosmetología">Ortiz Montesino, Nivia J. — Cosmetología — 10, 11, 12</option>
+                      <option value="staff_06" data-name="Otero, Carmen" data-email="de112451@miescuela.pr" data-assignment="Inglés" data-schedule="9:20-10:10" data-grade="9-6, 9-7, 10-6, 11-6, EES" data-department="Inglés">Otero, Carmen — Inglés — 9-6, 9-7, 10-6, 11-6, EES</option>
+                      <option value="staff_15" data-name="Palomino Luna, Ivette" data-email="de74635@miescuela.pr" data-assignment="Ciencia Física" data-schedule="9:20-10:10" data-grade="12" data-department="Ciencias">Palomino Luna, Ivette — Ciencia Física — 12</option>
+                      <option value="staff_50" data-name="Pérez, Sra." data-email="de000006@miescuela.pr" data-assignment="Matemática EE" data-schedule="9:20-10:10" data-grade="9, 11" data-department="Educación Especial">Pérez, Sra. — Matemática EE — 9, 11</option>
+                      <option value="staff_35" data-name="Rivas Aponte, Luis E." data-email="de136956@miescuela.pr" data-assignment="Electiva Historia" data-schedule="7:30-8:30" data-grade="10-6, 11-6" data-department="Historia / Estudios Sociales">Rivas Aponte, Luis E. — Electiva Historia — 10-6, 11-6</option>
+                      <option value="staff_34" data-name="Rivas Aponte, Luis E." data-email="de136956@miescuela.pr" data-assignment="Historia" data-schedule="7:30-8:30" data-grade="11, 12" data-department="Historia / Estudios Sociales">Rivas Aponte, Luis E. — Historia — 11, 12</option>
+                      <option value="staff_40" data-name="Rivera Alejandro, Ada J." data-email="de155982@miescuela.pr" data-assignment="Vocacional-DECACoop" data-schedule="7:30-8:30" data-grade="10, 11, 12" data-department="DECA / Coop">Rivera Alejandro, Ada J. — Vocacional-DECACoop — 10, 11, 12</option>
+                      <option value="staff_44" data-name="Rivera Berrios, Ana M." data-email="de000008@miescuela.pr" data-assignment="Educación Especial" data-schedule="12:00-12:50" data-grade="9, 12" data-department="Educación Especial">Rivera Berrios, Ana M. — Educación Especial — 9, 12</option>
+                      <option value="staff_09" data-name="Rivera Hernández, Miguel A." data-email="de70109@miescuela.pr" data-assignment="Matemáticas" data-schedule="8:30-9:20" data-grade="10" data-department="Matemáticas">Rivera Hernández, Miguel A. — Matemáticas — 10</option>
+                      <option value="staff_27" data-name="Rivera Moreno, Kárem Z." data-email="de156358@miescuela.pr" data-assignment="Trabajadora Social" data-schedule="2:30-3:30" data-grade="N/A" data-department="Trabajo Social">Rivera Moreno, Kárem Z. — Trabajadora Social</option>
+                      <option value="staff_45" data-name="Rivera Pagan, Zulma I." data-email="de142518@miescuela.pr" data-assignment="Educación Especial" data-schedule="12:50-1:40" data-grade="10" data-department="Educación Especial">Rivera Pagan, Zulma I. — Educación Especial — 10</option>
+                      <option value="staff_14" data-name="Rivera, Jennifer" data-email="de000002@miescuela.pr" data-assignment="Ciencias" data-schedule="11:00-11:50" data-grade="11" data-department="Ciencias">Rivera, Jennifer — Ciencias — 11</option>
+                      <option value="staff_02" data-name="Rodríguez López, Brenda L." data-email="de68899@miescuela.pr" data-assignment="Español" data-schedule="8:30-9:20" data-grade="10" data-department="Español">Rodríguez López, Brenda L. — Español — 10</option>
+                      <option value="staff_42" data-name="Rodríguez Rodríguez, Jelitza" data-email="de87668@miescuela.pr" data-assignment="Vocacional-Electiva Ocupacional" data-schedule="8:30-9:20" data-grade="11" data-department="Educación Ocupacional">Rodríguez Rodríguez, Jelitza — Vocacional-Electiva Ocupacional — 11</option>
+                      <option value="staff_13" data-name="Rosado Alvarado, Jacqueline M." data-email="de69779@miescuela.pr" data-assignment="Ciencias" data-schedule="8:30-9:20" data-grade="10" data-department="Ciencias">Rosado Alvarado, Jacqueline M. — Ciencias — 10</option>
+                      <option value="staff_10" data-name="Rosado, Evelisse" data-email="de000013@miescuela.pr" data-assignment="Matemáticas" data-schedule="10:10-11:00" data-grade="11" data-department="Matemáticas">Rosado, Evelisse — Matemáticas — 11</option>
+                      <option value="staff_41" data-name="Ríos Berrios, Luis" data-email="de109026@miescuela.pr" data-assignment="Vocacioal-Elaboración P.A." data-schedule="7:30-8:30" data-grade="10, 11, 12" data-department="Elaboración de Productos Agrícolas">Ríos Berrios, Luis — Vocacioal-Elaboración P.A. — 10, 11, 12</option>
+                      <option value="staff_17" data-name="Santiago Cruz, Yarimar" data-email="de134628@miescuela.pr" data-assignment="Salud" data-schedule="7:30-8:30" data-grade="9" data-department="Salud">Santiago Cruz, Yarimar — Salud — 9</option>
+                      <option value="staff_36" data-name="Soto Pagán, Celimar" data-email="de134766@miescuela.pr" data-assignment="Electiva Salud" data-schedule="11:00-11:50" data-grade="10, 12" data-department="Salud">Soto Pagán, Celimar — Electiva Salud — 10, 12</option>
+                      <option value="staff_01" data-name="Torres Soto, Midelys" data-email="de000001@miescuela.pr" data-assignment="Español" data-schedule="8:30-9:20" data-grade="9" data-department="Español">Torres Soto, Midelys — Español — 9</option>
+                      <option value="staff_52" data-name="Torres, Carmen" data-email="de000003@miescuela.pr" data-assignment="R2 y R3" data-schedule="10:10-11:00" data-grade="R2, R3" data-department="Educación Especial">Torres, Carmen — R2 y R3 — R2, R3</option>
+                      <option value="staff_33" data-name="Virella Ramos, Desiré" data-email="de148839@miescuela.pr" data-assignment="Historia" data-schedule="8:30-9:20" data-grade="10" data-department="Historia / Estudios Sociales">Virella Ramos, Desiré — Historia — 10</option>
+                      <option value="staff_18" data-name="Vázquez Maldonado, Mayra" data-email="de166884@miescuela.pr" data-assignment="Educación Física" data-schedule="7:30-8:30" data-grade="9-12" data-department="Educación Física">Vázquez Maldonado, Mayra — Educación Física — 9-12</option>
+                      <option value="staff_38" data-name="Vázquez Vázquez, Roberto" data-email="de167766@miescuela.pr" data-assignment="Vocacional-Computec" data-schedule="7:30-8:30" data-grade="10, 11, 12" data-department="COMPUTEC / Tecnología">Vázquez Vázquez, Roberto — Vocacional-Computec — 10, 11, 12</option>
+                      <option value="__other_staff">＋ Otro personal escolar / Mi nombre no aparece</option>
+                    </select>
+                    <div class="hint" id="staffHelp">Primero abre la lista y selecciona tu nombre. Si no aparece, escoge la última opción para escribirlo.</div>
+                  </div>
+
+                  <div id="staffManualMode" class="hidden">
+                    <div class="manual-staff-head">
+                      <strong>Otro personal escolar</strong>
+                      <button type="button" class="btn btn-secondary btn-sm" id="backToStaffList">← Volver a la lista</button>
+                    </div>
+                    <div class="form-grid" style="margin-top:10px">
+                      <div class="field">
+                        <label for="otherStaffName">Nombre y apellido *</label>
+                        <input id="otherStaffName" autocomplete="name" placeholder="Escribe tu nombre completo">
+                      </div>
+                      <div class="field">
+                        <label for="otherStaffType">Tipo de personal *</label>
+                        <select id="otherStaffType">
+                          <option value="">Selecciona una opción</option>
+                          <option>Asistente administrativo/a</option>
+                          <option>Secretaría / Oficina</option>
+                          <option>Asistente de Educación Especial</option>
+                          <option>Comedor Escolar</option>
+                          <option>Mantenimiento / Custodia</option>
+                          <option>Seguridad</option>
+                          <option>Administración</option>
+                          <option>Otro personal escolar</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="selectedStaffInfo" class="staff-profile hidden" aria-live="polite">
+                    <div class="staff-profile-title"><span>✓</span><div><strong id="staffInfoName"></strong><small>Datos completados automáticamente</small></div></div>
+                    <div class="staff-profile-grid">
+                      <div><span>Correo</span><strong id="staffInfoEmail">—</strong></div>
+                      <div><span>Asignatura / función</span><strong id="staffInfoAssignment">—</strong></div>
+                      <div><span>Horario capacitación</span><strong id="staffInfoSchedule">—</strong></div>
+                      <div><span>Grado / grupo</span><strong id="staffInfoGrade">—</strong></div>
+                    </div>
+                  </div>
+
+                  <input type="hidden" id="requesterName" name="requester_name">
+                  <input type="hidden" id="requesterEmail" name="requester_email">
+                  <input type="hidden" id="requesterAssignment" name="requester_assignment">
+                  <input type="hidden" id="requesterSchedule" name="requester_training_schedule">
+                  <input type="hidden" id="requesterGrade" name="requester_grade">
+                </div>
+                <div class="field">
+                  <label for="department">Departamento / área *</label>
+                  <select id="department" name="department" required>
+                    <option value="">Selecciona tu área</option>
+                    <option>Administración / Personal escolar</option>
+                    <option>Aplicaciones Tecnológicas</option>
+                    <option>Artes Culinarias</option>
+                    <option>Biblioteca / Centro de Recursos</option>
+                    <option>COMPUTEC / Tecnología</option>
+                    <option>Consejería</option>
+                    <option>Cosmetología</option>
+                    <option>DECA / Coop</option>
+                    <option>Educación Especial</option>
+                    <option>Educación Física</option>
+                    <option>Educación Ocupacional</option>
+                    <option>Elaboración de Productos Agrícolas</option>
+                    <option>Enfermería</option>
+                    <option>Español</option>
+                    <option>Historia / Estudios Sociales</option>
+                    <option>Inglés</option>
+                    <option>Matemáticas</option>
+                    <option>Ciencias</option>
+                    <option>Psicología</option>
+                    <option>Salud</option>
+                    <option>STEM</option>
+                    <option>Trabajo Social</option>
+                    <option>Comedor Escolar</option>
+                    <option>Mantenimiento / Custodia</option>
+                    <option>Seguridad</option>
+                    <option value="__other">Otro</option>
+                  </select>
+                  <div class="hint" id="departmentHint">Al seleccionar tu nombre, el área se completa automáticamente.</div>
+                </div>
+                <div class="field hidden" id="departmentOtherField">
+                  <label for="departmentOther">Escribe el departamento *</label>
+                  <input id="departmentOther" placeholder="Nombre del departamento">
+                </div>
+                <div class="field">
+                  <label for="room">Ubicación *</label>
+                  <select id="room" name="room" required>
+                    <option value="">Selecciona dónde estás</option>
+                    <option>Salón de clases</option>
+                    <option>Oficina administrativa</option>
+                    <option>Biblioteca / Centro de Recursos</option>
+                    <option>Laboratorio de COMPUTEC</option>
+                    <option>Taller ocupacional</option>
+                    <option>Laboratorio de Ciencias</option>
+                    <option>Salón de Educación Especial</option>
+                    <option>Comedor Escolar</option>
+                    <option>Gimnasio / Educación Física</option>
+                    <option value="__other">Otra ubicación</option>
+                  </select>
+                </div>
+                <div class="field hidden" id="roomOtherField">
+                  <label for="roomOther">Salón / ubicación *</label>
+                  <input id="roomOther" placeholder="Ej. Salón 203, oficina principal">
+                </div>
+                <div class="field" id="roomDetailField">
+                  <label for="roomDetail">Núm. de salón / detalle <span class="hint">(opcional)</span></label>
+                  <input id="roomDetail" placeholder="Ej. 203, oficina de enfermería">
+                </div>
+              </div>
+            </div>
+
+            <div class="quick-section">
+              <div class="quick-section-title"><b>2</b><strong>¿Qué está fallando?</strong></div>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="category">Tipo de problema *</label>
+                  <select id="category" name="category" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Computadora / Laptop">Computadora o laptop</option>
+                    <option value="Internet / Red">Internet o Wi‑Fi</option>
+                    <option value="Impresora / Escáner">Impresora o escáner</option>
+                    <option value="Proyector / Pantalla">Proyector, pantalla o Mimio</option>
+                    <option value="Cuenta / Software">Cuenta, contraseña o programa</option>
+                    <option value="Periférico / Cable">Teclado, mouse, cable, USB o accesorio</option>
+                    <option value="Impresión 3D / Plotter">Impresora 3D, plotter o laminadora</option>
+                    <option value="Otro">Otro problema técnico</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="issue">¿Qué ocurre? *</label>
+                  <select id="issue" required disabled>
+                    <option value="">Primero selecciona el tipo</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="impact">¿A quién afecta? *</label>
+                  <select id="impact" name="impact" required>
+                    <option value="single_user">Solo a mí / un equipo</option>
+                    <option value="classroom">Afecta una clase o salón</option>
+                    <option value="department">Afecta varias personas / departamento</option>
+                    <option value="school_wide">Afecta gran parte de la escuela</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="priority">Urgencia *</label>
+                  <select id="priority" name="priority" required>
+                    <option value="medium">Normal · necesito atención pronto</option>
+                    <option value="low">Baja · puede esperar</option>
+                    <option value="high">Alta · dificulta mi trabajo o clase</option>
+                    <option value="critical">Crítica · clase o servicio detenido</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="details">Detalle adicional <span class="hint">(opcional; solo si hace falta)</span></label>
+                  <textarea id="details" placeholder="Ej. aparece el mensaje 'No Signal', comenzó esta mañana…"></textarea>
+                </div>
+              </div>
+
+              <details class="optional-details">
+                <summary>Datos del equipo — opcional</summary>
+                <div class="optional-details-body">
+                  <div class="form-grid">
+                    <div class="field">
+                      <label for="equipmentType">Equipo</label>
+                      <select id="equipmentType" name="equipment_type">
+                        <option value="">No sé / no aplica</option>
+                        <option>Desktop PC</option><option>Laptop</option><option>Impresora</option><option>Escáner</option>
+                        <option>Proyector</option><option>Pantalla / Mimio</option><option>Router / Access Point</option><option>Tablet</option>
+                        <option>Impresora 3D</option><option>Plotter</option><option>Otro</option>
+                      </select>
+                    </div>
+                    <div class="field"><label for="brandModel">Marca / modelo</label><input id="brandModel" name="brand_model" placeholder="Ej. Lenovo E16"></div>
+                    <div class="field"><label for="assetTag">Número de inventario</label><input id="assetTag" name="asset_tag" placeholder="Si está visible"></div>
+                    <div class="field"><label for="serialNumber">Número de serie</label><input id="serialNumber" name="serial_number" placeholder="Opcional"></div>
+                    <div class="field full">
+                      <label>Evidencia fotográfica</label>
+                      <input id="evidence" type="file" accept="image/*" capture="environment" multiple hidden>
+                      <div id="dropzone" class="dropzone"><strong>📷 Toca aquí para añadir una foto</strong><div class="hint" style="margin-top:5px">Opcional · hasta 5 imágenes · 8 MB por archivo</div></div>
+                      <div id="fileList" class="file-list"></div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div id="submitNotice" class="notice error hidden" style="margin:0 24px"></div>
+            <div class="quick-submit">
+              <button class="btn btn-primary" id="submitTicket" type="submit">Enviar boleta de servicio</button>
+            </div>
+          </form>
+
+          <div id="successBox" class="notice success hidden" style="margin:0 24px 22px">
+            <strong>✅ Boleta creada: <span id="successTicketNo"></span></strong>
+            <p style="margin:6px 0;color:#58705f">Guarda este código para consultar el estado de la boleta.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap"><input id="successTracking" aria-label="Código de boleta" readonly style="flex:1;min-width:220px;background:#fff;border:1px solid #cfe1d5;padding:10px;border-radius:10px"><button id="copyTracking" class="btn btn-secondary btn-sm" type="button">Copiar código</button></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="tracking-area" id="seguimiento">
+        <div class="section-head"><div><span class="eyebrow">Seguimiento</span><h2 style="margin-top:10px">Consulta una boleta</h2><p>Escribe o pega el código de la boleta.</p></div></div>
+        <div class="card tracking-box"><input id="trackInput" placeholder="Ej. PCB-2026-00024"><button class="btn btn-primary" id="trackBtn">Buscar</button></div>
+        <div id="trackResult"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="shell">PCB TechDesk 2.2.3 · Escuela Superior Ocupacional Pablo Colón Berdecia · COMPUTEC</div></footer>
+  <script defer src="assets/staff-ui.js"></script>
+  <script type="module" src="assets/public.js"></script>
+  <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});</script>
+</body>
+</html>

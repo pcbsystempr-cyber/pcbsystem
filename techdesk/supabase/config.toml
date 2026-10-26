@@ -1,0 +1,5 @@
+[functions.new-ticket-email]
+verify_jwt = false
+
+[functions.create-technician]
+verify_jwt = true
