@@ -13,6 +13,10 @@
   <link rel="stylesheet" href="image-popup.css">
   <!-- <link rel="stylesheet" href="notification-bot.css"> -->
   <script src="translations.js"></script>
+  <script>
+    // El scroll lo controla js/pcb-experiencia.js (hero al entrar, punto del clic al regresar)
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  </script>
   <style>
     /* Fix inline para hero cards en dark mode - fuerza los estilos */
     body.dark-mode .hero-card {
@@ -564,27 +568,260 @@
     .welcome-popup-skip:hover { color: var(--primary); }
     body.dark-mode .welcome-popup-skip:hover { color: #c7d2fe; }
 
+    /* Los perfiles ahora son botones: no navegan ni hacen scroll */
+    button.welcome-role {
+      font: inherit;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    /* ════════════════════════════════════════════════
+       POPUP IDIOMA + TEMA (misma estética que el de perfil)
+       ════════════════════════════════════════════════ */
+    .setup-card { width: min(560px, 100%); }
+    .setup-group {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.4rem;
+    }
+    .setup-label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: .6rem;
+    }
+    .setup-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: .75rem;
+    }
+    .setup-option {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      padding: .95rem 1rem;
+      border-radius: 14px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      background: rgba(255,255,255,0.7);
+      border: 1.5px solid rgba(99,102,241,0.18);
+      color: var(--text-main);
+      transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .setup-option:hover { transform: translateY(-2px); border-color: rgba(99,102,241,0.45); }
+    .setup-option[aria-pressed="true"] {
+      border-color: #6366f1;
+      background: rgba(99,102,241,0.12);
+      box-shadow: 0 10px 24px -12px rgba(99,102,241,0.6);
+    }
+    .setup-option-emoji { font-size: 1.35rem; line-height: 1; }
+    body.dark-mode .setup-option {
+      background: rgba(15, 23, 42, 0.55);
+      border-color: rgba(129,140,248,0.25);
+      color: #e2e8f0;
+    }
+    body.dark-mode .setup-option[aria-pressed="true"] {
+      border-color: #818cf8;
+      background: rgba(129,140,248,0.18);
+    }
+    body.dark-mode .setup-label { color: #94a3b8; }
+    .setup-continue {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      margin-top: .4rem;
+      padding: 1rem;
+      border: none;
+      border-radius: 14px;
+      font: inherit;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #fff;
+      cursor: pointer;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      box-shadow: 0 14px 30px -12px rgba(99,102,241,0.7);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .setup-continue:hover { transform: translateY(-2px); box-shadow: 0 18px 36px -12px rgba(99,102,241,0.8); }
+
+    /* ════════════════════════════════════════════════
+       HERO — accesos personalizados por perfil
+       ════════════════════════════════════════════════ */
+    .hero-perfil {
+      margin-top: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem;
+      opacity: 0;
+      transform: translateY(14px);
+      animation: heroFadeUp .9s 1.3s cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    .hero-perfil[hidden] { display: none; }
+    .hero-perfil-chip {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .5rem;
+      padding: .45rem .6rem .45rem 1rem;
+      border-radius: 999px;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      backdrop-filter: blur(8px);
+    }
+    .hero-perfil-cambiar {
+      font: inherit;
+      font-size: .82rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      padding: .3rem .8rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: background .2s ease;
+    }
+    .hero-perfil-cambiar:hover { background: rgba(255,255,255,0.28); }
+    .hero-perfil-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .5rem;
+    }
+    .hero-perfil-link {
+      padding: .45rem 1rem;
+      border-radius: 10px;
+      font-size: .9rem;
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      background: rgba(15, 23, 42, 0.35);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: background .2s ease, transform .2s ease;
+    }
+    .hero-perfil-link:hover { background: rgba(99,102,241,0.55); transform: translateY(-2px); }
+
+    /* Resalta el elemento donde el usuario había hecho clic al regresar */
+    .pcb-retorno {
+      outline: 3px solid #6366f1 !important;
+      outline-offset: 4px;
+      animation: pcbRetorno 2.2s ease-out forwards;
+    }
+    @keyframes pcbRetorno {
+      0%, 60% { outline-color: #6366f1; }
+      100% { outline-color: transparent; }
+    }
+
+    /* ════════════════════════════════════════════════
+       LISTA DE FECHAS DEL CALENDARIO (sección + popup)
+       ════════════════════════════════════════════════ */
+    .cal-lista {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
+    .cal-item {
+      display: flex;
+      gap: .8rem;
+      align-items: flex-start;
+      padding: .75rem .9rem;
+      border-radius: 12px;
+      background: rgba(99,102,241,0.06);
+      border: 1px solid rgba(99,102,241,0.14);
+      border-left: 4px solid #6366f1;
+      text-align: left;
+    }
+    .cal-festivo, .cal-receso { border-left-color: #ef4444; }
+    .cal-assessment, .cal-evaluacion { border-left-color: #f59e0b; }
+    .cal-clases, .cal-familia { border-left-color: #22c55e; }
+    .cal-simulacro, .cal-fecha-limite { border-left-color: #0ea5e9; }
+    .cal-icono { font-size: 1.3rem; line-height: 1.2; }
+    .cal-cuerpo { display: flex; flex-direction: column; gap: .2rem; min-width: 0; }
+    .cal-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+    .cal-fecha { color: var(--primary); font-size: .92rem; }
+    .cal-chip {
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .12rem .5rem;
+      border-radius: 999px;
+      color: #4338ca;
+      background: rgba(99,102,241,0.14);
+    }
+    .cal-en-curso .cal-chip { color: #15803d; background: rgba(34,197,94,0.16); }
+    .cal-tipo { font-size: .75rem; color: var(--text-soft); }
+    .cal-texto { font-size: .92rem; line-height: 1.4; color: var(--text-main); overflow-wrap: anywhere; }
+    .cal-item-vacio { border-left-color: var(--border-soft); color: var(--text-soft); }
+    body.dark-mode .cal-item { background: rgba(129,140,248,0.08); border-color: rgba(129,140,248,0.2); }
+    body.dark-mode .cal-fecha { color: #93c5fd; }
+    body.dark-mode .cal-chip { color: #c7d2fe; background: rgba(129,140,248,0.2); }
+    body.dark-mode .cal-en-curso .cal-chip { color: #86efac; background: rgba(34,197,94,0.18); }
+    body.dark-mode .cal-texto { color: #e5e7eb; }
+
+    .calendar-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .calendar-layout { grid-template-columns: 1fr; }
+    }
+    .calendar-proximas h3 { margin: 0 0 .9rem; font-size: 1.15rem; }
+    .calendar-fuente { margin: .8rem 0 0; font-size: .8rem; color: var(--text-soft); }
+
     @media (prefers-reduced-motion: reduce) {
       .welcome-popup, .welcome-popup-card, .welcome-role { transition: none !important; }
       .welcome-popup-card { transform: none !important; }
+      .hero-perfil { animation: none; opacity: 1; transform: none; }
+      .pcb-retorno { animation: none; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Popup de selección de tema -->
-  <div id="themePopup" class="theme-popup">
-    <div class="theme-popup-content">
-      <h2 data-translate="🎨 Selecciona tu tema preferido">🎨 Selecciona tu tema preferido</h2>
-      <p data-translate="Elige cómo quieres ver el sitio web">Elige cómo quieres ver el sitio web</p>
-      <div class="theme-buttons">
-        <button type="button" class="theme-btn theme-btn-light" id="btnLightMode" onclick="document.body.classList.remove('dark-mode'); localStorage.setItem('theme', 'light'); document.getElementById('themePopup').classList.add('hidden');">
-          ☀️ Modo Claro
-        </button>
-        <button type="button" class="theme-btn theme-btn-dark" id="btnDarkMode" onclick="document.body.classList.add('dark-mode'); localStorage.setItem('theme', 'dark'); document.getElementById('themePopup').classList.add('hidden');">
-          🌙 Modo Oscuro
-        </button>
+  <!-- Popup inicial: idioma + tema (textos los pinta js/pcb-experiencia.js) -->
+  <div id="langThemePopup" class="welcome-popup" role="dialog" aria-modal="true" aria-labelledby="langThemeTitle" aria-hidden="true">
+    <div class="welcome-popup-card setup-card">
+      <div class="welcome-popup-header">
+        <span class="welcome-popup-eyebrow" data-translate="" data-setup-texto="setupEyebrow">👋 Bienvenido/a</span>
+        <h2 id="langThemeTitle" class="welcome-popup-title" data-translate="" data-setup-texto="setupTitulo">Personaliza tu visita</h2>
+        <p class="welcome-popup-sub" data-translate="" data-setup-texto="setupSub">Elige el idioma y el tema con el que quieres ver el sitio.</p>
       </div>
+      <div class="setup-group" role="group" aria-labelledby="setupIdiomaLabel">
+        <span id="setupIdiomaLabel" class="setup-label" data-translate="" data-setup-texto="idioma">Idioma</span>
+        <div class="setup-options">
+          <button type="button" class="setup-option" data-setup-idioma="es" aria-pressed="true">
+            <span class="setup-option-emoji" aria-hidden="true">🇵🇷</span><span data-translate="">Español</span>
+          </button>
+          <button type="button" class="setup-option" data-setup-idioma="en" aria-pressed="false">
+            <span class="setup-option-emoji" aria-hidden="true">🇺🇸</span><span data-translate="">English</span>
+          </button>
+        </div>
+      </div>
+      <div class="setup-group" role="group" aria-labelledby="setupTemaLabel">
+        <span id="setupTemaLabel" class="setup-label" data-translate="" data-setup-texto="tema">Tema</span>
+        <div class="setup-options">
+          <button type="button" class="setup-option" data-setup-tema="light" aria-pressed="true">
+            <span class="setup-option-emoji" aria-hidden="true">☀️</span><span data-translate="" data-setup-texto="claro">Claro</span>
+          </button>
+          <button type="button" class="setup-option" data-setup-tema="dark" aria-pressed="false">
+            <span class="setup-option-emoji" aria-hidden="true">🌙</span><span data-translate="" data-setup-texto="oscuro">Oscuro</span>
+          </button>
+        </div>
+      </div>
+      <button type="button" class="setup-continue" id="langThemeContinuar" data-translate="" data-setup-texto="continuar">Continuar →</button>
     </div>
   </div>
 
@@ -595,39 +832,39 @@
       <div class="welcome-popup-header">
         <span class="welcome-popup-eyebrow" data-translate="👋 Bienvenido/a">👋 Bienvenido/a</span>
         <h2 id="welcomePopupTitle" class="welcome-popup-title" data-translate="¿Cómo deseas entrar hoy?">¿Cómo deseas entrar hoy?</h2>
-        <p class="welcome-popup-sub" data-translate="Elige tu perfil para llevarte directo a lo que necesitas.">Elige tu perfil para llevarte directo a lo que necesitas.</p>
+        <p class="welcome-popup-sub" data-translate="Elige tu perfil para personalizar tu experiencia.">Elige tu perfil para personalizar tu experiencia.</p>
       </div>
       <div class="welcome-roles-grid">
-        <a href="#servicios" class="welcome-role" data-welcome-role="estudiante">
+        <button type="button" class="welcome-role" data-welcome-role="estudiante">
           <span class="welcome-role-emoji" aria-hidden="true">🎓</span>
           <span class="welcome-role-name" data-translate="Estudiante">Estudiante</span>
           <span class="welcome-role-desc" data-translate="Servicios, biblioteca y recursos">Servicios, biblioteca y recursos</span>
-        </a>
-        <a href="#portal-padres" class="welcome-role" data-welcome-role="padre">
+        </button>
+        <button type="button" class="welcome-role" data-welcome-role="padre">
           <span class="welcome-role-emoji" aria-hidden="true">👨‍👩‍👧</span>
           <span class="welcome-role-name" data-translate="Padre/Madre">Padre/Madre</span>
           <span class="welcome-role-desc" data-translate="Portal de padres y formularios">Portal de padres y formularios</span>
-        </a>
-        <a href="#servicios-maestro" class="welcome-role" data-welcome-role="maestro">
+        </button>
+        <button type="button" class="welcome-role" data-welcome-role="maestro">
           <span class="welcome-role-emoji" aria-hidden="true">👩‍🏫</span>
           <span class="welcome-role-name" data-translate="Maestro">Maestro</span>
           <span class="welcome-role-desc" data-translate="Herramientas y certificaciones">Herramientas y certificaciones</span>
-        </a>
-        <a href="admin.html" class="welcome-role" data-welcome-role="administracion">
+        </button>
+        <button type="button" class="welcome-role" data-welcome-role="administracion">
           <span class="welcome-role-emoji" aria-hidden="true">🛠️</span>
           <span class="welcome-role-name" data-translate="Administración">Administración</span>
           <span class="welcome-role-desc" data-translate="Panel administrativo">Panel administrativo</span>
-        </a>
-        <a href="#publicar-anuncio" class="welcome-role" data-welcome-role="comunidad">
+        </button>
+        <button type="button" class="welcome-role" data-welcome-role="comunidad">
           <span class="welcome-role-emoji" aria-hidden="true">🤝</span>
           <span class="welcome-role-name" data-translate="Comunidad">Comunidad</span>
           <span class="welcome-role-desc" data-translate="Publica anuncios y eventos">Publica anuncios y eventos</span>
-        </a>
-        <a href="#escuela" class="welcome-role" data-welcome-role="visitante">
+        </button>
+        <button type="button" class="welcome-role" data-welcome-role="visitante">
           <span class="welcome-role-emoji" aria-hidden="true">🏫</span>
           <span class="welcome-role-name" data-translate="Visitante">Visitante</span>
           <span class="welcome-role-desc" data-translate="Conoce la escuela">Conoce la escuela</span>
-        </a>
+        </button>
       </div>
       <div class="welcome-popup-footer">
         <button type="button" class="welcome-popup-skip" id="welcomePopupSkip" data-translate="Explorar por mi cuenta">Explorar por mi cuenta</button>
@@ -637,47 +874,24 @@
 
   <script>
     // Script inline para modo claro/oscuro y hamburger menu
+    // (el popup inicial de idioma + tema lo maneja js/pcb-experiencia.js)
     (function () {
-      function hidePopup() {
-        const popup = document.getElementById('themePopup');
-        if (popup) popup.classList.add('hidden');
-      }
-
       function setLightMode() {
         document.body.classList.remove('dark-mode');
         localStorage.setItem('theme', 'light');
-        hidePopup();
       }
 
       function setDarkMode() {
         document.body.classList.add('dark-mode');
         localStorage.setItem('theme', 'dark');
-        hidePopup();
       }
 
-      function checkTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-          document.body.classList.add('dark-mode');
-          hidePopup();
-        } else if (savedTheme === 'light') {
-          hidePopup();
-        }
+      // Aplicar el tema guardado inmediatamente (evita parpadeo)
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
       }
-
-      // Ejecutar inmediatamente
-      checkTheme();
-
-      // Agregar event listeners INMEDIATAMENTE (no esperar DOMContentLoaded)
-      const btnLight = document.getElementById('btnLightMode');
-      const btnDark = document.getElementById('btnDarkMode');
-
-      if (btnLight) {
-        btnLight.onclick = setLightMode;
-      }
-      if (btnDark) {
-        btnDark.onclick = setDarkMode;
-      }
+      const savedLangAttr = localStorage.getItem('language');
+      if (savedLangAttr) document.getElementById('htmlRoot').setAttribute('lang', savedLangAttr);
 
       // Animación de intro deshabilitada — index.html carga directamente
       // if (!sessionStorage.getItem("pcb_intro_seen")) {
@@ -973,6 +1187,13 @@
         </button>
       </div>
 
+      <!-- Cambiar Perfil (lo abre js/pcb-experiencia.js) -->
+      <div class="sidebar-item" data-abrir-perfiles style="cursor:pointer;">
+        <span class="sidebar-icon">👤</span>
+        <span class="sidebar-text" data-translate="Cambiar perfil">Cambiar perfil</span>
+        <span class="sidebar-arrow">›</span>
+      </div>
+
       <!-- Separador -->
       <div style="border-top: 1px solid rgba(255,255,255,0.1); margin: 1rem 0;"></div>
 
@@ -1056,6 +1277,8 @@
             vocacionales</a>
           <a href="#escuela" class="btn btn-secondary" data-translate="🏫 Conocer la escuela">🏫 Conocer la escuela</a>
         </div>
+        <!-- Accesos según el perfil elegido (js/pcb-experiencia.js) -->
+        <div id="heroPerfil" class="hero-perfil" hidden></div>
       </div>
     </div>
   </section>
@@ -1075,7 +1298,7 @@
         <div class="slideshow-wrapper">
           <!-- Slides -->
           <div class="slide fade active">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/casaabierta2026/" target="_self" rel="noopener">
               <img src="galeriaslideshow/pcbsystemlogo1.png" alt="Elaboración de Productos Agricolas">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1088,7 +1311,7 @@
             </a>
           </div>
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/casaabierta2026/" target="_self" rel="noopener">
               <img src="galeriaslideshow/EPABanner2026-1920-1080.png" alt="Elaboración de Productos Agricolas">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1101,7 +1324,7 @@
           </div>
 
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/casaabierta2026/" target="_self" rel="noopener">
               <img src="galeriaslideshow/ArtesCulinariasBanner2026-1920-1080.png" alt="Artes Culinarias">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1113,7 +1336,7 @@
           </div>
 
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/casaabierta2026/" target="_self" rel="noopener">
               <img src="galeriaslideshow/ComputecBanner2016-1920-1086.png" alt="Computec">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1125,7 +1348,7 @@
           </div>
 
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/casaabierta2026/" target="_self" rel="noopener">
               <img src="galeriaslideshow/CosmetologiaBanner2026.png" alt="Cosmetología">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1138,7 +1361,7 @@
           </div>
 
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/casaabierta2026/" target="_self" rel="noopener">
               <img src="galeriaslideshow/EnfermeriaBanner2026-1920-1080.png" alt="Enfermería">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1149,7 +1372,7 @@
             </a>
           </div>
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/casaabierta2026/" target="_self" rel="noopener">
               <img src="galeriaslideshow/DECABanner2026-1920-1080.png" alt="Representante de Ventas y Servicios Empresariales">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1161,7 +1384,7 @@
             </a>
           </div>
           <div class="slide fade">
-            <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" rel="noopener">
+            <a href="https://pcbsystempr-cyber.github.io/casaabierta2026/" target="_self" rel="noopener">
               <img src="galeriaslideshow/SeguridadPublicaBanner2026-1920-1080.png" alt="Seguridad Publica">
               <div class="slide-overlay">
                 <div class="slide-text">
@@ -1192,7 +1415,7 @@
 
         <!-- CTA Button -->
         <div class="programs-cta" style="margin-top: 2rem;">
-          <a href="https://pcbsystempr-cyber.github.io/Casa_Abierta_Official/" target="_self" class="btn btn-primary" target="_blank" rel="noopener"
+          <a href="https://pcbsystempr-cyber.github.io/casaabierta2026/" target="_self" class="btn btn-primary" target="_blank" rel="noopener"
             data-translate="Ver todos los programas y Casa Abierta">
             Ver todos los programas y Casa Abierta
           </a>
@@ -1200,6 +1423,76 @@
       </div>
     </div>
   </section>
+
+  <!-- PCB VISION — Pantalla Escolar Inteligente -->
+  <section id="pcb-vision" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 data-translate="📺 PCB Vision">📺 PCB Vision</h2>
+        <p data-translate="La pantalla escolar inteligente de la PCB: anuncios, eventos y cumpleaños de nuestra comunidad en tiempo real.">
+          La pantalla escolar inteligente de la PCB: anuncios, eventos y cumpleaños de nuestra comunidad en tiempo real.
+        </p>
+      </div>
+
+      <div class="pcb-vision-card">
+        <div class="pcb-vision-features">
+          <div class="pcb-vision-feature">
+            <span class="pcb-vision-icon" aria-hidden="true">📢</span>
+            <h3 data-translate="Anuncios y banners">Anuncios y banners</h3>
+            <p data-translate="Avisos importantes de la escuela que rotan en pantalla y se actualizan al instante.">Avisos importantes de la escuela que rotan en pantalla y se actualizan al instante.</p>
+          </div>
+          <div class="pcb-vision-feature">
+            <span class="pcb-vision-icon" aria-hidden="true">📅</span>
+            <h3 data-translate="Próximos eventos">Próximos eventos</h3>
+            <p data-translate="El calendario escolar ordenado automáticamente para que nadie se pierda una fecha.">El calendario escolar ordenado automáticamente para que nadie se pierda una fecha.</p>
+          </div>
+          <div class="pcb-vision-feature">
+            <span class="pcb-vision-icon" aria-hidden="true">🎂</span>
+            <h3 data-translate="Cumpleaños y comunidad">Cumpleaños y comunidad</h3>
+            <p data-translate="Celebramos a nuestra comunidad. Envía tu evento o cumpleaños escaneando el código QR.">Celebramos a nuestra comunidad. Envía tu evento o cumpleaños escaneando el código QR.</p>
+          </div>
+        </div>
+        <div class="pcb-vision-cta">
+          <a href="https://pcbsystempr-cyber.github.io/pcb_vision/" target="_blank" rel="noopener" class="btn btn-primary"
+            data-translate="📺 Ver PCB Vision">📺 Ver PCB Vision</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .pcb-vision-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border-soft);
+      border-radius: 22px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px -15px rgba(99, 102, 241, 0.35);
+    }
+    .pcb-vision-features {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+    @media (max-width: 820px) {
+      .pcb-vision-features { grid-template-columns: 1fr; }
+      .pcb-vision-card { padding: 1.25rem; }
+    }
+    .pcb-vision-feature {
+      padding: 1.25rem;
+      border-radius: 16px;
+      background: rgba(99, 102, 241, 0.06);
+      border: 1px solid rgba(99, 102, 241, 0.14);
+      text-align: center;
+    }
+    .pcb-vision-icon { display: block; font-size: 2rem; line-height: 1; margin-bottom: .6rem; }
+    .pcb-vision-feature h3 { margin: 0 0 .4rem; font-size: 1.1rem; color: var(--primary); }
+    .pcb-vision-feature p { margin: 0; font-size: .95rem; line-height: 1.5; color: var(--text-soft); }
+    .pcb-vision-cta { text-align: center; margin-top: 1.75rem; }
+    body.dark-mode .pcb-vision-card { background: rgba(17, 24, 39, 0.9); border-color: rgba(129, 140, 248, 0.25); }
+    body.dark-mode .pcb-vision-feature { background: rgba(129, 140, 248, 0.08); border-color: rgba(129, 140, 248, 0.2); }
+    body.dark-mode .pcb-vision-feature h3 { color: #93c5fd; }
+    body.dark-mode .pcb-vision-feature p { color: #cbd5e1; }
+  </style>
 
   <!-- CLASE GRADUANDA 2026 -->
   <section id="clas-graduanda" class="section">
@@ -1833,24 +2126,31 @@
   <!-- CALENDARIO ESCOLAR -->
   <section id="calendario-escolar" class="section section-alt">
     <div class="container">
+      <!-- Títulos, fechas y PDF se pintan desde data/calendario-academico.js (js/calendario-academico.js) -->
       <div class="section-header">
-        <h2 data-translate="Calendario escolar 2025–2026">Calendario escolar 2025–2026</h2>
-        <p
-          data-translate="Calendario oficial del Departamento de Educación de Puerto Rico para el año escolar 2025–2026.">
-          Calendario oficial del Departamento de Educación de Puerto Rico para el año escolar 2025–2026.
+        <h2 id="calendarioTitulo" data-translate="">Calendario escolar 2026–2027</h2>
+        <p id="calendarioDesc" data-translate="">
+          Calendario académico oficial del Departamento de Educación de Puerto Rico para el año escolar 2026–2027.
         </p>
       </div>
 
       <div class="calendar-wrapper">
-        <iframe src="https://de.pr.gov/wp-content/uploads/2026/06/Legal-2026-27.pdf" target="_blank"
-          title="Calendario Escolar 2025-2026"></iframe>
-
-        <div class="calendar-actions">
-          <a class="btn btn-primary"
-            href="https://de.pr.gov/wp-content/uploads/2026/06/Legal-2026-27.pdf" target="_blank"
-            rel="noopener" data-translate="Descargar calendario en PDF">
-            Descargar calendario en PDF
-          </a>
+        <div class="calendar-layout">
+          <div class="calendar-proximas">
+            <h3 id="calendarioProximasTitulo" data-translate="">📅 Próximas fechas</h3>
+            <ul id="calendarioProximas" class="cal-lista"></ul>
+            <p id="calendarioFuente" class="calendar-fuente" data-translate=""></p>
+          </div>
+          <div>
+            <iframe id="calendarioPdf" src="Avisos/CalendarioAcademino-26-27.pdf" loading="lazy"
+              title="Calendario Académico 2026-2027"></iframe>
+            <div class="calendar-actions">
+              <a id="calendarioDescarga" class="btn btn-primary" href="Avisos/CalendarioAcademino-26-27.pdf"
+                target="_blank" rel="noopener" data-translate="Descargar calendario en PDF">
+                Descargar calendario en PDF
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2319,11 +2619,13 @@
     <button class="promo-close-btn" onclick="event.stopPropagation(); closePromo()" title="Cerrar">
       ✕
     </button>
+    <!-- Contenido: próximas fechas del calendario + última novedad (js/pcb-experiencia.js) -->
     <div class="promo-header">
-      <span class="promo-title" data-translate="📢 ¡Novedades!">📢 ¡Novedades!</span>
+      <span class="promo-title" data-translate="">📢 Novedades PCB Vision</span>
     </div>
     <div class="promo-content">
-      <p class="promo-preview" data-translate="¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.">¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.</p>
+      <p class="promo-aviso" data-translate="" hidden style="font-weight: 600; margin-bottom: 6px;"></p>
+      <p class="promo-preview" data-translate=""></p>
       <p class="promo-click-hint" style="font-size: 0.85rem; color: #38BDF8; margin-top: 10px; text-align: center;">
         <i class="fas fa-expand"></i> <span data-translate="Haz clic para ver más">Haz clic para ver más</span>
       </p>
@@ -2337,15 +2639,20 @@
         <i class="fas fa-times"></i>
       </button>
       <div class="promo-expanded-header">
-        <h2 class="promo-expanded-title" data-translate="📢 ¡Novedades!">📢 ¡Novedades!</h2>
+        <h2 class="promo-expanded-title" data-translate="">📢 Novedades PCB Vision</h2>
       </div>
       <div class="promo-expanded-body">
-        <p class="promo-expanded-message" data-translate="¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.">¡Ya comenzó la matrícula para el nuevo curso escolar! No te quedes sin tu espacio.</p>
-        <img
-          src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-          alt="Estudiantes" class="promo-expanded-img">
+        <div id="novedadAviso" hidden>
+          <h3 class="promo-aviso-titulo" data-translate="" style="margin: 0 0 8px;"></h3>
+          <p class="promo-expanded-message" data-translate=""></p>
+          <img alt="" class="promo-expanded-img" hidden>
+        </div>
+        <h3 id="novedadesCalendarioTitulo" data-translate="" style="margin: 10px 0 12px; font-size: 1.1rem;">📅 Próximas fechas del calendario escolar</h3>
+        <ul id="novedadesCalendario" class="cal-lista"></ul>
         <div class="promo-expanded-actions">
-          <a href="promociones.html" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 20px;">
+          <a href="#calendario-escolar" id="novedadesVerCalendario" class="btn btn-secondary" data-translate=""
+            style="width: 100%; text-align: center; margin-top: 20px;">📅 Ver calendario completo</a>
+          <a href="promociones.html" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 12px;">
             <i class="fas fa-gift"></i> <span data-translate="Ver Promociones">Ver Promociones</span>
           </a>
         </div>
@@ -2787,16 +3094,10 @@
     };
 
     // Expand Promo Popup
+    // (el contenido de ambos popups lo pinta js/pcb-experiencia.js)
     window.expandPromo = function () {
       const expandedPopup = document.getElementById('promoPopupExpanded');
       const smallPopup = document.getElementById('promoPopup');
-
-      // Copy content from small popup to expanded
-      const title = smallPopup.querySelector('.promo-title').textContent;
-      const message = smallPopup.querySelector('.promo-preview').textContent;
-
-      expandedPopup.querySelector('.promo-expanded-title').textContent = title;
-      expandedPopup.querySelector('.promo-expanded-message').textContent = message;
 
       // Show expanded popup
       expandedPopup.classList.add('active');
@@ -2926,92 +3227,12 @@
       }
       btn.disabled = false; btn.textContent = '📤 Enviar Anuncio';
     });
-
-    // Show promo after 3 seconds — combina novedades admin + anuncios comunidad
-    setTimeout(async () => {
-      const popup         = document.getElementById('promoPopup');
-      const expandedPopup = document.getElementById('promoPopupExpanded');
-
-      try {
-        // Obtener la fuente más reciente activa (novedad admin ó anuncio comunidad)
-        const [novedad, anuncios] = await Promise.all([
-          window.novedadesDB  ? window.novedadesDB.getLatest()   : Promise.resolve(null),
-          window.anunciosDB   ? window.anunciosDB.getActive()     : Promise.resolve([])
-        ]);
-
-        // Elegir el más reciente entre ambas fuentes
-        const latestAnuncio = anuncios && anuncios.length ? anuncios[0] : null;
-        let item = null;
-        if (novedad && latestAnuncio) {
-          item = new Date(novedad.created_at) >= new Date(latestAnuncio.created_at) ? novedad : latestAnuncio;
-        } else {
-          item = novedad || latestAnuncio;
-        }
-
-        if (item) {
-          const title   = item.title   || item.titulo;
-          const message = item.message || item.mensaje;
-          const imgUrl  = item.image_url || item.imagen_url;
-
-          popup.querySelector('.promo-title').textContent   = title;
-          popup.querySelector('.promo-preview').textContent = message;
-          expandedPopup.querySelector('.promo-expanded-title').textContent   = title;
-          expandedPopup.querySelector('.promo-expanded-message').textContent = message;
-
-          const expandedImg = expandedPopup.querySelector('.promo-expanded-img');
-          if (imgUrl) { expandedImg.src = imgUrl; expandedImg.style.display = 'block'; }
-          else { expandedImg.style.display = 'none'; }
-        }
-      } catch (e) {
-        console.warn('No se pudo cargar novedad:', e);
-      }
-
-      popup.classList.add('active');
-    }, 3000);
   </script>
 
-  <!-- ════════════════════════════════════════════════
-       WELCOME ROLE POPUP — trigger + cierre
-       ════════════════════════════════════════════════ -->
-  <script>
-    (function () {
-      const popup = document.getElementById('welcomePopup');
-      if (!popup) return;
-
-      const STORAGE_KEY = 'welcomePopupShown';
-      const DELAY_MS    = 3500;
-
-      function open() {
-        const themePopup = document.getElementById('themePopup');
-        if (themePopup && !themePopup.classList.contains('hidden')) return;
-        if (sessionStorage.getItem(STORAGE_KEY) === '1') return;
-        popup.classList.add('is-open');
-        popup.setAttribute('aria-hidden', 'false');
-        sessionStorage.setItem(STORAGE_KEY, '1');
-        document.body.style.overflow = 'hidden';
-      }
-
-      function close() {
-        popup.classList.remove('is-open');
-        popup.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      }
-
-      document.getElementById('welcomePopupClose').addEventListener('click', close);
-      document.getElementById('welcomePopupSkip').addEventListener('click', close);
-      popup.addEventListener('click', function (e) {
-        if (e.target === popup) close();
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && popup.classList.contains('is-open')) close();
-      });
-      popup.querySelectorAll('.welcome-role').forEach(function (link) {
-        link.addEventListener('click', close);
-      });
-
-      setTimeout(open, DELAY_MS);
-    })();
-  </script>
+  <!-- Calendario académico (generado desde el PDF) + flujo de bienvenida y novedades PCB Vision -->
+  <script src="data/calendario-academico.js"></script>
+  <script src="js/calendario-academico.js"></script>
+  <script src="js/pcb-experiencia.js"></script>
 
   <!-- ════════════════════════════════════════════════
        SCROLL REVEAL — auto-asignación + IntersectionObserver

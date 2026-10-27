@@ -133,3 +133,30 @@ Las noticias se guardan en `localStorage` con esta estructura:
 **Fecha de Actualización**: 2026-02-08  
 **Estado**: ✅ FUNCIONANDO
 
+
+---
+
+## 📅 Novedades PCB Vision + Calendario Académico (2026-10-26)
+
+El popup **Novedades PCB Vision** (aparece 3 s después de entrar al home, una vez por sesión)
+y la sección **Calendario escolar** del `index.html` muestran automáticamente las próximas
+fechas del calendario oficial `Avisos/CalendarioAcademino-26-27.pdf`. Cada día se recalculan
+solas (lo que está "En curso" y lo que viene). Si hay una novedad publicada desde el admin,
+aparece arriba en el popup.
+
+### Cambiar el calendario por uno nuevo
+1. Copia el PDF nuevo en `Avisos/`.
+2. En una terminal:
+   ```
+   cd herramientas
+   npm install
+   node actualizar-calendario.mjs Avisos/NombreDelNuevo.pdf
+   ```
+3. Se regenera `data/calendario-academico.js` y el sitio usa el nuevo PDF (visor, descarga y fechas).
+
+### Flujo de bienvenida del home (`js/pcb-experiencia.js`)
+1. Primera visita: popup de **idioma (ES/EN) + tema (claro/oscuro)**.
+2. Luego: popup de **perfil** (estudiante, padre, maestro…). Personaliza accesos en el hero.
+   Se puede cambiar con "Cambiar perfil" en el hero o en el menú lateral.
+3. El home se queda en el hero (sin autoscroll) y a los 3 s salen las Novedades.
+4. Al ir a otra página y regresar, el home vuelve al punto donde se hizo clic.
