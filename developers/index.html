@@ -27,22 +27,6 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        .back-btn {
-            background: var(--light-bg);
-            color: var(--text-dark);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 1px solid var(--border-color);
-        }
-        .back-btn:hover {
-            background: var(--primary-color);
-            color: var(--white);
-            border-color: var(--primary-color);
-            transform: translateX(-4px);
-        }
         .programmer-projects {
             text-align: left;
             margin-top: 1rem;
@@ -265,14 +249,18 @@
     <header>
         <nav class="navbar">
             <div class="container">
-                <div class="logo">
-                    <a href="#">
-                        <img src="LOGO6.png" alt="Logo" class="logo-image">
-                        <span class="logo-title">PCB Developers</span>
-                    </a>
+                <div class="logo-group">
+                    <div class="logo">
+                        <a href="#">
+                            <img src="LOGO6.png" alt="Logo" class="logo-image">
+                            <span class="logo-title">PCB Developers</span>
+                        </a>
+                    </div>
+                    <button class="back-btn" onclick="history.back()" title="Regreso (Alt+←)">
+                        <span aria-hidden="true">←</span> Regreso
+                    </button>
                 </div>
-                <ul class="nav-menu">
-                    <li><a href="../../index.html" class="back-btn" title="Volver al PCB System">← PCB System</a></li>
+                <ul class="nav-menu" id="navMenu">
                     <li><a href="#programmers">Programmers</a></li>
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#media">Media</a></li>

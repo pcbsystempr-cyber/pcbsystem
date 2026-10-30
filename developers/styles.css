@@ -89,6 +89,12 @@ header {
     align-items: center;
 }
 
+.logo-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -178,6 +184,38 @@ header {
 
 .theme-toggle-btn i {
     font-size: 1rem;
+}
+
+/* Back Button - matches admin-btn and theme-toggle-btn */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gradient);
+    color: var(--white);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.back-btn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .back-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
 }
 
 /* Hero Section */

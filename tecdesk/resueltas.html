@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Boletas resueltas · PCB TechDesk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .rz-count{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border-radius:999px;background:var(--green-soft);color:#2e8053;font-size:11px;font-weight:800;white-space:nowrap}
+    .rz-count b{font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div id="demoBanner" class="demo-banner hidden">MODO DEMOSTRACIÓN · los resultados se cargan de forma local.</div>
+
+  <div class="app-layout">
+    <aside class="sidebar" aria-label="Navegación principal">
+      <div class="side-brand"><a class="brand" href="app.html"><div class="brand-mark">PCB</div></a></div>
+      <nav class="nav">
+        <a href="app.html" aria-label="Dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span class="nav-label">Dashboard</span>
+        </a>
+        <a href="#tickets" aria-label="Boletas">
+          <svg viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-8l-5 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="M7 8h10M7 12h7"/></svg><span class="nav-label">Boletas</span>
+        </a>
+        <a href="reports.html" data-admin-only aria-label="Reportes">
+          <svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg><span class="nav-label">Reportes</span>
+        </a>
+        <a href="index.html" aria-label="Nueva boleta">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span class="nav-label">Nueva boleta</span>
+        </a>
+        <a class="active" href="resueltas.html" aria-label="Boletas resueltas">
+          <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span class="nav-label">Boletas resueltas</span>
+        </a>
+      </nav>
+      <div class="sidebar-bottom nav"><button id="logoutBtn" aria-label="Cerrar sesión"><svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3M13 4h5a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-5"/></svg><span class="nav-label">Cerrar sesión</span></button></div>
+    </aside>
+
+    <main class="main">
+      <header class="app-header">
+        <div><h1>Boletas resueltas</h1><p>Todas las boletas marcadas como resueltas o cerradas.</p></div>
+        <div class="header-actions"><span class="rz-count">Resueltas <b id="resultCount">0</b></span></div>
+      </header>
+
+      <section class="app-content">
+        <div class="toolbar" style="margin-bottom:16px">
+          <div class="search"><input id="searchInput" placeholder="Buscar por boleta, solicitante, departamento o problema…"></div>
+          <select id="statusFilter"><option value="">Resueltas y cerradas</option><option value="resolved">Resuelta</option><option value="closed">Cerrada</option></select>
+        </div>
+
+        <div class="card table-card">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Boleta</th>
+                  <th>Solicitante</th>
+                  <th>Prioridad</th>
+                  <th>Estado</th>
+                  <th>Técnico</th>
+                  <th>Resuelta</th>
+                  <th>Creada</th>
+                </tr>
+              </thead>
+              <tbody id="ticketBody">
+                <tr><td colspan="7"><div class="empty">Cargando boletas resueltas…</div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="assets/resueltas.js"></script>
+</body>
+</html>

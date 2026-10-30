@@ -1,0 +1,10 @@
+{
+  "name": "PCB TechDesk 2.2",
+  "short_name": "PCB TechDesk",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "lang": "es-PR",
+  "description": "Sistema de boletas de servicio técnico escolar de COMPUTEC"
+}
